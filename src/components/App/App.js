@@ -5,7 +5,7 @@ import AppHeader from '../AppHeader/AppHeader'
 function App() {
   return (
     <div className={styles.root}>
-
+        <AppHeader />
     </div>
   );
 }
