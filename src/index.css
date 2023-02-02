@@ -3,6 +3,11 @@
   src: url(./fonts/JetBrainsMono/JetBrainsMono-Regular.woff2);
 }
 
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url(./fonts/JetBrainsMono/JetBrainsMono-Bold.woff2);
+}
+
 body {
   margin: 0;
   width: 100%;
