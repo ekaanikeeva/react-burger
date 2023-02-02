@@ -1,0 +1,24 @@
+.section {
+    grid-column: 1 / 2;
+    width: 100%;
+}
+
+.title {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    margin: 40px 0 20px;
+}
+
+.navigation {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 40px;
+
+    .tab {
+        min-width: 100%;
+        width: 100%;
+    }
+}

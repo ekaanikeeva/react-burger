@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './AppHeader.module.css'
+import styles from './AppHeader.module.scss'
 import { Logo, BurgerIcon, ProfileIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 function AppHeader() {
@@ -15,11 +15,11 @@ function AppHeader() {
                     Лента заказов</a>
             </nav>
 
-            <a className={styles.link} href="/">
+            <a className={styles.logo} href="/">
                 <Logo />
             </a>
 
-            <a className={styles.link} href="/">
+            <a className={styles.account} href="/">
             <ProfileIcon type="secondary" />
                 Личный кабинет</a>
         </header>

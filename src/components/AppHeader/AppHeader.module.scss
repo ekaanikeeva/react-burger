@@ -1,9 +1,10 @@
 .header {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: space-between;
     align-items: center;
-    padding: 24px 40px;
+    padding: 24px 0;
     box-sizing: border-box;
 }
 
@@ -22,11 +23,26 @@
     line-height: 24px;
     color: #8585AD;
     text-decoration: none;
+
+    svg {
+        margin-right: 9px;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
-.link svg {
-    margin-right: 9px;
+.logo {
+    composes: link;
+    justify-self: center;
 }
+
+.account {
+    composes: link;
+    justify-self: end;
+}
+
 
 .burgerLink {
     composes: link;
