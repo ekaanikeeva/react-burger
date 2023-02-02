@@ -1,0 +1,12 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    max-width: 1920px;
+    width: 100%;
+    margin: 0 auto;
+    
+    color: #F2F2F3;
+    font-family: 'JetBrains Mono', Arial, Helvetica, sans-serif;
+    padding: 40px;
+    box-sizing: border-box;
+}
