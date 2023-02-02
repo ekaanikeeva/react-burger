@@ -1,10 +1,10 @@
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import styles from './Main.module.scss';
 
-function Main() {
+function Main({ ingredients }) {
     return (
     <main className={styles.main}>
-        <BurgerIngredients />
+        <BurgerIngredients ingredients={ingredients}/>
     </main>
     )
 }
