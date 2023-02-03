@@ -1,0 +1,31 @@
+.burgerConstructor {
+    padding-top: 100px;
+}
+
+.ingredientsList {
+    list-style-type: none;
+    padding-left: 60px;
+    max-height: calc(100vh - 170px);
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        width: 10px;               /* ширина scrollbar */
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #2F2F37;        /* цвет дорожки */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #8585AD;
+        border: 3px solid #8585AD;
+    }
+}
+
+.ingredient {
+    margin-bottom: 16px;
+}

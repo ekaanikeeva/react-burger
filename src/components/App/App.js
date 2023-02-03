@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './App.module.css'
+import styles from './App.module.scss'
 import { ingredientList } from '../../utils/data';
 import AppHeader from '../AppHeader/AppHeader'
 import Main from '../Main/Main';
