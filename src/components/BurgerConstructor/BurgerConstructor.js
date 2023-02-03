@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -28,6 +29,10 @@ function BurgerConstructor({ ingredients }) {
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
         </form>
     )
+}
+
+BurgerConstructor.propTypes = {
+    ingredients: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default BurgerConstructor;

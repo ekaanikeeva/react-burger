@@ -9,12 +9,13 @@
     grid-column: 1 / 4;
     list-style-type: none;
     padding-left: 60px;
-    max-height: calc(100vh - 340px);
+    max-height: 60vh;
     margin: 0;
     width: 100%;
     box-sizing: border-box;
     overflow-y: scroll;
     overflow-x: hidden;
+    min-height: 550px;
 
     &::-webkit-scrollbar {
         width: 10px;
@@ -61,6 +62,7 @@
     background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
     border-radius: 64px;
     font-weight: 400;
+    border: none;
     font-size: 16px;
     line-height: 24px;
     padding: 20px 40px;

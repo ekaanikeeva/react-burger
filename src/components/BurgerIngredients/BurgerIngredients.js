@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
-import { Tab,  CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient';
 
 
@@ -28,13 +29,19 @@ function BurgerIngredients({ ingredients }) {
             <ul className={styles.ingredientsList}>
                 {ingredients.map((item, index) => {
                     return(
+                        <li key={index} className={styles.ingredient}>
                         <Ingredient item={ item } index={ index } />
+                        </li>
                     )
                 })}
                 
             </ul>
         </section>
     )
+}
+
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(PropTypes.object)
 }
 
 export default BurgerIngredients;
