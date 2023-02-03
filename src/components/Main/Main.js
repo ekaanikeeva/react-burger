@@ -21,7 +21,7 @@ const ingredientPropTypes = PropTypes.shape({
   });
 
 Main.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropTypes)
+    ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired
 }
 
 export default Main
