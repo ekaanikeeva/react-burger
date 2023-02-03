@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./BurgerConstructor.module.scss";
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerConstructor({ ingredients }) {
     return (
-        <section className={styles.burgerConstructor}>
+        <form className={styles.burgerConstructor}>
             <ul className={styles.ingredientsList}>
             {ingredients.map((item, index) => {
                 return (
@@ -21,8 +21,12 @@ function BurgerConstructor({ ingredients }) {
                 )
             })}
     </ul>
-
-        </section>
+            <div className={styles.burgerPrice}>
+                <span>610</span>
+                <CurrencyIcon type="primary" />
+            </div>
+            <button type="submit" className={styles.submitButton}>Оформить заказ</button>
+        </form>
     )
 }
 
