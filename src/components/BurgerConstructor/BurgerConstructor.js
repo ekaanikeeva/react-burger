@@ -4,10 +4,18 @@ import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerConstructor({ ingredients }) {
+    const [finalCost, setFinalCost] = React.useState(0);
+    let priceCount = 0;
+
+    React.useEffect(() => {
+        setFinalCost(priceCount)
+    }, [priceCount])
+
     return (
         <form className={styles.burgerConstructor}>
             <ul className={styles.ingredientsList}>
             {ingredients.map((item, index) => {
+                priceCount += item.price;
                 return (
                     <li key= { index } className={ styles.ingredient }>
                         <ConstructorElement
@@ -23,7 +31,7 @@ function BurgerConstructor({ ingredients }) {
             })}
     </ul>
             <div className={styles.burgerPrice}>
-                <span>610</span>
+                <span>{finalCost}</span>
                 <CurrencyIcon type="primary" />
             </div>
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
@@ -31,8 +39,15 @@ function BurgerConstructor({ ingredients }) {
     )
 }
 
+const ingredientPropTypes = PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+  });
+
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.object)
+    ingredients: PropTypes.arrayOf(ingredientPropTypes)
 }
 
 export default BurgerConstructor;

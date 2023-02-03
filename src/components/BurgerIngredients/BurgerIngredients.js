@@ -40,8 +40,14 @@ function BurgerIngredients({ ingredients }) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.object)
-}
+const ingredientPropTypes = PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+  });
 
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientPropTypes)
+}
 export default BurgerIngredients;
