@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './BurgerIngredients.module.scss';
 import { Tab,  CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import Ingredient from '../Ingredient/Ingredient';
 
 
 function BurgerIngredients({ ingredients }) {
@@ -26,14 +27,9 @@ function BurgerIngredients({ ingredients }) {
             <h2 className={styles.ingredientsTitle}>Булки</h2>
             <ul className={styles.ingredientsList}>
                 {ingredients.map((item, index) => {
-                    return(<li key={index} className={styles.ingredient}>
-                        <Counter count={1} size="default" extraClass="m-1" />
-                        <img src={item.image} alt={item.name} />
-                        <a className={styles.price}>
-                            <span>{item.price}</span>
-                            <CurrencyIcon type="primary" /></a>
-                        <h3>{item.name}</h3>
-                    </li>)
+                    return(
+                        <Ingredient item={ item } index={ index } />
+                    )
                 })}
                 
             </ul>

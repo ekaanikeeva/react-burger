@@ -1,0 +1,34 @@
+
+.ingredient {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: calc(100% - 24px);
+    justify-content: center;
+    align-items: center;
+    height: 208px;
+    transition: box-shadow .5s linear;
+    margin: 10px;
+
+    &:nth-child(2n) {
+        margin-right: 24px;
+    }
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0 4px 10px #8585AD;
+        transition: box-shadow .5s linear;
+    }
+}
+
+.price {
+    display: flex;
+    align-items: center;
+
+    span {
+        margin-right: 10px;
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 24px;
+    }
+}
