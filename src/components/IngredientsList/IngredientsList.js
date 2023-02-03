@@ -31,6 +31,8 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 IngredientsList.propTypes = {
+    title: PropTypes.string.isRequired,
+    currentType: PropTypes.string.isRequired,
     ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired
 }
 
