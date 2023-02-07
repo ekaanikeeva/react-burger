@@ -1,0 +1,76 @@
+.burgerConstructor {
+    padding-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(3, fit-content);
+    align-items: center;
+}
+
+.ingredientsList {
+    grid-column: 1 / 4;
+    list-style-type: none;
+    padding-left: 60px;
+    max-height: 60vh;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 550px;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        /* ширина scrollbar */
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #2F2F37;
+        /* цвет дорожки */
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #8585AD;
+        border: 3px solid #8585AD;
+    }
+}
+
+.ingredient {
+    margin-bottom: 16px;
+}
+
+.burgerPrice {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    padding: 40px 40px 40px 0;
+
+    span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 36px;
+        padding-right: 9px;
+    }
+
+    svg {
+        width: 33px;
+        height: auto;
+    }
+    grid-column: 2 / 3;
+}
+
+.submitButton {
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    border-radius: 64px;
+    font-weight: 400;
+    border: none;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 20px 40px;
+    color: #F2F2F3;
+    height: fit-content;
+    grid-column: 3 / 4;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
