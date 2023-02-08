@@ -5,7 +5,6 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
 import Modal from '../Modal/Modal';
-import Ingredient from '../Ingredient/Ingredient';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 function BurgerIngredients({ ingredients }) {
