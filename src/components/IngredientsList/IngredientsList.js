@@ -3,7 +3,11 @@ import styles from './IngredientsList.module.scss';
 import Ingredient from '../Ingredient/Ingredient';
 import PropTypes from 'prop-types';
 
-function IngredientsList({ title, currentType, ingredients }) {
+function IngredientsList({ title, currentType, ingredients, setIsOpen, setCurrentIngredient }) {
+    const openModal = () => {
+        setIsOpen(true)
+    }
+
     return (
         <>
             <h2 className={styles.ingredientsTitle}>{title}</h2>
@@ -11,8 +15,11 @@ function IngredientsList({ title, currentType, ingredients }) {
                 {ingredients.map((item, index) => {
                     if (item.type === currentType) {
                         return (
-                            <li key={index} className={styles.ingredient}>
-                                <Ingredient item={item} index={index} />
+                            <li key={index} className={styles.ingredient} onClick={() => {
+                                openModal();
+                                setCurrentIngredient(item)
+                            }}>
+                                <Ingredient item={item} />
                             </li>
                         )
                     }
