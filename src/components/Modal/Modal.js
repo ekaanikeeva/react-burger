@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.scss";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
@@ -7,6 +8,17 @@ function Modal({ isOpen, setIsOpen, children, title }) {
     const onClose = () => {
         setIsOpen(false)
     }
+
+    useEffect(() => {
+        function handleEscape(event) {
+          if (event.code === 'Escape') {
+            onClose();
+          }
+        }
+      
+        document.addEventListener('keydown', handleEscape)
+        return () => document.removeEventListener('keydown', handleEscape)
+      }, [])
 
     return createPortal(
         <div className={isOpen ? styles.modal : styles.modal_hidden}>
