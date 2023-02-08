@@ -1,24 +1,25 @@
 import { useEffect } from "react";
+import PropTypes from 'prop-types';
 import { createPortal } from "react-dom";
 import styles from "./Modal.module.scss";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function Modal({ isOpen, setIsOpen, children, title }) {
-    const onClose = () => {
+    function onClose () {
         setIsOpen(false)
     }
 
     useEffect(() => {
         function handleEscape(event) {
           if (event.code === 'Escape') {
-            onClose();
+            setIsOpen(false)
           }
         }
       
         document.addEventListener('keydown', handleEscape)
         return () => document.removeEventListener('keydown', handleEscape)
-      }, [])
+      }, [setIsOpen])
 
     return createPortal(
         <div className={isOpen ? styles.modal : styles.modal_hidden}>
@@ -35,6 +36,13 @@ function Modal({ isOpen, setIsOpen, children, title }) {
         , document.body
 
     )
+}
+
+Modal.propTypes = {
+    isOpen: PropTypes.bool.isRequired, 
+    setIsOpen: PropTypes.func.isRequired, 
+    children: PropTypes.any.isRequired, 
+    title: PropTypes.string
 }
 
 export default Modal;

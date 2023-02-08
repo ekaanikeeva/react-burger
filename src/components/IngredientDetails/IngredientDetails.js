@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function IngredientDetails({ currentIngredient}) {
     return (
         <>
@@ -23,6 +25,17 @@ function IngredientDetails({ currentIngredient}) {
             </section>
         </>
     )
+}
+
+IngredientDetails.propTypes = {
+    currentIngredient: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        calories: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        proteins: PropTypes.number.isRequired,
+    })
 }
 
 export default IngredientDetails;

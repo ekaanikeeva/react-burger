@@ -40,7 +40,9 @@ const ingredientPropTypes = PropTypes.shape({
 IngredientsList.propTypes = {
     title: PropTypes.string.isRequired,
     currentType: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+    setIsOpen: PropTypes.func.isRequired,
+    setCurrentIngredient: PropTypes.func.isRequired
 }
 
 export default IngredientsList
