@@ -6,6 +6,7 @@ import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constan
 import IngredientsList from '../IngredientsList/IngredientsList';
 import Modal from '../Modal/Modal';
 import Ingredient from '../Ingredient/Ingredient';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 function BurgerIngredients({ ingredients }) {
     const [current, setCurrent] = useState('one');
@@ -42,26 +43,7 @@ function BurgerIngredients({ ingredients }) {
             </ul>
             {currentIngredient !== null ?
                 <Modal title="Детали ингредиента" isOpen={isOpen} setIsOpen={setIsOpen}>
-                    <img src={currentIngredient.image} alt={currentIngredient.name} />
-                    <h3>{currentIngredient.name}</h3>
-                    <section className="ingredients__info">
-                        <div>
-                            <span>Калории,ккал</span>
-                            <span>{currentIngredient.calories}</span>
-                        </div>
-                        <div>
-                            <span>Белки, г</span>
-                            <span>{currentIngredient.proteins}</span>
-                        </div>
-                        <div>
-                            <span>Жиры, г</span>
-                            <span>{currentIngredient.fat}</span>
-                        </div>
-                        <div>
-                            <span>Углеводы, г</span>
-                            <span>{currentIngredient.carbohydrates}</span>
-                        </div>
-                    </section>
+                    <IngredientDetails currentIngredient={currentIngredient} />
                 </Modal>
                 : ""
             }
