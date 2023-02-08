@@ -1,14 +1,23 @@
-import React from "react";
+import { useState, useMemo } from "react";
 import PropTypes from 'prop-types';
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 function BurgerConstructor({ ingredients }) {
+    const [isOpen, setIsOpen] = useState(false);
 
-    const priceCount = React.useMemo(() => ingredients.reduce((total, item) => total + item.price, 0), [ingredients])
+    const handleSubmit = (evt) => {
+        evt.preventDefault()
+
+        setIsOpen(true)
+    }
+
+    const priceCount = useMemo(() => ingredients.reduce((total, item) => total + item.price, 0), [ingredients])
 
     return (
-        <form className={styles.burgerConstructor}>
+        <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
             <ul className={styles.ingredientsList}>
             {ingredients.map((item, index) => {
                 return (
@@ -30,6 +39,9 @@ function BurgerConstructor({ ingredients }) {
                 <CurrencyIcon type="primary" />
             </div>
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
+            <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+                <OrderDetails />
+            </Modal>
         </form>
     )
 }
