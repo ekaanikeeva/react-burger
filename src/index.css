@@ -7,6 +7,10 @@
   font-family: 'JetBrains Mono';
   src: url(./fonts/JetBrainsMono/JetBrainsMono-Bold.woff2);
 }
+@font-face {
+  font-family: 'Iceland';
+  src: url(./fonts/Iceland/Iceland-Regular.woff2);
+}
 
 body {
   margin: 0;
