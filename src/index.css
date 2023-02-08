@@ -16,6 +16,7 @@ body {
   margin: 0;
   width: 100%;
   background: #1C1C21;
+  font-family: 'JetBrains Mono', sans-serif, Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
