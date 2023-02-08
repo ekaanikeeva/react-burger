@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 import styles from './App.module.scss'
 import AppHeader from '../AppHeader/AppHeader'
 import Main from '../Main/Main';
-import { ingredientsUrl } from '../../utils/constants';
+import { getIngredientsApi } from '../../utils/ingredientsApi';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
 
   const getIngredients = () => {
-    fetch(ingredientsUrl)
-      .then(res => res.json())
+      getIngredientsApi()
       .then(data => {
         setIngredients(data.data)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log('Не удалось загрузить ингредиенты'))
   }
 
   useEffect(() => {
