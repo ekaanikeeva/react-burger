@@ -41,7 +41,7 @@ function Modal({ isOpen, setIsOpen, children, title }) {
 Modal.propTypes = {
     isOpen: PropTypes.bool.isRequired, 
     setIsOpen: PropTypes.func.isRequired, 
-    children: PropTypes.any.isRequired, 
+    children: PropTypes.element.isRequired, 
     title: PropTypes.string
 }
 
