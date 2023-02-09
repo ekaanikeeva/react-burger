@@ -35,7 +35,7 @@ IngredientDetails.propTypes = {
         fat: PropTypes.number.isRequired,
         carbohydrates: PropTypes.number.isRequired,
         proteins: PropTypes.number.isRequired,
-    })
+    }.isRequired)
 }
 
 export default IngredientDetails;
