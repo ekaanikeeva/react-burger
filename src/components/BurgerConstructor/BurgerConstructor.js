@@ -39,9 +39,11 @@ function BurgerConstructor({ ingredients }) {
                 <CurrencyIcon type="primary" />
             </div>
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
+            { isOpen && 
             <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
                 <OrderDetails />
             </Modal>
+            }
         </form>
     )
 }

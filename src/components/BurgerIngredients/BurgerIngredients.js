@@ -40,11 +40,10 @@ function BurgerIngredients({ ingredients }) {
                 </li>
 
             </ul>
-            {currentIngredient !== null ?
+            { currentIngredient !== null &&
                 <Modal title="Детали ингредиента" isOpen={isOpen} setIsOpen={setIsOpen}>
                     <IngredientDetails currentIngredient={currentIngredient} />
                 </Modal>
-                : ""
             }
 
         </section>
