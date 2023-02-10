@@ -10,7 +10,6 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 function BurgerIngredients({ ingredients }) {
     const [current, setCurrent] = useState('one');
-    const [isOpen, setIsOpen] = useState(false);
     const [currentIngredient, setCurrentIngredient] = useState(null);
 
     function onClose () {
