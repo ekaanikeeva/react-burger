@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
+import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
@@ -53,13 +54,6 @@ function BurgerIngredients({ ingredients }) {
         </section>
     )
 }
-
-const ingredientPropTypes = PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-});
 
 BurgerIngredients.propTypes = {
     ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired

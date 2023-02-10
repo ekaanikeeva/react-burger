@@ -2,6 +2,7 @@ import React from "react";
 import styles from './IngredientsList.module.scss';
 import Ingredient from '../Ingredient/Ingredient';
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 
 function IngredientsList({ title, currentType, ingredients, setCurrentIngredient }) {
     return (
@@ -24,13 +25,6 @@ function IngredientsList({ title, currentType, ingredients, setCurrentIngredient
         </>
     )
 }
-
-const ingredientPropTypes = PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-});
 
 IngredientsList.propTypes = {
     title: PropTypes.string.isRequired,
