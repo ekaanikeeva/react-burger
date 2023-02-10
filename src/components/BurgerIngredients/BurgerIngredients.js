@@ -12,6 +12,10 @@ function BurgerIngredients({ ingredients }) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentIngredient, setCurrentIngredient] = useState(null);
 
+    function onClose () {
+        setCurrentIngredient(null)
+    }
+    
     return (
         <section className={styles.section}>
             <h1 className={styles.title}>Соберите бургер</h1>
@@ -30,18 +34,18 @@ function BurgerIngredients({ ingredients }) {
 
             <ul className={styles.ingredientsList}>
                 <li>
-                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredients} setIsOpen={setIsOpen} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredients} setCurrentIngredient={setCurrentIngredient} />
                 </li>
                 <li>
-                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredients} setIsOpen={setIsOpen} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredients} setCurrentIngredient={setCurrentIngredient} />
                 </li>
                 <li>
-                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredients} setIsOpen={setIsOpen} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredients} setCurrentIngredient={setCurrentIngredient} />
                 </li>
 
             </ul>
             { currentIngredient !== null &&
-                <Modal title="Детали ингредиента" isOpen={isOpen} setIsOpen={setIsOpen}>
+                <Modal title="Детали ингредиента" onClose={onClose}>
                     <IngredientDetails currentIngredient={currentIngredient} />
                 </Modal>
             }

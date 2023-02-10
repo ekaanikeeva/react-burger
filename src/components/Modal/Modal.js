@@ -5,32 +5,30 @@ import styles from "./Modal.module.scss";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function Modal({ isOpen, setIsOpen, children, title }) {
-    function onClose () {
-        setIsOpen(false)
-    }
+function Modal({ onClose, children, title }) {
+
 
     useEffect(() => {
         function handleEscape(event) {
-          if (event.code === 'Escape') {
-            setIsOpen(false)
-          }
+            if (event.code === 'Escape') {
+                onClose()
+            }
         }
-      
+
         document.addEventListener('keydown', handleEscape)
         return () => document.removeEventListener('keydown', handleEscape)
-      }, [setIsOpen])
+    }, [onClose])
 
     return createPortal(
-        <div className={isOpen ? styles.modal : styles.modal_hidden}>
-            <ModalOverlay onClose={onClose}/>
+        <div className={styles.modal}>
+            <ModalOverlay onClose={onClose} />
             <div className={styles.modal__container}>
                 <button type="button" className={styles.close} onClick={onClose}><CloseIcon type="primary" /></button>
                 <h2 className={styles.title}>{title}</h2>
                 <div className={styles.child__container}>
                     {children}
                 </div>
-                
+
             </div>
         </div>
         , document.body
@@ -39,9 +37,8 @@ function Modal({ isOpen, setIsOpen, children, title }) {
 }
 
 Modal.propTypes = {
-    isOpen: PropTypes.bool.isRequired, 
-    setIsOpen: PropTypes.func.isRequired, 
-    children: PropTypes.element.isRequired, 
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired,
     title: PropTypes.string
 }
 
