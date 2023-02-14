@@ -22,24 +22,46 @@ function BurgerConstructor() {
 
     const priceCount = useMemo(() => ingredients.reduce((total, item) => total + item.price, 0), [ingredients])
 
+    const currentBun = useMemo(() => ingredients.find((item) => {
+        return item.type === 'bun'
+    }), [ingredients]);
+
+
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
+            <div className={styles.burgerBunTop}>
+                {currentBun &&
+                    <ConstructorElement
+                        type="top"
+                        isLocked={true}
+                        text={currentBun.name}
+                        price={currentBun.price}
+                        thumbnail={currentBun.image}
+                    />}
+            </div>
             <ul className={styles.ingredientsList}>
                 {ingredients.map((item, index) => {
-                    return (
+                    return (item.type !== 'bun' &&
                         <li key={index} className={styles.ingredient}>
                             <ConstructorElement
-                                type={index === 0 ? "top" : index === ingredients.length - 1 ? "bottom" : undefined}
                                 isLocked={index === 0 || index === ingredients.length - 1 ? true : false}
                                 text={item.name}
                                 price={item.price}
                                 thumbnail={item.image}
                             />
-                        </li>
-
-                    )
+                        </li>)
                 })}
             </ul>
+            <div className={styles.burgerBunBottom}>
+                {currentBun &&
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={true}
+                        text={currentBun.name}
+                        price={currentBun.price}
+                        thumbnail={currentBun.image}
+                    />}
+            </div>
             <div className={styles.burgerPrice}>
                 <span>{priceCount}</span>
                 <CurrencyIcon type="primary" />
