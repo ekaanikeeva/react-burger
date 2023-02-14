@@ -3,7 +3,6 @@ import styles from './App.module.scss'
 import AppHeader from '../AppHeader/AppHeader'
 import Main from '../Main/Main';
 import { getIngredientsApi } from '../../utils/ingredientsApi';
-import { IngredientsContext } from '../../services/ingredientsContext';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -23,9 +22,7 @@ function App() {
   return (
     <div className={styles.root}>
       <AppHeader />
-      <IngredientsContext.Provider value={ingredients}>
-        <Main />
-      </IngredientsContext.Provider>
+        <Main ingredients={ingredients} />
     </div>
   );
 }

@@ -7,12 +7,11 @@ import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constan
 import IngredientsList from '../IngredientsList/IngredientsList';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import { IngredientsContext } from "../../services/ingredientsContext";
 
-function BurgerIngredients() {
+
+function BurgerIngredients({ ingredients }) {
     const [current, setCurrent] = useState('one');
     const [currentIngredient, setCurrentIngredient] = useState(null);
-    const ingredients = useContext(IngredientsContext);
 
     function onClose () {
         setCurrentIngredient(null)
@@ -56,7 +55,7 @@ function BurgerIngredients() {
     )
 }
 
-// BurgerIngredients.propTypes = {
-//     ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
-// }
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
+}
 export default BurgerIngredients;
