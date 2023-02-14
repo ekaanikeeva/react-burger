@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
@@ -7,10 +7,12 @@ import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constan
 import IngredientsList from '../IngredientsList/IngredientsList';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { IngredientsContext } from "../../services/ingredientsContext";
 
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients() {
     const [current, setCurrent] = useState('one');
     const [currentIngredient, setCurrentIngredient] = useState(null);
+    const ingredients = useContext(IngredientsContext);
 
     function onClose () {
         setCurrentIngredient(null)
@@ -54,7 +56,7 @@ function BurgerIngredients({ ingredients }) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
-}
+// BurgerIngredients.propTypes = {
+//     ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
+// }
 export default BurgerIngredients;
