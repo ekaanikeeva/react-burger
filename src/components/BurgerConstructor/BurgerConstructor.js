@@ -28,7 +28,6 @@ function BurgerConstructor() {
 
     const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
 
-console.log(currentBun)
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
             <div className={styles.burgerBunTop}>
