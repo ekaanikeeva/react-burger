@@ -20,13 +20,15 @@ function BurgerConstructor() {
         setIsOpen(false)
     }
 
-    const priceCount = useMemo(() => ingredients.reduce((total, item) => total + item.price, 0), [ingredients])
+    const priceCount = useMemo(() => ingredients.reduce((total, item) => {
+        if (item.type !== 'bun') {
+            return total + item.price
+        } else return total + (item.price * 2)
+    }, 0), [ingredients])
 
-    const currentBun = useMemo(() => ingredients.find((item) => {
-        return item.type === 'bun'
-    }), [ingredients]);
+    const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
 
-
+console.log(currentBun)
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
             <div className={styles.burgerBunTop}>
