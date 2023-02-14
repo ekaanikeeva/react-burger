@@ -8,7 +8,7 @@
 
 .ingredientsList {
     display: grid;
-    column-gap: 24px;
+    column-gap: 20px;
     row-gap: 32px;
     grid-template-columns: repeat(2, 1fr);
     list-style-type: none;
@@ -20,15 +20,19 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    width: calc(100% - 24px);
+    width: calc(100% - 15px);
+    box-sizing: border-box;
     justify-content: center;
     align-items: center;
     height: 208px;
     transition: box-shadow .5s linear;
-    margin: 10px;
+    padding: 3px;
+    margin-left: 3px;
+    box-sizing: border-box;
 
     &:nth-child(2n) {
-        margin-right: 24px;
+        margin-right: 15px;
+        margin-left: 0;
     }
 
     &:hover {

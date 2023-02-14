@@ -1,0 +1,118 @@
+.modal {
+    visibility: visible;
+    opacity: 1;
+    font-family: 'JetBrains Mono', sans-serif;
+    transition: visibility .3s linear, opacity .5s linear;
+}
+
+.modal_hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .3s linear, opacity .5s linear;
+}
+
+.modal__container {
+    height: auto;
+    min-height: 500px;
+    width: 720px;
+    max-width: 90vw;
+    max-height: 90vw;
+    position: fixed;
+    left: calc(50% - (720px / 2));
+    right: calc(50% - (720px / 2));
+    top: 15vh;
+    z-index: 3;
+    background: #1C1C21;
+    border: 1px solid rgba(76, 76, 255, 0.2);
+    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+    padding: 40px 40px 65px;
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: start;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 40px;
+    margin: 0;
+}
+
+.close {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    transition: scale .5s linear;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: scale .5s linear;
+    }
+}
+
+.child__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100% - 180px);
+    margin: 0 auto;
+
+    h3 {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 30px;
+        text-align: center;
+        margin: 15px 0 30px;
+    }
+
+    img {
+        height: 240px;
+    }
+
+    svg {
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(41, 33, 66, 1) 0%, rgba(28, 28, 33, 1) 100%);
+        padding: 35px;
+        box-sizing: border-box;
+        border-radius: 50%;
+    }
+
+    p {
+        margin-top: 80px;
+    }
+
+    section {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        div {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                font-style: normal;
+                font-weight: 400;
+                line-height: 24px;
+                text-align: center;
+                color: #8585AD;
+                margin-bottom: 8px;
+
+                &:first-of-type {
+                    font-size: 16px;
+                }
+
+                &:last-of-type {
+                    font-size: 28px;
+                    font-family: 'Iceland', cursive;
+                }
+            }
+        }
+    }
+}
