@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext } from "react";
+import { useState, useMemo, useContext, useEffect } from "react";
 import PropTypes from 'prop-types';
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,15 +6,25 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import { IngredientsContext } from "../../services/ingredientsContext";
+import { postOrderApi } from "../../utils/ingredientsApi";
 
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
+    const [orderId, setOrderId] = useState(null)
     const ingredients = useContext(IngredientsContext);
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
-        setIsOpen(true)
+        const idArray = ingredients.map(item => item._id)
+        
+        postOrderApi(idArray)
+        .then((res) => {
+            setOrderId(res.order.number)
+            setIsOpen(true)
+        } )
+   
     }
+
 
     function onClose() {
         setIsOpen(false)
@@ -70,7 +80,7 @@ function BurgerConstructor() {
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
             {isOpen &&
                 <Modal onClose={onClose}>
-                    <OrderDetails />
+                    <OrderDetails orderId={ orderId } />
                 </Modal>
             }
         </form>

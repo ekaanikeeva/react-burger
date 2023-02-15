@@ -1,9 +1,9 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function OrderDetails() {
+function OrderDetails({ orderId }) {
     return (
         <>
-            <p className="text text_type_digits-large">038457</p>
+            <p className="text text_type_digits-large">{orderId}</p>
             <h3>идентификатор заказа</h3>
             <CheckMarkIcon type="primary" />
             <div className="p-7"></div>
