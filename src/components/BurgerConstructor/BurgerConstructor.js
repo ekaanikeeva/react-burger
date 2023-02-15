@@ -10,33 +10,35 @@ import { postOrderApi } from "../../utils/ingredientsApi";
 
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
-    const [orderId, setOrderId] = useState(null)
+    const [orderNumber, setOrderNumber] = useState(null)
     const ingredients = useContext(IngredientsContext);
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
         const idArray = ingredients.map(item => item._id)
-        
         postOrderApi(idArray)
         .then((res) => {
-            setOrderId(res.order.number)
+            setOrderNumber(res.order.number)
             setIsOpen(true)
         } )
    
     }
 
-
     function onClose() {
         setIsOpen(false)
     }
 
+    const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
+
+    const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
+
     const priceCount = useMemo(() => ingredients.reduce((total, item) => {
         if (item.type !== 'bun') {
             return total + item.price
-        } else return total + (item.price * 2)
+        } else if (currentBun._id === item._id) return total + (item.price * 2)
+        else return total;
     }, 0), [ingredients])
 
-    const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
 
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
@@ -51,8 +53,8 @@ function BurgerConstructor() {
                     />}
             </div>
             <ul className={styles.ingredientsList}>
-                {ingredients.map((item, index) => {
-                    return (item.type !== 'bun' &&
+                {ingredientsWithoutBuns.map((item, index) => {
+                    return (
                         <li key={index} className={styles.ingredient}>
                             <ConstructorElement
                                 isLocked={index === 0 || index === ingredients.length - 1 ? true : false}
@@ -80,7 +82,7 @@ function BurgerConstructor() {
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
             {isOpen &&
                 <Modal onClose={onClose}>
-                    <OrderDetails orderId={ orderId } />
+                    <OrderDetails orderNumber={ orderNumber } />
                 </Modal>
             }
         </form>
