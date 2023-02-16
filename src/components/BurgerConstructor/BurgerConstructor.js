@@ -1,5 +1,4 @@
 import { useState, useMemo, useContext, useEffect } from "react";
-import PropTypes from 'prop-types';
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
@@ -13,8 +12,11 @@ function BurgerConstructor() {
     const ingredients = useContext(IngredientsContext);
     const handleSubmit = (evt) => {
         evt.preventDefault()
+        const allIngredientsArray = ingredientsWithoutBuns;
+        allIngredientsArray.unshift(currentBun)
+        allIngredientsArray.push(currentBun)
 
-        const idArray = ingredients.map(item => item._id).concat(currentBun._id)
+        const idArray = allIngredientsArray.map(item => item._id)
         postOrderApi(idArray)
         .then((res) => {
             setOrderNumber(res.order.number)
@@ -30,6 +32,7 @@ function BurgerConstructor() {
     const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
 
     const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
+
 
     const priceCount = useMemo(() => ingredients.reduce((total, item) => {
         if (item.type !== 'bun') {
