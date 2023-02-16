@@ -4,7 +4,6 @@ import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import { postOrderApi } from "../../utils/ingredientsApi";
 
@@ -89,9 +88,5 @@ function BurgerConstructor() {
     )
 }
 
-
-// BurgerConstructor.propTypes = {
-//     ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
-// }
 
 export default BurgerConstructor;
