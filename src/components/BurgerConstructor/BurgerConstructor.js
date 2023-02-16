@@ -14,7 +14,7 @@ function BurgerConstructor() {
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
-        const idArray = ingredients.map(item => item._id)
+        const idArray = ingredients.map(item => item._id).concat(currentBun._id)
         postOrderApi(idArray)
         .then((res) => {
             setOrderNumber(res.order.number)
