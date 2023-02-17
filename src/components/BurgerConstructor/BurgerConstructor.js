@@ -12,8 +12,9 @@ function BurgerConstructor() {
     const ingredients = useContext(IngredientsContext);
     const handleSubmit = (evt) => {
         evt.preventDefault()
-        const allIngredientsArray = ingredientsWithoutBuns;
-        allIngredientsArray.unshift(currentBun)
+        const allIngredientsArray = [];
+        allIngredientsArray.push(currentBun)
+        allIngredientsArray.push(ingredientsWithoutBuns);
         allIngredientsArray.push(currentBun)
 
         const idArray = allIngredientsArray.map(item => item._id)
