@@ -8,7 +8,7 @@ function App() {
   const [ingredients, setIngredients] = useState([]);
 
   const getIngredients = () => {
-      getIngredientsApi()
+    getIngredientsApi()
       .then(data => {
         setIngredients(data.data)
       })
@@ -22,7 +22,7 @@ function App() {
   return (
     <div className={styles.root}>
       <AppHeader />
-      <Main ingredients={ingredients} />
+        <Main ingredients={ingredients} />
     </div>
   );
 }

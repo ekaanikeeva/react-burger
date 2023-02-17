@@ -4,13 +4,16 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import styles from './Main.module.scss';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import { IngredientsContext } from '../../services/ingredientsContext';
 
 function Main({ ingredients }) {
     return (
-    <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients}/>
-        <BurgerConstructor ingredients={ingredients}/>
-    </main>
+        <main className={styles.main}>
+            <BurgerIngredients ingredients={ingredients} />
+            <IngredientsContext.Provider value={ingredients}>
+                <BurgerConstructor />
+            </IngredientsContext.Provider>
+        </main>
     )
 }
 

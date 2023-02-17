@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
@@ -7,6 +7,7 @@ import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constan
 import IngredientsList from '../IngredientsList/IngredientsList';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+
 
 function BurgerIngredients({ ingredients }) {
     const [current, setCurrent] = useState('one');

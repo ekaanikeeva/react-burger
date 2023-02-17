@@ -5,17 +5,31 @@
     align-items: center;
 }
 
+.burgerBunTop {
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+    padding-left: 60px;
+    margin-bottom: 16px;
+}
+
+.burgerBunBottom {
+    grid-row: 3 / 4;
+    grid-column: 1 / 4;
+    padding-left: 60px;
+    margin-top: 16px;
+}
+
 .ingredientsList {
     grid-column: 1 / 4;
     list-style-type: none;
     padding-left: 60px;
-    max-height: 60vh;
+    max-height: calc(60vh - 200px);
     margin: 0;
     width: 100%;
     box-sizing: border-box;
     overflow-y: scroll;
     overflow-x: hidden;
-    min-height: 550px;
+    min-height: 460px;
 
     &::-webkit-scrollbar {
         width: 10px;
