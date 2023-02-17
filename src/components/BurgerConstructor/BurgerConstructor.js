@@ -13,9 +13,9 @@ function BurgerConstructor() {
     const handleSubmit = (evt) => {
         evt.preventDefault()
         const allIngredientsArray = [];
-        allIngredientsArray.push(currentBun)
-        allIngredientsArray.push(ingredientsWithoutBuns);
-        allIngredientsArray.push(currentBun)
+        allIngredientsArray.push(...currentBun)
+        allIngredientsArray.push(...ingredientsWithoutBuns);
+        allIngredientsArray.push(...currentBun)
 
         const idArray = allIngredientsArray.map(item => item._id)
         postOrderApi(idArray)
