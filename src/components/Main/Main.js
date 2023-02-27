@@ -9,7 +9,7 @@ import { IngredientsContext } from '../../services/ingredientsContext';
 function Main({ ingredients }) {
     return (
         <main className={styles.main}>
-            <BurgerIngredients ingredients={ingredients} />
+            <BurgerIngredients />
             <IngredientsContext.Provider value={ingredients}>
                 <BurgerConstructor />
             </IngredientsContext.Provider>

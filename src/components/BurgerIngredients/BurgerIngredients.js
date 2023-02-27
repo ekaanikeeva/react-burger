@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
@@ -7,11 +7,24 @@ import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constan
 import IngredientsList from '../IngredientsList/IngredientsList';
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { useSelector, useDispatch } from 'react-redux';
+import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 
-
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients() {
     const [current, setCurrent] = useState('one');
     const [currentIngredient, setCurrentIngredient] = useState(null);
+    const ingredientsSelector = useSelector(store => store.ingredientsReducer);
+    const [ingredientsArray, setIngredientsArray] = useState(null)
+    const dispatch = useDispatch();
+
+    useMemo(() => {
+        dispatch(ingredientsAsync())
+    }, [])
+
+    useMemo(() => {
+        setIngredientsArray(ingredientsSelector?.ingredients)
+    }, [ingredientsSelector])
+
 
     function onClose () {
         setCurrentIngredient(null)
@@ -35,13 +48,13 @@ function BurgerIngredients({ ingredients }) {
 
             <ul className={styles.ingredientsList}>
                 <li>
-                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredients} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} setCurrentIngredient={setCurrentIngredient} />
                 </li>
                 <li>
-                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredients} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} setCurrentIngredient={setCurrentIngredient} />
                 </li>
                 <li>
-                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredients} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} setCurrentIngredient={setCurrentIngredient} />
                 </li>
 
             </ul>
@@ -55,7 +68,4 @@ function BurgerIngredients({ ingredients }) {
     )
 }
 
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
-}
 export default BurgerIngredients;
