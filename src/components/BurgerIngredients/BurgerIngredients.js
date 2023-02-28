@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";

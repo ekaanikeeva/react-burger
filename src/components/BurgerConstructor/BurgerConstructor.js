@@ -5,17 +5,24 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import { postOrderApi } from "../../utils/ingredientsApi";
+import { useSelector, useDispatch } from 'react-redux';
+import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
     const [orderNumber, setOrderNumber] = useState(null)
     const ingredients = useContext(IngredientsContext);
+    const [allBurger, setAllBurger] = useState([]);
+    const burgerIngredientsSelector = useSelector(store => store.burgerConstructorReducer.constructorIngredients);
+    const dispatch = useDispatch();
+
     const handleSubmit = (evt) => {
         evt.preventDefault()
         const allIngredientsArray = [];
-        allIngredientsArray.push(...currentBun)
+        allIngredientsArray.push(currentBun)
         allIngredientsArray.push(...ingredientsWithoutBuns);
-        allIngredientsArray.push(...currentBun)
+        allIngredientsArray.push(currentBun)
+        dispatch(addConstructorIngredientsAction(allIngredientsArray));
 
         const idArray = allIngredientsArray.map(item => item._id)
         postOrderApi(idArray)
@@ -23,7 +30,6 @@ function BurgerConstructor() {
             setOrderNumber(res.order.number)
             setIsOpen(true)
         } )
-   
     }
 
     function onClose() {
@@ -42,6 +48,14 @@ function BurgerConstructor() {
         else return total;
     }, 0), [ingredients])
 
+    // useEffect(() => {
+    //     dispatch(addConstructorIngredientsAction(ingredients));    
+    // }, [ingredients])
+
+    useEffect(() => {
+        setAllBurger(burgerIngredientsSelector)
+        console.log(allBurger)
+    }, [handleSubmit])
 
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
@@ -60,7 +74,7 @@ function BurgerConstructor() {
                     return (
                         <li key={index} className={styles.ingredient}>
                             <ConstructorElement
-                                isLocked={index === 0 || index === ingredients.length - 1 ? true : false}
+                                isLocked={false}
                                 text={item.name}
                                 price={item.price}
                                 thumbnail={item.image}

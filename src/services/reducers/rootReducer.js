@@ -1,12 +1,12 @@
 import { combineReducers } from "redux"
 import { ingredientsReducer } from "./ingredientsReducer"
-// import { burgerConstructor } from "./burgerConstructor"
+import { burgerConstructorReducer } from "./burgerConstructorReducer"
 // import { order } from "./order"
 // import { currentIngredient } from "./currentIngredient"
 
 export const rootReducer = combineReducers({
-    ingredientsReducer
-    // burgerConstructor,
+    ingredientsReducer,
+    burgerConstructorReducer
     // currentIngredient,
     // order,
 })

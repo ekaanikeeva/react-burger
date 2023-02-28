@@ -29,7 +29,7 @@ function IngredientsList({ title, currentType, ingredients, setCurrentIngredient
 IngredientsList.propTypes = {
     title: PropTypes.string.isRequired,
     currentType: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+    // ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
     setCurrentIngredient: PropTypes.func.isRequired
 }
 
