@@ -9,14 +9,15 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
+import { getCurrentIngredientAction } from "../../services/reducers/currentIngredientReducer";
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState('one');
-    const [currentIngredient, setCurrentIngredient] = useState(null);
+    // const [currentIngredient, setCurrentIngredient] = useState(null);
     const ingredientsSelector = useSelector(store => store.ingredientsReducer);
     const [ingredientsArray, setIngredientsArray] = useState(null)
     const dispatch = useDispatch();
-
+    const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
     useMemo(() => {
         dispatch(ingredientsAsync())
     }, [])
@@ -27,7 +28,7 @@ function BurgerIngredients() {
 
 
     function onClose () {
-        setCurrentIngredient(null)
+        dispatch(getCurrentIngredientAction(null))
     }
     
     return (
@@ -48,13 +49,13 @@ function BurgerIngredients() {
 
             <ul className={styles.ingredientsList}>
                 <li>
-                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} />
                 </li>
                 <li>
-                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} />
                 </li>
                 <li>
-                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} setCurrentIngredient={setCurrentIngredient} />
+                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} />
                 </li>
 
             </ul>

@@ -3,8 +3,11 @@ import styles from './IngredientsList.module.scss';
 import Ingredient from '../Ingredient/Ingredient';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
+import { useDispatch } from "react-redux";
+import { getCurrentIngredientAction } from "../../services/reducers/currentIngredientReducer";
 
-function IngredientsList({ title, currentType, ingredients, setCurrentIngredient }) {
+function IngredientsList({ title, currentType, ingredients }) {
+    const dispatch = useDispatch();
     return (
         <>
             <h2 className={styles.ingredientsTitle}>{title}</h2>
@@ -13,7 +16,7 @@ function IngredientsList({ title, currentType, ingredients, setCurrentIngredient
                     if (item.type === currentType) {
                         return (
                             <li key={index} className={styles.ingredient} onClick={() => {
-                                setCurrentIngredient(item)
+                                dispatch(getCurrentIngredientAction(item))
                             }}>
                                 <Ingredient item={item} />
                             </li>
@@ -30,7 +33,7 @@ IngredientsList.propTypes = {
     title: PropTypes.string.isRequired,
     currentType: PropTypes.string.isRequired,
     // ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-    setCurrentIngredient: PropTypes.func.isRequired
+    // setCurrentIngredient: PropTypes.func.isRequired
 }
 
 export default IngredientsList

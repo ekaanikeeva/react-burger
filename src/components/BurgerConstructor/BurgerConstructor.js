@@ -12,8 +12,7 @@ function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
     const [orderNumber, setOrderNumber] = useState(null)
     const ingredients = useContext(IngredientsContext);
-    const [allBurger, setAllBurger] = useState([]);
-    const burgerIngredientsSelector = useSelector(store => store.burgerConstructorReducer.constructorIngredients);
+
     const dispatch = useDispatch();
 
     const handleSubmit = (evt) => {
@@ -48,18 +47,9 @@ function BurgerConstructor() {
         else return total;
     }, 0), [ingredients])
 
-    // useEffect(() => {
-    //     dispatch(addConstructorIngredientsAction(ingredients));    
-    // }, [ingredients])
-
-    useEffect(() => {
-        setAllBurger(burgerIngredientsSelector)
-        console.log(allBurger)
-    }, [handleSubmit])
-
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
-            <div className={styles.burgerBunTop}>
+            <div className={styles.burgerBunTop} draggable>
                 {currentBun &&
                     <ConstructorElement
                         type="top"
