@@ -7,28 +7,33 @@ import { IngredientsContext } from "../../services/ingredientsContext";
 import { postOrderApi } from "../../utils/ingredientsApi";
 import { useSelector, useDispatch } from 'react-redux';
 import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
+import { orderNumberAsync } from "../../services/asyncActions/order";
 
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
-    const [orderNumber, setOrderNumber] = useState(null)
+    // const [orderNumber, setOrderNumber] = useState(null)
     const ingredients = useContext(IngredientsContext);
-
+    const orderNumber = useSelector(store => store.orderReducer.order)
+    const open = useSelector(store => store.orderReducer.isOpen)
     const dispatch = useDispatch();
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
         const allIngredientsArray = [];
         allIngredientsArray.push(currentBun)
-        allIngredientsArray.push(...ingredientsWithoutBuns);
+        allIngredientsArray.push(ingredientsWithoutBuns);
         allIngredientsArray.push(currentBun)
         dispatch(addConstructorIngredientsAction(allIngredientsArray));
 
         const idArray = allIngredientsArray.map(item => item._id)
-        postOrderApi(idArray)
-        .then((res) => {
-            setOrderNumber(res.order.number)
-            setIsOpen(true)
-        } )
+
+        dispatch(orderNumberAsync(idArray))
+        setIsOpen(true)
+        // postOrderApi(idArray)
+        // .then((res) => {
+        //     setOrderNumber(res.order.number)
+        //     setIsOpen(true)
+        // } )
     }
 
     function onClose() {

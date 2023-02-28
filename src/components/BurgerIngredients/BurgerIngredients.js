@@ -1,7 +1,5 @@
 import { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import styles from './BurgerIngredients.module.scss';
-import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
@@ -13,7 +11,7 @@ import { getCurrentIngredientAction } from "../../services/reducers/currentIngre
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState('one');
-    // const [currentIngredient, setCurrentIngredient] = useState(null);
+
     const ingredientsSelector = useSelector(store => store.ingredientsReducer);
     const [ingredientsArray, setIngredientsArray] = useState(null)
     const dispatch = useDispatch();
