@@ -3,22 +3,20 @@ import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { IngredientsContext } from "../../services/ingredientsContext";
-import { postOrderApi } from "../../utils/ingredientsApi";
 import { useSelector, useDispatch } from 'react-redux';
-import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
+import { addConstructorIngredientsAction } from "../../services/reducers/burgerConstructorReducer";
 import { orderNumberAsync } from "../../services/asyncActions/order";
 
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
-    // const [orderNumber, setOrderNumber] = useState(null)
-    const ingredients = useContext(IngredientsContext);
+
     const orderNumber = useSelector(store => store.orderReducer.order)
-    const open = useSelector(store => store.orderReducer.isOpen)
     const dispatch = useDispatch();
+    const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
+
         const allIngredientsArray = [];
         allIngredientsArray.push(currentBun)
         allIngredientsArray.push(ingredientsWithoutBuns);
@@ -29,11 +27,6 @@ function BurgerConstructor() {
 
         dispatch(orderNumberAsync(idArray))
         setIsOpen(true)
-        // postOrderApi(idArray)
-        // .then((res) => {
-        //     setOrderNumber(res.order.number)
-        //     setIsOpen(true)
-        // } )
     }
 
     function onClose() {
@@ -92,7 +85,7 @@ function BurgerConstructor() {
                 <CurrencyIcon type="primary" />
             </div>
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
-            {isOpen &&
+            {isOpen && orderNumber !== null &&
                 <Modal onClose={onClose}>
                     <OrderDetails orderNumber={ orderNumber } />
                 </Modal>
