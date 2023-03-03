@@ -5,7 +5,7 @@ import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { useSelector, useDispatch } from 'react-redux';
-import { addConstructorIngredientsAction } from "../../services/reducers/burgerConstructorReducer";
+import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 import { orderNumberAsync } from "../../services/asyncActions/order";
 
 function BurgerConstructor() {
@@ -14,6 +14,10 @@ function BurgerConstructor() {
     const [{isHover}, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
+            const burgerBun = ingredients?.find(el => el.type === 'bun')
+            if (burgerBun !== undefined && item.item.type === 'bun') {
+                dispatch(removeConstructorIngredientAction(burgerBun._id))
+            }
             dispatch(addConstructorIngredientsAction(item.item));
         },
         collect: monitor => ({
@@ -40,7 +44,7 @@ function BurgerConstructor() {
         setIsOpen(false)
     }
 
-    const currentBun = useMemo(() => ingredients[ingredients.findLastIndex(item => item.type === 'bun')], [ingredients]);
+    const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
 
     const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
 
