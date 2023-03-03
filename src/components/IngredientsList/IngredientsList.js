@@ -1,13 +1,10 @@
 import React from "react";
 import styles from './IngredientsList.module.scss';
 import Ingredient from '../Ingredient/Ingredient';
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
-import { useDispatch } from "react-redux";
-import { getCurrentIngredientAction } from "../../services/reducers/currentIngredientReducer";
 
 function IngredientsList({ title, currentType, ingredients }) {
-    const dispatch = useDispatch();
     return (
         <>
             <h2 className={styles.ingredientsTitle}>{title}</h2>
@@ -15,11 +12,8 @@ function IngredientsList({ title, currentType, ingredients }) {
                 {ingredients.map((item, index) => {
                     if (item.type === currentType) {
                         return (
-                            <li key={index} className={styles.ingredient} onClick={() => {
-                                dispatch(getCurrentIngredientAction(item))
-                            }}>
-                                <Ingredient item={item} />
-                            </li>
+                            
+                                <Ingredient item={item} index={index}/>
                         )
                     }
 

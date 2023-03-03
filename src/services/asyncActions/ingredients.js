@@ -7,5 +7,6 @@ export const ingredientsAsync = () => {
         .then(res => {
             return dispatch(addIngredietntsAction(res.data))
         })
+        .catch(err => console.log(err))
     }
 }

@@ -1,4 +1,5 @@
 import { useState, useMemo, useContext, useEffect } from "react";
+import { useDrop } from "react-dnd";
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
@@ -10,20 +11,29 @@ import { orderNumberAsync } from "../../services/asyncActions/order";
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
 
+    const [{isHover}, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(item) {
+            dispatch(addConstructorIngredientsAction(item.item));
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
     const orderNumber = useSelector(store => store.orderReducer.order)
     const dispatch = useDispatch();
-    const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
+    const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients))
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
-        const allIngredientsArray = [];
-        allIngredientsArray.push(currentBun)
-        allIngredientsArray.push(ingredientsWithoutBuns);
-        allIngredientsArray.push(currentBun)
-        dispatch(addConstructorIngredientsAction(allIngredientsArray));
+        // const allIngredientsArray = [];
+        // allIngredientsArray.push(...currentBun)
+        // allIngredientsArray.push(...ingredientsWithoutBuns);
+        // allIngredientsArray.push(...currentBun)
+        // dispatch(addConstructorIngredientsAction(allIngredientsArray));
 
-        const idArray = allIngredientsArray.map(item => item._id)
+        const idArray = ingredients.map(item => item._id)
 
         dispatch(orderNumberAsync(idArray))
         setIsOpen(true)
@@ -37,7 +47,6 @@ function BurgerConstructor() {
 
     const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
 
-
     const priceCount = useMemo(() => ingredients.reduce((total, item) => {
         if (item.type !== 'bun') {
             return total + item.price
@@ -46,8 +55,9 @@ function BurgerConstructor() {
     }, 0), [ingredients])
 
     return (
-        <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
-            <div className={styles.burgerBunTop} draggable>
+        <form className={styles.burgerConstructor} onSubmit={handleSubmit} ref={dropTarget}>
+            
+            <div className={styles.burgerBunTop} >
                 {currentBun &&
                     <ConstructorElement
                         type="top"
@@ -57,7 +67,7 @@ function BurgerConstructor() {
                         thumbnail={currentBun.image}
                     />}
             </div>
-            <ul className={styles.ingredientsList}>
+            <ul className={styles.ingredientsList} >
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
                         <li key={index} className={styles.ingredient}>
@@ -70,7 +80,7 @@ function BurgerConstructor() {
                         </li>)
                 })}
             </ul>
-            <div className={styles.burgerBunBottom}>
+            <div className={styles.burgerBunBottom} >
                 {currentBun &&
                     <ConstructorElement
                         type="bottom"
