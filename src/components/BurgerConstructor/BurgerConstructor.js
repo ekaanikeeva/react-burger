@@ -43,7 +43,7 @@ function BurgerConstructor() {
         setIsOpen(false)
     }
 
-    const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
+    const currentBun = useMemo(() => ingredients[ingredients.findLastIndex(item => item.type === 'bun')], [ingredients]);
 
     const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
 
