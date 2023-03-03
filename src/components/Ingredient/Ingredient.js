@@ -20,7 +20,7 @@ function Ingredient({ item, index }) {
         !isDrag &&
         <li key={index} draggable={true} className={styles.ingredient} ref={dragRef}
             onClick={() => dispatch(getCurrentIngredientAction(item))}>
-                <Counter count={1} size="default" extraClass="m-1" />
+                <Counter count={item.count} size="default" extraClass="m-1" />
                 <img src={item.image} alt={item.name} />
                 <a className={styles.price}>
                     <span>{item.price}</span>

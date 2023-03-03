@@ -7,18 +7,21 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import { useSelector, useDispatch } from 'react-redux';
 import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 import { orderNumberAsync } from "../../services/asyncActions/order";
+import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
 
 function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
 
-    const [{isHover}, dropTarget] = useDrop({
+    const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
             const burgerBun = ingredients?.find(el => el.type === 'bun')
             if (burgerBun !== undefined && item.item.type === 'bun') {
                 dispatch(removeConstructorIngredientAction(burgerBun._id))
+                dispatch(decreaseIngredientCountAction(burgerBun._id))
             }
             dispatch(addConstructorIngredientsAction(item.item));
+            dispatch(increaseIngredientCountAction(item.item._id));
         },
         collect: monitor => ({
             isHover: monitor.isOver(),
@@ -57,7 +60,7 @@ function BurgerConstructor() {
 
     return (
         <form className={styles.burgerConstructor} onSubmit={handleSubmit} ref={dropTarget}>
-            
+
             <div className={styles.burgerBunTop} >
                 {currentBun &&
                     <ConstructorElement
@@ -98,7 +101,7 @@ function BurgerConstructor() {
             <button type="submit" className={styles.submitButton}>Оформить заказ</button>
             {isOpen && orderNumber !== null &&
                 <Modal onClose={onClose}>
-                    <OrderDetails orderNumber={ orderNumber } />
+                    <OrderDetails orderNumber={orderNumber} />
                 </Modal>
             }
         </form>

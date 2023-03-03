@@ -1,4 +1,4 @@
-import { GET_BURGER_INGREDIENTS, UPDATE_INGREDIENT_COUNT, ADD_INGREDIENT_COUNT } from "../actions/actions";
+import { GET_BURGER_INGREDIENTS, INCREASE_INGREDIENT_COUNT, DECREASE_INGREDIENT_COUNT } from "../actions/actions";
 
 const initialState = {
     ingredients: [],
@@ -10,11 +10,20 @@ export const ingredientsReducer = (state = initialState, action) => {
       case GET_BURGER_INGREDIENTS: {
         return {...state, ingredients: action.payload}
       }
-      case UPDATE_INGREDIENT_COUNT: {
+      case INCREASE_INGREDIENT_COUNT: {
         return {...state, ingredients: [...state.ingredients.map((item) => {
           if (item._id === action.payload) {
-            item.count = item.count + 1
-          }
+            item.count += 1
+            return item;
+          } else return item;
+        })]}
+      }
+      case DECREASE_INGREDIENT_COUNT: {
+        return {...state, ingredients: [...state.ingredients.map((item) => {
+          if (item._id === action.payload) {
+            item.count > 0 ? item.count -= 1 : item.count = 0;
+            return item;
+          } else return item;
         })]}
       }
       default: {
@@ -24,3 +33,5 @@ export const ingredientsReducer = (state = initialState, action) => {
   };
   
   export const addIngredietntsAction = (payload) => ({type:GET_BURGER_INGREDIENTS, payload})
+  export const increaseIngredientCountAction = (payload) => ({type: INCREASE_INGREDIENT_COUNT, payload})
+  export const decreaseIngredientCountAction = (payload) => ({type: DECREASE_INGREDIENT_COUNT, payload})
