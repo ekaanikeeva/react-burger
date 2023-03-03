@@ -10,7 +10,10 @@ import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
 
 function BurgerConstructor() {
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
+    const orderNumber = useSelector(store => store.orderReducer.order);
+    const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
 
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
@@ -27,9 +30,7 @@ function BurgerConstructor() {
             isHover: monitor.isOver(),
         })
     });
-    const orderNumber = useSelector(store => store.orderReducer.order)
-    const dispatch = useDispatch();
-    const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients))
+
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
