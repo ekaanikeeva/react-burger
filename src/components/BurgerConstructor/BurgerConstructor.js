@@ -27,13 +27,10 @@ function BurgerConstructor() {
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
-        // const allIngredientsArray = [];
-        // allIngredientsArray.push(...currentBun)
-        // allIngredientsArray.push(...ingredientsWithoutBuns);
-        // allIngredientsArray.push(...currentBun)
-        // dispatch(addConstructorIngredientsAction(allIngredientsArray));
+        const allIngredientsArray = [];
+        allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun)
 
-        const idArray = ingredients.map(item => item._id)
+        const idArray = allIngredientsArray.map(item => item._id)
 
         dispatch(orderNumberAsync(idArray))
         setIsOpen(true)
