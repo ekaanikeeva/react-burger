@@ -4,11 +4,11 @@ import Ingredient from '../Ingredient/Ingredient';
 import PropTypes, { func } from 'prop-types';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 
-function IngredientsList({ title, currentType, ingredients }) {
+function IngredientsList({ title, currentType, ingredients, currentRef }) {
     return (
         <>
             <h2 className={styles.ingredientsTitle}>{title}</h2>
-            <ul className={styles.ingredientsList}>
+            <ul className={styles.ingredientsList} ref={currentRef}>
                 {ingredients.map((item, index) => {
                     if (item.type === currentType) {
                         return (

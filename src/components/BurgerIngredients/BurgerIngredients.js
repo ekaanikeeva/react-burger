@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
@@ -10,7 +11,28 @@ import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/reducers/currentIngredientReducer";
 
 function BurgerIngredients() {
-    const [current, setCurrent] = useState('one');
+    const [current, setCurrent] = useState('bun');
+
+    const [bonsRef, inViewBons] = useInView({
+        threshold: 0
+    })
+    const [mainsRef, inViewMains] = useInView({
+        threshold: 0
+    })
+    const [soucesRef, inViewSouces] = useInView({
+        threshold: 0
+    })
+
+    useEffect(() => {
+        console.log(inViewBons)
+        if (inViewBons) {
+            setCurrent('bun')
+        } else if (inViewSouces) {
+            setCurrent('main')
+        } else if (inViewMains) {
+            setCurrent('sauce')
+        }
+    }, [inViewBons, inViewMains, inViewSouces])
 
     const ingredientsSelector = useSelector(store => store.ingredientsReducer);
     const [ingredientsArray, setIngredientsArray] = useState(null)
@@ -25,39 +47,45 @@ function BurgerIngredients() {
     }, [ingredientsSelector])
 
 
-    function onClose () {
+    function onClose() {
         dispatch(getCurrentIngredientAction(null))
     }
-    
+
     return (
         <section className={styles.section}>
             <h1 className={styles.title}>Соберите бургер</h1>
 
             <nav className={styles.navigation}>
-                <Tab value="one" active={current === one} onClick={setCurrent}>
-                    Булки
-                </Tab>
-                <Tab value="two" active={current === two} onClick={setCurrent}>
-                    Соусы
-                </Tab>
-                <Tab value="three" active={current === three} onClick={setCurrent}>
-                    Начинки
-                </Tab>
+                <div id="bun">
+                    <Tab value='bun' active={current === 'bun'}>
+                        Булки
+                    </Tab>
+                </div>
+                <div id="main">
+                    <Tab value='main' active={current === 'main'}>
+                        Соусы
+                    </Tab>
+                </div>
+                <div id="sauce">
+                    <Tab id="sauce" value='sauce' active={current === 'sauce'}>
+                        Начинки
+                    </Tab>
+                </div>
             </nav>
 
             <ul className={styles.ingredientsList}>
                 <li>
-                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} />
+                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} currentRef={bonsRef}/>
                 </li>
                 <li>
-                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} />
+                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} currentRef={soucesRef}/>
                 </li>
                 <li>
-                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} />
+                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} currentRef={mainsRef}/>
                 </li>
 
             </ul>
-            { currentIngredient !== null &&
+            {currentIngredient !== null &&
                 <Modal title="Детали ингредиента" onClose={onClose}>
                     <IngredientDetails currentIngredient={currentIngredient} />
                 </Modal>
