@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
+import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
@@ -20,11 +21,17 @@ function BurgerConstructor() {
         drop(item) {
             const burgerBun = ingredients?.find(el => el.type === 'bun')
             if (burgerBun !== undefined && item.item.type === 'bun') {
-                dispatch(removeConstructorIngredientAction(burgerBun._id))
+                dispatch(removeConstructorIngredientAction(burgerBun.constructorId))
                 dispatch(decreaseIngredientCountAction(burgerBun._id))
+                dispatch(addConstructorIngredientsAction(item.item));
+                dispatch(increaseIngredientCountAction(item.item._id));
+            } else {
+                item.item.constructorId = Math.random()
+                console.log(item.item.constructorId)
+                dispatch(addConstructorIngredientsAction(item.item));
+                dispatch(increaseIngredientCountAction(item.item._id));
             }
-            dispatch(addConstructorIngredientsAction(item.item));
-            dispatch(increaseIngredientCountAction(item.item._id));
+            
         },
         collect: monitor => ({
             isHover: monitor.isOver(),
@@ -75,14 +82,8 @@ function BurgerConstructor() {
             <ul className={styles.ingredientsList} >
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
-                        <li key={index} className={styles.ingredient}>
-                            <ConstructorElement
-                                isLocked={false}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </li>)
+                        <ConstructorIngredient item={item} index={index} />
+                    )
                 })}
             </ul>
             <div className={styles.burgerBunBottom} >

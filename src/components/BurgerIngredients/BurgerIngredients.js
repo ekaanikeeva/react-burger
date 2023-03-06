@@ -24,7 +24,6 @@ function BurgerIngredients() {
     })
 
     useEffect(() => {
-        console.log(inViewBons)
         if (inViewBons) {
             setCurrent('bun')
         } else if (inViewSouces) {
