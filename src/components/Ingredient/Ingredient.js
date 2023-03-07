@@ -6,7 +6,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { useDispatch } from "react-redux";
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 
-function Ingredient({ item, index }) {
+function Ingredient({ item }) {
     const dispatch = useDispatch();
 
     const [{ isDrag }, dragRef] = useDrag({
@@ -17,7 +17,7 @@ function Ingredient({ item, index }) {
         })
     })
     return (
-        <li key={index} draggable={true} className={styles.ingredient} ref={dragRef}
+        <li draggable={true} className={styles.ingredient} ref={dragRef}
             onClick={() => dispatch(getCurrentIngredientAction(item))}>
                 <Counter count={item.count} size="default" extraClass="m-1" />
                 <img src={item.image} alt={item.name} />
@@ -35,7 +35,6 @@ Ingredient.propTypes = {
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
     }),
-    index: PropTypes.number.isRequired
 }
 
 export default Ingredient;

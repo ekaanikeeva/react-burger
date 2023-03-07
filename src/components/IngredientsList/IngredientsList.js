@@ -12,9 +12,7 @@ function IngredientsList({ title, currentType, ingredients, currentRef }) {
                 {ingredients.map((item, index) => {
                     if (item.type === currentType) {
                         return (
-                            <div key={index}>
-                                <Ingredient item={item} index={index}/>
-                                </div>
+                                <Ingredient key={item._id} item={item} index={index}/>
                         )
                     }
 
