@@ -7,7 +7,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import { useSelector, useDispatch } from 'react-redux';
 import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 import { orderNumberAsync } from "../../services/asyncActions/order";
-import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
+import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 
 function BurgerConstructor() {

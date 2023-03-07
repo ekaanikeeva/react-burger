@@ -1,4 +1,4 @@
-import { addIngredietntsAction, getIngredientsSuccessAction, getIngredientsErrorAction } from "../reducers/ingredientsReducer";
+import { addIngredietntsAction, getIngredientsSuccessAction, getIngredientsErrorAction } from "../actions/ingredientsActions";
 import { getIngredientsApi } from "../../utils/ingredientsApi";
 
 export const ingredientsAsync = () => {

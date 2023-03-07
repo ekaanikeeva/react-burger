@@ -3,7 +3,7 @@ import styles from "./ConstructorIngredient.module.scss";
 import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
-import { decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
+import { decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 
 function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredient }) {
     const dispatch = useDispatch();
