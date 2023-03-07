@@ -4,7 +4,7 @@ import { useDrop, useDrag } from "react-dnd";
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./ConstructorIngredient.module.scss";
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
-
+import { decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
 
 function ConstructorIngredient({ item, index }) {
     const dispatch = useDispatch();
@@ -30,7 +30,8 @@ function ConstructorIngredient({ item, index }) {
     }
 
     function removeIngredient (item) {
-        return dispatch(removeConstructorIngredientAction(item.constructorId))
+        dispatch(removeConstructorIngredientAction(item.constructorId))
+        dispatch(decreaseIngredientCountAction(item._id))
     }
 
     return (
