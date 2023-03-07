@@ -44,7 +44,7 @@ function BurgerIngredients() {
 
     useMemo(() => {
         setIngredientsArray(ingredientsSelector?.ingredients)
-    }, [isSuccessIngredients])
+    }, [ingredientsSelector])
 
 
     function onClose() {
