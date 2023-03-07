@@ -82,9 +82,7 @@ function BurgerConstructor() {
             <ul className={styles.ingredientsList} >
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
-                        <div key={index}>
-                            <ConstructorIngredient item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient}/>
-                        </div>
+                            <ConstructorIngredient key={item.constructorId} item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient}/>
                     )
                 })}
             </ul>
