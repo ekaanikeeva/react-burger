@@ -24,7 +24,11 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
 
     function dropHandler(e, index, item) {
         e.preventDefault();
-        dispatch(moveConstructorIngredientAction({dropitem: item, dropindex: index, moveditem: movedIngredient}))
+        if (movedIngredient !== null) {
+            dispatch(moveConstructorIngredientAction({dropitem: item, dropindex: index, moveditem: movedIngredient}))
+            setMovedIngredient(null)
+        }
+        
     }
 
     function removeIngredient (item) {
