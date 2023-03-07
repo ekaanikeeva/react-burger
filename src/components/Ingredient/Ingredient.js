@@ -17,7 +17,6 @@ function Ingredient({ item, index }) {
         })
     })
     return (
-        !isDrag &&
         <li key={index} draggable={true} className={styles.ingredient} ref={dragRef}
             onClick={() => dispatch(getCurrentIngredientAction(item))}>
                 <Counter count={item.count} size="default" extraClass="m-1" />
@@ -36,6 +35,7 @@ Ingredient.propTypes = {
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
     }),
+    index: PropTypes.number.isRequired
 }
 
 export default Ingredient;

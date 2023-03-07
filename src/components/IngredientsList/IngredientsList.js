@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './IngredientsList.module.scss';
 import Ingredient from '../Ingredient/Ingredient';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 
 function IngredientsList({ title, currentType, ingredients, currentRef }) {
@@ -27,7 +27,7 @@ function IngredientsList({ title, currentType, ingredients, currentRef }) {
 IngredientsList.propTypes = {
     title: PropTypes.string.isRequired,
     currentType: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+    ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired),
     currentRef: PropTypes.func.isRequired
 }
 

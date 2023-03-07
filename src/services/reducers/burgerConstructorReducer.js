@@ -31,7 +31,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 
         case MOVE_CONSTRUCTOR_INGREDIENT: {
             const dropIndex = action.payload.dropindex;
-            const dropItem = action.payload.dropitem;
             const movedItem = action.payload.moveditem.item;
             const movedIndex = action.payload.moveditem.index;
             const bun = state.constructorIngredients.find(item => item.type === 'bun')

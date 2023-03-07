@@ -1,18 +1,16 @@
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useDrop, useDrag } from "react-dnd";
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from "./ConstructorIngredient.module.scss";
+import PropTypes from 'prop-types';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 import { decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
 
 function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredient }) {
     const dispatch = useDispatch();
-    const movedItemPosition = useSelector(store => store.burgerConstructorReducer.movedIngredient);
+
     function dragStartHandler(e, index, item) {
         dispatch(getMovedIngredientAction(index))
         setMovedIngredient({item: item, index: index})
-        console.log('drag', item)
     }
 
     function dragEndHandler(e) {
@@ -27,11 +25,9 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
     function dropHandler(e, index, item) {
         e.preventDefault();
         dispatch(moveConstructorIngredientAction({dropitem: item, dropindex: index, moveditem: movedIngredient}))
-        console.log('drop', item)
     }
 
     function removeIngredient (item) {
-        
         dispatch(removeConstructorIngredientAction(item.constructorId))
         dispatch(decreaseIngredientCountAction(item._id))
     }
@@ -55,6 +51,17 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
             />
         </li>
     )
+}
+
+ConstructorIngredient.propTypes = {
+    item: PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+    }),
+    index: PropTypes.number.isRequired,
+
+    setMovedIngredient: PropTypes.func.isRequired
 }
 
 export default ConstructorIngredient;
