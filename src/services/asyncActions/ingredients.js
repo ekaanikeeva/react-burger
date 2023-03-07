@@ -1,4 +1,4 @@
-import { addIngredietntsAction, getIngredientsSuccessAction } from "../reducers/ingredientsReducer";
+import { addIngredietntsAction, getIngredientsSuccessAction, getIngredientsErrorAction } from "../reducers/ingredientsReducer";
 import { getIngredientsApi } from "../../utils/ingredientsApi";
 
 export const ingredientsAsync = () => {
@@ -12,6 +12,7 @@ export const ingredientsAsync = () => {
             return dispatch(addIngredietntsAction(ingredientsList))
         })
         .then(() => dispatch(getIngredientsSuccessAction()))
+        .catch(() => getIngredientsErrorAction())
         .catch(err => console.log(err))
     }
 }
