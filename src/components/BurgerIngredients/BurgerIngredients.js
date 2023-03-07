@@ -34,6 +34,7 @@ function BurgerIngredients() {
     }, [inViewBons, inViewMains, inViewSouces])
 
     const ingredientsSelector = useSelector(store => store.ingredientsReducer);
+    const isSuccessIngredients = useSelector(store => store.ingredientsReducer.isSuccess)
     const [ingredientsArray, setIngredientsArray] = useState(null)
     const dispatch = useDispatch();
     const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
@@ -43,7 +44,7 @@ function BurgerIngredients() {
 
     useMemo(() => {
         setIngredientsArray(ingredientsSelector?.ingredients)
-    }, [ingredientsSelector])
+    }, [isSuccessIngredients])
 
 
     function onClose() {
