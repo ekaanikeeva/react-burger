@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ConstructorIngredient.module.scss";
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
@@ -58,11 +59,7 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
 }
 
 ConstructorIngredient.propTypes = {
-    item: PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-    }),
+    item: ingredientPropTypes,
     index: PropTypes.number.isRequired,
 
     setMovedIngredient: PropTypes.func.isRequired

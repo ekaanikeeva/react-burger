@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDrag } from "react-dnd";
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/ingredientPropTypes';
 import styles from './Ingredient.module.scss';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "react-redux";
@@ -30,11 +31,7 @@ function Ingredient({ item }) {
 }
 
 Ingredient.propTypes = {
-    item: PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-    }),
+    item: ingredientPropTypes
 }
 
 export default Ingredient;
