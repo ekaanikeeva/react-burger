@@ -1,5 +1,5 @@
 import { postOrderApi } from "../../utils/ingredientsApi";
-import { getOrderNumberAction, orderErrorAction } from "../reducers/orderReducer";
+import { getOrderNumberAction, orderErrorAction } from "../actions/orderActions";
 
 export const orderNumberAsync = (idArray) => {
     return function (dispatch) {

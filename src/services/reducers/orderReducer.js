@@ -1,5 +1,4 @@
-const GET_ORDER = 'GET_ORDER';
-const GET_ORDER_ERROR = 'GET_ORDER_ERROR';
+import { GET_ORDER, GET_ORDER_ERROR } from "../actions/orderActions"
 
 const initialState = {
     order: null,
@@ -28,6 +27,3 @@ export const orderReducer = (state = initialState, action) => {
         }
     }
 }
-
-export const getOrderNumberAction = (payload) => ({ type: GET_ORDER, payload });
-export const orderErrorAction = (payload) => ({type: GET_ORDER_ERROR, payload})
