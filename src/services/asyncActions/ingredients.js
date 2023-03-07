@@ -12,7 +12,9 @@ export const ingredientsAsync = () => {
             return dispatch(addIngredietntsAction(ingredientsList))
         })
         .then(() => dispatch(getIngredientsSuccessAction()))
-        .catch(() => getIngredientsErrorAction())
-        .catch(err => console.log(err))
+        .catch((err) => {
+            dispatch(getIngredientsErrorAction());
+            console.log(err);
+        })
     }
 }
