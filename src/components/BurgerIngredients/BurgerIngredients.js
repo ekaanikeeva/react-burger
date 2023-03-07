@@ -8,7 +8,7 @@ import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
-import { getCurrentIngredientAction } from "../../services/reducers/currentIngredientReducer";
+import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState('bun');

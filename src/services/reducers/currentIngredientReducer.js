@@ -1,4 +1,4 @@
-const GET_CURRENT_INGREDIENT = 'GET_CURRENT_INGREDIENT';
+import { GET_CURRENT_INGREDIENT } from "../actions/currentIngredientActions";
 
 const initialState = {
     currentIngredient: null
@@ -15,4 +15,3 @@ export const currentIngredientReducer = (state = initialState, action) => {
     }
 }
 
-export const getCurrentIngredientAction = (payload) => ({type: GET_CURRENT_INGREDIENT, payload});

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './Ingredient.module.scss';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "react-redux";
-import { getCurrentIngredientAction } from "../../services/reducers/currentIngredientReducer";
+import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 
 function Ingredient({ item, index }) {
     const dispatch = useDispatch();
