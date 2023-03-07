@@ -19,17 +19,17 @@ function BurgerConstructor() {
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
+            const itemCopy = JSON.parse(JSON.stringify(item.item));
+
             const burgerBun = ingredients?.find(el => el.type === 'bun')
-            if (burgerBun !== undefined && item.item.type === 'bun') {
+            if (burgerBun !== undefined && itemCopy.type === 'bun') {
                 dispatch(removeConstructorIngredientAction(burgerBun.constructorId))
                 dispatch(decreaseIngredientCountAction(burgerBun._id))
-                dispatch(addConstructorIngredientsAction(item.item));
-                dispatch(increaseIngredientCountAction(item.item._id));
+                dispatch(addConstructorIngredientsAction(itemCopy));
+                dispatch(increaseIngredientCountAction(itemCopy._id));
             } else {
-                item.item.constructorId = Math.random()
-                console.log(item.item.constructorId)
-                dispatch(addConstructorIngredientsAction(item.item));
-                dispatch(increaseIngredientCountAction(item.item._id));
+                dispatch(addConstructorIngredientsAction(itemCopy));
+                dispatch(increaseIngredientCountAction(itemCopy._id));
             }
             
         },
@@ -82,7 +82,9 @@ function BurgerConstructor() {
             <ul className={styles.ingredientsList} >
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
+                        <div key={index}>
                         <ConstructorIngredient item={item} index={index} />
+                        </div>
                     )
                 })}
             </ul>

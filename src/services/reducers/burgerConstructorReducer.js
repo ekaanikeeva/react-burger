@@ -16,6 +16,10 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         }
 
         case ADD_CONSTRUCTOR_INGREDIENTS: {
+            const newIngredient = action.payload;
+            newIngredient.constructorId = Math.random();
+
+            console.log(newIngredient)
             return { ...state, constructorIngredients: [...state.constructorIngredients, action.payload] }
         }
 

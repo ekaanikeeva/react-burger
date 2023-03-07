@@ -5,9 +5,8 @@ export const ingredientsAsync = () => {
     return function (dispatch) {
         getIngredientsApi()
         .then(res => {
-            const ingredientsList = res.data.map((item, index) => {
+            const ingredientsList = res.data.map((item) => {
                 item.count = 0;
-                item.constructorId = index + Math.random()
                 return item;
             })
             return dispatch(addIngredietntsAction(ingredientsList))
