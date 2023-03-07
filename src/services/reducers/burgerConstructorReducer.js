@@ -18,8 +18,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         case ADD_CONSTRUCTOR_INGREDIENTS: {
             const newIngredient = action.payload;
             newIngredient.constructorId = Math.random();
-
-            console.log(newIngredient)
             return { ...state, constructorIngredients: [...state.constructorIngredients, action.payload] }
         }
 
@@ -32,7 +30,21 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         }
 
         case MOVE_CONSTRUCTOR_INGREDIENT: {
-            return { ...state, constructorIngredients: [...state.constructorIngredients.filter((item, index) => item !== state.movedIngredient)] }
+            const dropIndex = action.payload.dropindex;
+            const dropItem = action.payload.dropitem;
+            const movedItem = action.payload.moveditem.item;
+            const movedIndex = action.payload.moveditem.index;
+            const bun = state.constructorIngredients.find(item => item.type === 'bun')
+
+            const newConstructorList = state.constructorIngredients.filter(item => item.type !== 'bun')
+            newConstructorList.splice(movedIndex, 1)
+            newConstructorList.splice(dropIndex, 0, movedItem)
+
+            if (bun) {
+                newConstructorList.push(bun)
+            } 
+
+            return { ...state, constructorIngredients: newConstructorList }
         }
 
         default: {

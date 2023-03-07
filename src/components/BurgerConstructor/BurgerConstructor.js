@@ -15,7 +15,7 @@ function BurgerConstructor() {
     const [isOpen, setIsOpen] = useState(false);
     const orderNumber = useSelector(store => store.orderReducer.order);
     const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
-
+    const [movedIngredient, setMovedIngredient] = useState(null)
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
@@ -83,7 +83,7 @@ function BurgerConstructor() {
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
                         <div key={index}>
-                        <ConstructorIngredient item={item} index={index} />
+                            <ConstructorIngredient item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient}/>
                         </div>
                     )
                 })}

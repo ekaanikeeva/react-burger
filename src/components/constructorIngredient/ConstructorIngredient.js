@@ -6,11 +6,12 @@ import styles from "./ConstructorIngredient.module.scss";
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
 import { decreaseIngredientCountAction } from "../../services/reducers/ingredientsReducer";
 
-function ConstructorIngredient({ item, index }) {
+function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredient }) {
     const dispatch = useDispatch();
-    // const movedItem = useSelector(store => store.burgerConstructorReducer.movedItem);
+    const movedItemPosition = useSelector(store => store.burgerConstructorReducer.movedIngredient);
     function dragStartHandler(e, index, item) {
         dispatch(getMovedIngredientAction(index))
+        setMovedIngredient({item: item, index: index})
         console.log('drag', item)
     }
 
@@ -25,11 +26,12 @@ function ConstructorIngredient({ item, index }) {
 
     function dropHandler(e, index, item) {
         e.preventDefault();
-        dispatch(moveConstructorIngredientAction(index))
+        dispatch(moveConstructorIngredientAction({dropitem: item, dropindex: index, moveditem: movedIngredient}))
         console.log('drop', item)
     }
 
     function removeIngredient (item) {
+        
         dispatch(removeConstructorIngredientAction(item.constructorId))
         dispatch(decreaseIngredientCountAction(item._id))
     }
