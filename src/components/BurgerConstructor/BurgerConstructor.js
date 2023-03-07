@@ -5,7 +5,7 @@ import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import { useSelector, useDispatch } from 'react-redux';
-import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
+import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";

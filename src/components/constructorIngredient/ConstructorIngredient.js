@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./ConstructorIngredient.module.scss";
 import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/reducers/burgerConstructorReducer";
+import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 
 function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredient }) {
