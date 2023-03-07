@@ -31,7 +31,7 @@ function Modal({ onClose, children, title }) {
 
             </div>
         </div>
-        , document.body
+        , document.querySelector('#modals')
 
     )
 }
