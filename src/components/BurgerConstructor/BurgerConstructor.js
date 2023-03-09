@@ -100,7 +100,7 @@ function BurgerConstructor() {
                 <span>{priceCount}</span>
                 <CurrencyIcon type="primary" />
             </div>
-            <button type="submit" className={styles.submitButton}>Оформить заказ</button>
+            <button type="submit" className={styles.submitButton} disabled={currentBun !== undefined ? false : true}>Оформить заказ</button>
             {isOpen && orderNumber !== null &&
                 <Modal onClose={onClose}>
                     <OrderDetails orderNumber={orderNumber} />
