@@ -83,6 +83,8 @@
     color: #F2F2F3;
     height: fit-content;
     grid-column: 3 / 4;
+    opacity: 1;
+    transition: opacity .3s ease;
 
     &:hover {
         cursor: pointer;
@@ -91,5 +93,6 @@
     &:disabled {
         opacity: .7;
         cursor: not-allowed;
+        transition: opacity .3s ease;
     }
 }
