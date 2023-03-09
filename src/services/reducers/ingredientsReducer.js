@@ -1,4 +1,11 @@
-import { GET_BURGER_INGREDIENTS, INCREASE_INGREDIENT_COUNT, DECREASE_INGREDIENT_COUNT, GET_BURGER_INGREDIENTS_SUCCESS, GET_BURGER_INGREDIENTS_ERROR } from "../actions/ingredientsActions";
+import { 
+  GET_BURGER_INGREDIENTS, 
+  INCREASE_INGREDIENT_COUNT, 
+  DECREASE_INGREDIENT_COUNT, 
+  GET_BURGER_INGREDIENTS_SUCCESS, 
+  GET_BURGER_INGREDIENTS_ERROR,
+  CLEAR_ALL_INGREDIENTS_COUNT 
+} from "../actions/ingredientsActions";
 
 const initialState = {
   ingredients: [],
@@ -35,6 +42,14 @@ export const ingredientsReducer = (state = initialState, action) => {
             return item;
           } else return item;
         })]
+      }
+    }
+    case CLEAR_ALL_INGREDIENTS_COUNT: {
+      return {
+        ...state, ingredients: [...state.ingredients.map((item) => {
+          item.count = 0;
+          return item;
+        } )]
       }
     }
     default: {

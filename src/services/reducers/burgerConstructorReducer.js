@@ -1,4 +1,11 @@
-import { GET_CONSTRUCTOR_INGREDIENTS, ADD_CONSTRUCTOR_INGREDIENTS, REMOVE_CONSTRUCTOR_INGREDIENT, GET_MOVED_INGREDIENT, MOVE_CONSTRUCTOR_INGREDIENT } from "../actions/burgerConstructorActions";
+import { 
+    GET_CONSTRUCTOR_INGREDIENTS, 
+    ADD_CONSTRUCTOR_INGREDIENTS, 
+    REMOVE_CONSTRUCTOR_INGREDIENT, 
+    GET_MOVED_INGREDIENT, 
+    MOVE_CONSTRUCTOR_INGREDIENT,
+    CLEAR_CONSTRUCTOR_INGREDIENTS
+ } from "../actions/burgerConstructorActions";
 
 const initialState = {
     constructorIngredients: [],
@@ -40,6 +47,10 @@ export const burgerConstructorReducer = (state = initialState, action) => {
             }
 
             return { ...state, constructorIngredients: newConstructorList }
+        }
+
+        case CLEAR_CONSTRUCTOR_INGREDIENTS: {
+            return { ...state, constructorIngredients: []}
         }
 
         default: {
