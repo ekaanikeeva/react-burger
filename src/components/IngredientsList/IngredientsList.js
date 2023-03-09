@@ -8,7 +8,7 @@ function IngredientsList({ title, currentType, ingredients, currentRef }) {
     return (
         <>
             <h2 className={styles.ingredientsTitle}>{title}</h2>
-            <ul className={styles.ingredientsList} ref={currentRef}>
+            <ul className={styles.ingredientsList} ref={currentRef} id={currentType + "List"}>
                 {ingredients.map((item, index) => {
                     if (item.type === currentType) {
                         return (

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,7 +11,7 @@ import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 
 function BurgerIngredients() {
-    const [current, setCurrent] = useState('bun');
+    const [current, setCurrent] = useState(bun);
 
     const [bonsRef, inViewBons] = useInView({
         threshold: 0
@@ -22,14 +22,15 @@ function BurgerIngredients() {
     const [soucesRef, inViewSouces] = useInView({
         threshold: 0
     })
+    const currentRef = useRef('bun')
 
     useEffect(() => {
         if (inViewBons) {
-            setCurrent('bun')
+            setCurrent(bun)
         } else if (inViewSouces) {
-            setCurrent('main')
+            setCurrent(mainIngredient)
         } else if (inViewMains) {
-            setCurrent('sauce')
+            setCurrent(sauce)
         }
     }, [inViewBons, inViewMains, inViewSouces])
 
@@ -51,23 +52,28 @@ function BurgerIngredients() {
         dispatch(getCurrentIngredientAction(null))
     }
 
+    function scrollIntoCurrent (current) {
+        console.log(document.querySelector(`${current}`))
+        document.querySelector(`${current}`).scrollIntoView({behavior: "smooth"});
+    }
+
     return (
         <section className={styles.section}>
             <h1 className={styles.title}>Соберите бургер</h1>
 
             <nav className={styles.navigation}>
                 <div id="bun">
-                    <Tab value='bun' active={current === 'bun'}>
+                    <Tab value='bun' active={current === bun} onClick={() => scrollIntoCurrent('#bunList')}>
                         Булки
                     </Tab>
                 </div>
                 <div id="main">
-                    <Tab value='main' active={current === 'main'}>
+                    <Tab value='main' active={current === mainIngredient} onClick={() => scrollIntoCurrent('#sauceList')}>
                         Соусы
                     </Tab>
                 </div>
                 <div id="sauce">
-                    <Tab id="sauce" value='sauce' active={current === 'sauce'}>
+                    <Tab id="sauce" value='sauce' active={current === sauce} onClick={() => scrollIntoCurrent('#mainList')}>
                         Начинки
                     </Tab>
                 </div>
