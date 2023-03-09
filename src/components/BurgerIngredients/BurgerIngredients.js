@@ -22,7 +22,6 @@ function BurgerIngredients() {
     const [soucesRef, inViewSouces] = useInView({
         threshold: 0
     })
-    const currentRef = useRef('bun')
 
     useEffect(() => {
         if (inViewBons) {
@@ -53,7 +52,6 @@ function BurgerIngredients() {
     }
 
     function scrollIntoCurrent (current) {
-        console.log(document.querySelector(`${current}`))
         document.querySelector(`${current}`).scrollIntoView({behavior: "smooth"});
     }
 
