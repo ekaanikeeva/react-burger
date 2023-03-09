@@ -1,6 +1,12 @@
 .ingredient {
     margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
 
+    .constructor-element {
+        padding-left: 20px;
+    }
     &:hover {
         cursor:grab;
     }

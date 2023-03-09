@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./ConstructorIngredient.module.scss";
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 
@@ -11,7 +11,7 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
 
     function dragStartHandler(e, index, item) {
         dispatch(getMovedIngredientAction(index))
-        setMovedIngredient({item: item, index: index})
+        setMovedIngredient({ item: item, index: index })
     }
 
     function dragEndHandler(e) {
@@ -26,26 +26,28 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
     function dropHandler(e, index, item) {
         e.preventDefault();
         if (movedIngredient !== null) {
-            dispatch(moveConstructorIngredientAction({dropitem: item, dropindex: index, moveditem: movedIngredient}))
+            dispatch(moveConstructorIngredientAction({ dropitem: item, dropindex: index, moveditem: movedIngredient }))
             setMovedIngredient(null)
         }
         
     }
 
-    function removeIngredient (item) {
+    function removeIngredient(item) {
         dispatch(removeConstructorIngredientAction(item.constructorId))
         dispatch(decreaseIngredientCountAction(item._id))
     }
 
     return (
-        <li draggable={true} key={index} 
-        className={styles.ingredient} 
-        onDragStart={(e) => dragStartHandler(e, index, item)}
-        onDragLeave={(e) => dragEndHandler(e)}
-        onDragOver={(e) => dragOverHandler(e)}
-        onDragEnd={(e) => dragEndHandler(e)}
-        onDrop={(e) => dropHandler(e, index, item)}
+        <li draggable={true}
+            className={styles.ingredient}
+            onDragStart={(e) => dragStartHandler(e, index, item)}
+            onDragLeave={(e) => dragEndHandler(e)}
+            onDragOver={(e) => dragOverHandler(e)}
+            onDragEnd={(e) => dragEndHandler(e)}
+            onDrop={(e) => dropHandler(e, index, item)}
         >
+                <DragIcon type="primary" />
+
             <ConstructorElement
                 isLocked={false}
                 text={item.name}
