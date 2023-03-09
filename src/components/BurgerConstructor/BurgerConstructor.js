@@ -74,7 +74,7 @@ function BurgerConstructor() {
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={currentBun.name}
+                        text={`${ currentBun.name } (верх)`}
                         price={currentBun.price}
                         thumbnail={currentBun.image}
                     />}
@@ -91,7 +91,7 @@ function BurgerConstructor() {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={currentBun.name}
+                        text={`${ currentBun.name } (низ)`}
                         price={currentBun.price}
                         thumbnail={currentBun.image}
                     />}
