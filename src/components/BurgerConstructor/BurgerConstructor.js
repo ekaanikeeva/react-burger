@@ -1,29 +1,54 @@
 import { useState, useMemo, useContext, useEffect } from "react";
+import { useDrop } from "react-dnd";
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { IngredientsContext } from "../../services/ingredientsContext";
-import { postOrderApi } from "../../utils/ingredientsApi";
+import { useSelector, useDispatch } from 'react-redux';
+import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
+import { orderNumberAsync } from "../../services/asyncActions/order";
+import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
+import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 
 function BurgerConstructor() {
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
-    const [orderNumber, setOrderNumber] = useState(null)
-    const ingredients = useContext(IngredientsContext);
+    const orderNumber = useSelector(store => store.orderReducer.order);
+    const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
+    const [movedIngredient, setMovedIngredient] = useState(null)
+    const [{ isHover }, dropTarget] = useDrop({
+        accept: "ingredient",
+        drop(item) {
+            const itemCopy = JSON.parse(JSON.stringify(item.item));
+
+            const burgerBun = ingredients?.find(el => el.type === 'bun')
+            if (burgerBun !== undefined && itemCopy.type === 'bun') {
+                dispatch(removeConstructorIngredientAction(burgerBun.constructorId))
+                dispatch(decreaseIngredientCountAction(burgerBun._id))
+                dispatch(addConstructorIngredientsAction(itemCopy));
+                dispatch(increaseIngredientCountAction(itemCopy._id));
+            } else {
+                dispatch(addConstructorIngredientsAction(itemCopy));
+                dispatch(increaseIngredientCountAction(itemCopy._id));
+            }
+            
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
+
     const handleSubmit = (evt) => {
         evt.preventDefault()
+
         const allIngredientsArray = [];
-        allIngredientsArray.push(...currentBun)
-        allIngredientsArray.push(...ingredientsWithoutBuns);
-        allIngredientsArray.push(...currentBun)
+        allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun)
 
         const idArray = allIngredientsArray.map(item => item._id)
-        postOrderApi(idArray)
-        .then((res) => {
-            setOrderNumber(res.order.number)
-            setIsOpen(true)
-        } )
-   
+
+        dispatch(orderNumberAsync(idArray))
+        setIsOpen(true)
     }
 
     function onClose() {
@@ -34,7 +59,6 @@ function BurgerConstructor() {
 
     const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
 
-
     const priceCount = useMemo(() => ingredients.reduce((total, item) => {
         if (item.type !== 'bun') {
             return total + item.price
@@ -42,38 +66,32 @@ function BurgerConstructor() {
         else return total;
     }, 0), [ingredients])
 
-
     return (
-        <form className={styles.burgerConstructor} onSubmit={handleSubmit}>
-            <div className={styles.burgerBunTop}>
+        <form className={styles.burgerConstructor} onSubmit={handleSubmit} ref={dropTarget}>
+
+            <div className={styles.burgerBunTop} >
                 {currentBun &&
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={currentBun.name}
+                        text={`${ currentBun.name } (верх)`}
                         price={currentBun.price}
                         thumbnail={currentBun.image}
                     />}
             </div>
-            <ul className={styles.ingredientsList}>
+            <ul className={styles.ingredientsList} >
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
-                        <li key={index} className={styles.ingredient}>
-                            <ConstructorElement
-                                isLocked={index === 0 || index === ingredients.length - 1 ? true : false}
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </li>)
+                            <ConstructorIngredient key={item.constructorId} item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient}/>
+                    )
                 })}
             </ul>
-            <div className={styles.burgerBunBottom}>
+            <div className={styles.burgerBunBottom} >
                 {currentBun &&
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={currentBun.name}
+                        text={`${ currentBun.name } (низ)`}
                         price={currentBun.price}
                         thumbnail={currentBun.image}
                     />}
@@ -82,10 +100,12 @@ function BurgerConstructor() {
                 <span>{priceCount}</span>
                 <CurrencyIcon type="primary" />
             </div>
-            <button type="submit" className={styles.submitButton}>Оформить заказ</button>
-            {isOpen &&
+            <button type="submit" className={styles.submitButton} 
+            disabled={currentBun !== undefined ? false : true} 
+            title={currentBun !== undefined ? "Оформить заказ" : "Необходимо добавить булку"}>Оформить заказ</button>
+            {isOpen && orderNumber !== null &&
                 <Modal onClose={onClose}>
-                    <OrderDetails orderNumber={ orderNumber } />
+                    <OrderDetails orderNumber={orderNumber} />
                 </Modal>
             }
         </form>
