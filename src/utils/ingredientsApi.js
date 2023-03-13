@@ -25,3 +25,28 @@ export const postOrderApi = (idArray) => {
     })
     .then(_checkResponse)
 };
+
+export const resetPassword = (email) => {
+    return fetch(`${ingredientsUrl}/password-reset`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "email": email }),
+    })
+    .then(_checkResponse)
+}
+
+export const changePassword = (password, token) => {
+    return fetch(`${ingredientsUrl}/password-reset/reset`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+            "password": password,
+            "token": token
+     }),
+    })
+    .then(_checkResponse)
+}
