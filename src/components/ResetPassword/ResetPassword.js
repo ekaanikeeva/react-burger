@@ -5,7 +5,7 @@ import { changePassword } from "../../utils/ingredientsApi";
 function ResetPassword() {
     const [newPassword, setNewPassword] = useState(null)
     const [token, setToken] = useState(null)
-
+    const [isSuccess, setIsSuccess] = useState(false)
     function handleChangePassword(evt) {
         const target = evt.target;
         const value = target.value;
@@ -23,7 +23,7 @@ function ResetPassword() {
         e.preventDefault()
 
         changePassword(newPassword, token)
-        .then(res => console.log(res))
+        .then(res => setIsSuccess(true))
         .catch(err => console.log(err))
     }
     return (
@@ -45,6 +45,7 @@ function ResetPassword() {
                 className={styles.input}
                 placeholder="Введите код из письма"
             />
+            {isSuccess && <span className={styles.success}>Пароль успешно изменен!</span>}
         </Form>
     )
 }

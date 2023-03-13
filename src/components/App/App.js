@@ -6,6 +6,8 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ForgotPassword from '../ForgotPassword/ForgotPassword'; 
 import ResetPassword from '../ResetPassword/ResetPassword';
+import Profile from '../Profile/Profile';
+
 function App() {
   return (
     <div className={styles.root}>
@@ -16,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

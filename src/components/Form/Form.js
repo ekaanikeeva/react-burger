@@ -1,5 +1,5 @@
 import styles from "./Form.module.scss";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Form({ title, children, submitTitle, linkQuestion, link, linkText, onSubmit }) {
     const location = useLocation();
