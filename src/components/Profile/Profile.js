@@ -9,8 +9,12 @@ function Profile() {
                 <NavLink className={({ isActive }) =>
                     isActive ? styles.active : styles.link
                 } to='/profile'>Профиль</NavLink>
-                <NavLink className={styles.link} to='/profile/order'>История заказов</NavLink>
-                <NavLink className={styles.link} to='/'>Выход</NavLink>
+                <NavLink className={({ isActive }) =>
+                    isActive ? styles.active : styles.link
+                } to='/profile/orders'>История заказов</NavLink>
+                <NavLink className={({ isActive }) =>
+                    isActive ? styles.active : styles.link
+                } to='/'>Выход</NavLink>
             </nav>
 
             <div>
