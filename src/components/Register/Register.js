@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.scss';
 import Form from '../Form/Form';
 import { registerUserAsync } from '../../services/asyncActions/auth';
 
 function Register() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const isAuth = useSelector(store => store.authReducer.isUserAuth);
 
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
@@ -31,6 +34,13 @@ function Register() {
 
         dispatch(registerUserAsync(email, password, name))
     }
+
+    useEffect(() => {
+        if(isAuth) {
+            navigate('/')
+        }
+    }, [isAuth])
+
     return (
         <Form 
         title="Регистрация" submitTitle="Зарегистрироваться" onSubmit={handleSubmit}

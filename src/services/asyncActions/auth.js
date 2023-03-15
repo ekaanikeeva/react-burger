@@ -6,8 +6,10 @@ export const registerUserAsync = (email, password, userName) => {
         registerUser(email, password, userName)
             .then((res) => {
                 dispatch(registerAction(res.user))
+                console.log(res)
             })
-            .catch(err => console.log('error', err))
+            .then(()=> dispatch(isSuccessAction(true)))
+            .catch(err => dispatch(isErrorAction(err)))
     }
 }
 

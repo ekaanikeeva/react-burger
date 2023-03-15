@@ -1,8 +1,10 @@
 import styles from "./Profile.module.scss";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { EmailInput, Input, EditIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function Profile() {
+    const user = useSelector(store => store.authReducer.user);
     return (
         <section className={styles.profile}>
             <nav className={styles.navigation}>
@@ -23,6 +25,7 @@ function Profile() {
                     icon={'EditIcon'}
                     placeholder={'Имя'}
                     type={'text'}
+                    defaultValue={user !== null ? user.name : ''}
                     extraClass={styles.input}
                 />
                 <Input
@@ -31,6 +34,7 @@ function Profile() {
                     placeholder={'Логин'}
                     type={'email'}
                     extraClass={styles.input}
+                    defaultValue={user !== null ? user.email : ''}
                 />
                 <Input
                     name={'password'}
