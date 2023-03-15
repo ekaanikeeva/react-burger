@@ -1,4 +1,4 @@
-export const ingredientsUrl = 'https://norma.nomoreparties.space/api';
+export const stellarUrl = 'https://norma.nomoreparties.space/api';
 
 const _checkResponse = (res) => {
     if (res.ok) return res.json();
@@ -6,7 +6,7 @@ const _checkResponse = (res) => {
 };
 
 export const getIngredientsApi = () => {
-    return fetch(`${ingredientsUrl}/ingredients`, {
+    return fetch(`${stellarUrl}/ingredients`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export const getIngredientsApi = () => {
 
 
 export const postOrderApi = (idArray) => {
-    return fetch(`${ingredientsUrl}/orders`, {
+    return fetch(`${stellarUrl}/orders`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const postOrderApi = (idArray) => {
 };
 
 export const resetPassword = (email) => {
-    return fetch(`${ingredientsUrl}/password-reset`, {
+    return fetch(`${stellarUrl}/password-reset`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export const resetPassword = (email) => {
 }
 
 export const changePassword = (password, token) => {
-    return fetch(`${ingredientsUrl}/password-reset/reset`, {
+    return fetch(`${stellarUrl}/password-reset/reset`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const changePassword = (password, token) => {
 }
 
 export const registerUser = (email, password, userName) => {
-    return fetch(`${ingredientsUrl}/auth/register`, {
+    return fetch(`${stellarUrl}/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const registerUser = (email, password, userName) => {
 }
 
 export const login = (email, password) => {
-    return fetch(`${ingredientsUrl}/auth/login`, {
+    return fetch(`${stellarUrl}/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
