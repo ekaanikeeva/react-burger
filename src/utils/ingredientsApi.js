@@ -77,3 +77,26 @@ export const login = (email, password) => {
         }),
     }).then(_checkResponse)
 }
+
+export const getUser = (token) => {
+    return fetch(`${stellarUrl}/auth/user`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+    }).then(_checkResponse)
+}
+
+export const refreshToken = (access, refresh) => {
+    return fetch(`${stellarUrl}/auth/token`, {
+        method: 'POST',
+        headers: {
+         'Content-Type': 'application/json;charset=utf-8',
+         "Authorization": access
+        },
+        body: JSON.stringify({
+         "token": refresh
+        })
+       }).then(_checkResponse)
+}
