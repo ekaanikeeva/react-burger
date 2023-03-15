@@ -23,7 +23,7 @@ export const postOrderApi = (idArray) => {
         },
         body: JSON.stringify({ ingredients: idArray }),
     })
-    .then(_checkResponse)
+        .then(_checkResponse)
 };
 
 export const resetPassword = (email) => {
@@ -34,7 +34,7 @@ export const resetPassword = (email) => {
         },
         body: JSON.stringify({ "email": email }),
     })
-    .then(_checkResponse)
+        .then(_checkResponse)
 }
 
 export const changePassword = (password, token) => {
@@ -43,10 +43,25 @@ export const changePassword = (password, token) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
             "password": password,
             "token": token
-     }),
+        }),
     })
-    .then(_checkResponse)
+        .then(_checkResponse)
+}
+
+export const registerUser = (email, password, userName) => {
+    return fetch(`${ingredientsUrl}/auth/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "email": email,
+            "password": password,
+            "name": userName
+        }),
+    })
+        .then(_checkResponse)
 }
