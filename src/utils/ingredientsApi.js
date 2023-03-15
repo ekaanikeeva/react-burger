@@ -62,6 +62,18 @@ export const registerUser = (email, password, userName) => {
             "password": password,
             "name": userName
         }),
-    })
-        .then(_checkResponse)
+    }).then(_checkResponse)
+}
+
+export const login = (email, password) => {
+    return fetch(`${ingredientsUrl}/auth/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "email": email,
+            "password": password,
+        }),
+    }).then(_checkResponse)
 }

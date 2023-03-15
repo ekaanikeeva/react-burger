@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from './Register.module.scss';
 import Form from '../Form/Form';
-import { registerUserAsync } from '../../services/asyncActions/register';
+import { registerUserAsync } from '../../services/asyncActions/auth';
 
 function Register() {
     const dispatch = useDispatch();
