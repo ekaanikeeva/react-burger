@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Login.module.scss';
 import Form from '../Form/Form';
-import { loginUserAsync } from '../../services/asyncActions/auth';
+import { authUserAsync } from '../../services/asyncActions/auth';
 
 function Login () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
     const isAuth = useSelector(store => store.authReducer.isUserAuth);
+    const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
-
 
     function handleChangeEmail(evt) {
         const value = evt.target.value;
@@ -26,12 +28,13 @@ function Login () {
     function handleSubmit(e) {
         e.preventDefault()
 
-        dispatch(loginUserAsync(email, password))
+        dispatch(authUserAsync(email, password))
     }
 
     useEffect(() => {
         if(isAuth) {
             navigate('/')
+            setCookie("accessToken", accessTokenSelector)
         }
     }, [isAuth])
 

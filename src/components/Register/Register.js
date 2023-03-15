@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.scss';
 import Form from '../Form/Form';
@@ -9,6 +10,8 @@ function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isAuth = useSelector(store => store.authReducer.isUserAuth);
+    const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
+    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
 
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
@@ -38,6 +41,7 @@ function Register() {
     useEffect(() => {
         if(isAuth) {
             navigate('/')
+            setCookie("accessToken", accessTokenSelector)
         }
     }, [isAuth])
 

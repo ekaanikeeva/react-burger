@@ -1,36 +1,34 @@
-import { REGISTER_USER, LOGIN_USER, AUTH_SUCCESS, AUTH_ERROR } from "../actions/auth";
+import { REGISTER_USER, AUTH_USER, AUTH_ERROR } from "../actions/auth";
 
 const initialState = {
     user: null,
     isUserAuth: false,
-    authError: null
+    authError: null,
+    accessToken: null,
+    refreshToken: null
 };
 
 export const authReducer = (state= initialState, action) => {
     switch (action.type) {
-        case REGISTER_USER: {
+        case AUTH_USER: {
+            const userPayload = action.payload;
+            console.log('user', userPayload)
             return {
                 ...state,
-                user: action.payload
-            } 
-        }
-        case LOGIN_USER: {
-            return {
-                ...state,
-                user: action.payload
-            } 
-        }
-        case AUTH_SUCCESS: {
-            return {
-                ...state,
+                user: userPayload.user,
+                accessToken: userPayload.accessToken,
+                refreshToken: userPayload.refreshToken,
                 isUserAuth: true
-            }
+            } 
         }
         case AUTH_ERROR: {
             return {
                 ...state,
                 authError: action.payload,
-                user: null
+                user: null,
+                accessToken: null,
+                refreshToken: null,
+                isUserAuth: false
             }
         }
         default: {
