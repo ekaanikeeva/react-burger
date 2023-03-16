@@ -24,7 +24,7 @@ function App() {
     if(cookies.accessToken !== undefined) {
       dispatch(getUserAsync(cookies.accessToken, cookies.refreshToken))
     } else navigate('/login')
-  }, [authInfo])
+  }, [])
 
 
   return (

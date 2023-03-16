@@ -1,13 +1,32 @@
 import styles from "./Profile.module.scss";
-import { useSelector } from "react-redux";
+import { useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { updateUserAsync } from "../../services/asyncActions/auth";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function Profile() {
+    const dispatch = useDispatch();
     const user = useSelector(store => store.authReducer.user);
+    const token = useSelector(store => store.authReducer.accessToken);
 
-    const changeUserData = () => {
-        console.log('sdgf')
+    const [email, setEmail] = useState(user.email || null)
+    const [password, setPassword] = useState(user.password || null)
+    const [name, setName] = useState(user.name || null)
+
+    function handleChangeEmail(evt) {
+        const value = evt.target.value;
+        setEmail(value)
+    }
+
+    function handleChangeName(evt) {
+        const value = evt.target.value;
+        setName(value)
+    }
+
+    function handleChangePassword(evt) {
+        const value = evt.target.value;
+        setPassword(value)
     }
 
     return (
@@ -30,9 +49,14 @@ function Profile() {
                     icon={'EditIcon'}
                     placeholder={'Имя'}
                     type={'text'}
-                    defaultValue={user !== null ? user.name : ''}
+                    defaultValue={user.name}
                     extraClass={styles.input}
-                    onIconClick={changeUserData}
+                    onIconClick={() => {
+                        if (name !== null) {
+                            dispatch(updateUserAsync(token, {"name": name}))
+                        }
+                    }}
+                    onChange={handleChangeName}
                 />
                 <Input
                     name={'email'}
@@ -40,7 +64,13 @@ function Profile() {
                     placeholder={'Логин'}
                     type={'email'}
                     extraClass={styles.input}
-                    defaultValue={user !== null ? user.email : ''}
+                    defaultValue={user.email}
+                    onChange={handleChangeEmail}
+                    onIconClick={() => {
+                        if (password !== null) {
+                            dispatch(updateUserAsync(token, {"email": email}))
+                        }
+                    }}
                 />
                 <Input
                     name={'password'}
@@ -48,7 +78,12 @@ function Profile() {
                     placeholder={'Пароль'}
                     type={'password'}
                     extraClass={styles.input}
-                    defaultValue='111111'
+                    onChange={handleChangePassword}
+                    onIconClick={() => {
+                        if (password !== null) {
+                            dispatch(updateUserAsync(token, {"password": password}))
+                        }
+                    }}
                 />
             </div>
         </section>

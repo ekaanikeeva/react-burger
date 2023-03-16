@@ -1,5 +1,5 @@
 import { authAction, isErrorAction, getUserAction, getTokensAction } from "../actions/auth";
-import { registerUser, login, getUser, refreshToken } from "../../utils/ingredientsApi";
+import { registerUser, login, getUser, refreshToken, updateUserApi } from "../../utils/ingredientsApi";
 
 export const registerUserAsync = (email, password, userName) => {
     return function (dispatch) {
@@ -25,19 +25,35 @@ export const authUserAsync = (email, password) => {
 export const getUserAsync = (accessToken, refreshUserToken) => {
     return function (dispatch) {
         getUser(accessToken)
-            .then(res => dispatch(getUserAction(res.user)))
+            .then((res) => {
+                dispatch(getUserAction(res.user))
+                dispatch(getTokensAction({accessToken, refreshUserToken}))
+            })
             .catch(err => {
                 if (err === 403) {
                     refreshToken(accessToken, refreshUserToken)
                         .then((res) => {
-                            document.cookie = `accessToken=${res.accessToken}`
-                            document.cookie = `refreshToken=${res.refreshToken}`
+                            const access = res.accessToken;
+                            const refresh = res.refreshToken
+                            document.cookie = `accessToken=${access}`
+                            document.cookie = `refreshToken=${refresh}`
                             getUser(res.accessToken)
-                                .then(res => dispatch(getUserAction(res.user)))
+                                .then((res) => {
+                                    dispatch(getUserAction(res.user))
+                                    dispatch(getTokensAction({access, refresh}))
+                                } )
                                 .catch(err => dispatch(isErrorAction(err)))
                         })
                         .catch((err) => dispatch(isErrorAction(err)))
                 }
             })
+    }
+}
+
+export const updateUserAsync = (accessToken, changesInfo) => {
+    return function (dispatch) {
+        updateUserApi(accessToken, changesInfo)
+        .then(res => dispatch(getUserAction(res.user)))
+        .catch(err => console.log(err))
     }
 }

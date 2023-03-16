@@ -100,3 +100,14 @@ export const refreshToken = (access, refresh) => {
         })
        }).then(_checkResponse)
 }
+
+export const updateUserApi = (token, updateInfo) => {
+    return fetch(`${stellarUrl}/auth/user`, {
+        method: 'PATCH',
+        headers: {
+         'Content-Type': 'application/json;charset=utf-8',
+         authorization: token
+        },
+        body: JSON.stringify(updateInfo)
+       }).then(_checkResponse)
+}
