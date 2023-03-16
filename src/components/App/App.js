@@ -11,7 +11,7 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import Profile from '../Profile/Profile';
 import { useCookies } from 'react-cookie';
 import { getUserAsync } from '../../services/asyncActions/auth';
-import { ProtectedRouteElement } from '../ProtectedRoute';
+import { ProtectedRouteElement, ProtectedRouteUnAuth } from '../ProtectedRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,10 +33,10 @@ function App() {
       <AppHeader />
       <Routes>
         <Route exact path="/" element={<ProtectedRouteElement element={<Main />}/>} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/register" element={<ProtectedRouteUnAuth element={<Register />} />}  />
+        <Route path="/login" element={<ProtectedRouteUnAuth element={<Login />} />} />
+        <Route path="/forgot-password" element={<ProtectedRouteUnAuth element={<ForgotPassword />} />} />
+        <Route path="/reset-password" element={<ProtectedRouteUnAuth element={<ResetPassword />} />} />
         <Route path="/profile" element={<ProtectedRouteElement element={<Profile />}/>}  />
       </Routes>
     </div>
