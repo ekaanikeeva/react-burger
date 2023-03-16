@@ -11,13 +11,14 @@ import ResetPassword from '../ResetPassword/ResetPassword';
 import Profile from '../Profile/Profile';
 import { useCookies } from 'react-cookie';
 import { getUserAsync } from '../../services/asyncActions/auth';
+import { ProtectedRouteElement } from '../ProtectedRoute';
 
 function App() {
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
   const navigate = useNavigate();
 
-  const authInfo = useSelector(store => store.authReducer.isUserAuth)
+
   const isError = useSelector(store => store.authReducer.authError)
 
   useEffect(() => {
@@ -31,12 +32,12 @@ function App() {
     <div className={styles.root}>
       <AppHeader />
       <Routes>
-        <Route exact path="/" element={<Main />} />
+        <Route exact path="/" element={<ProtectedRouteElement element={<Main />}/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<ProtectedRouteElement element={<Profile />}/>}  />
       </Routes>
     </div>
   );
