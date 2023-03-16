@@ -24,10 +24,6 @@ export const authReducer = (state= initialState, action) => {
             return {
                 ...state,
                 authError: action.payload,
-                user: null,
-                accessToken: null,
-                refreshToken: null,
-                isUserAuth: false
             }
         }
         case GET_USER: {

@@ -15,22 +15,18 @@ import { getUserAsync } from '../../services/asyncActions/auth';
 function App() {
   const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
-  const navigate = useNavigate()
-  const authInfo = useSelector(store => store.authReducer)
+  const navigate = useNavigate();
+
+  const authInfo = useSelector(store => store.authReducer.isUserAuth)
+  const isError = useSelector(store => store.authReducer.authError)
 
   useEffect(() => {
     if(cookies.accessToken !== undefined) {
       dispatch(getUserAsync(cookies.accessToken, cookies.refreshToken))
     } else navigate('/login')
-  }, [])
-  useEffect(() => {
-    if (authInfo.accessToken !== null) {
-      setCookie("accessToken", authInfo.accessToken)
-    } 
-    if (authInfo.refreshToken !== null) {
-      setCookie("refreshToken", authInfo.refreshToken)
-    }
   }, [authInfo])
+
+
   return (
     <div className={styles.root}>
       <AppHeader />

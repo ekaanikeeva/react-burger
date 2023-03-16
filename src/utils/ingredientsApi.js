@@ -83,7 +83,7 @@ export const getUser = (token) => {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": token
+            authorization: token
         },
     }).then(_checkResponse)
 }
@@ -93,10 +93,10 @@ export const refreshToken = (access, refresh) => {
         method: 'POST',
         headers: {
          'Content-Type': 'application/json;charset=utf-8',
-         "Authorization": access
+         authorization: access
         },
         body: JSON.stringify({
-         "token": refresh
+         "token": `${refresh}`
         })
        }).then(_checkResponse)
 }

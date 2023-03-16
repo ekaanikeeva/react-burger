@@ -21,17 +21,23 @@ export const authUserAsync = (email, password) => {
     }
 }
 
+
 export const getUserAsync = (accessToken, refreshUserToken) => {
     return function (dispatch) {
         getUser(accessToken)
             .then(res => dispatch(getUserAction(res.user)))
-            .then(() => dispatch(getTokensAction({"accessToken": accessToken, "refreshToken": refreshUserToken})))
             .catch(err => {
                 if (err === 403) {
                     refreshToken(accessToken, refreshUserToken)
-                    .then(res => getUser(res.accessToken))
-                    .catch(err => dispatch(isErrorAction(err)))
-                } else dispatch(isErrorAction(err))
+                        .then((res) => {
+                            document.cookie = `accessToken=${res.accessToken}`
+                            document.cookie = `refreshToken=${res.refreshToken}`
+                            getUser(res.accessToken)
+                                .then(res => dispatch(getUserAction(res.user)))
+                                .catch(err => dispatch(isErrorAction(err)))
+                        })
+                        .catch((err) => dispatch(isErrorAction(err)))
+                }
             })
     }
 }
