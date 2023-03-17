@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
+import { useLocation, useParams, Route, Routes } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -11,6 +12,7 @@ import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 
 function BurgerIngredients() {
+
     const [current, setCurrent] = useState(bun);
 
     const [bonsRef, inViewBons] = useInView({
@@ -37,7 +39,7 @@ function BurgerIngredients() {
     const isSuccessIngredients = useSelector(store => store.ingredientsReducer.isSuccess)
     const [ingredientsArray, setIngredientsArray] = useState(null)
     const dispatch = useDispatch();
-    const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
+    
     useMemo(() => {
         dispatch(ingredientsAsync())
     }, [])
@@ -51,8 +53,8 @@ function BurgerIngredients() {
         dispatch(getCurrentIngredientAction(null))
     }
 
-    function scrollIntoCurrent (current) {
-        document.querySelector(`${current}`).scrollIntoView({behavior: "smooth"});
+    function scrollIntoCurrent(current) {
+        document.querySelector(`${current}`).scrollIntoView({ behavior: "smooth" });
     }
 
     return (
@@ -79,21 +81,29 @@ function BurgerIngredients() {
 
             <ul className={styles.ingredientsList}>
                 <li>
-                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} currentRef={bonsRef}/>
+                    <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} currentRef={bonsRef} />
                 </li>
                 <li>
-                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} currentRef={soucesRef}/>
+                    <IngredientsList title="Соусы" currentType={sauce} ingredients={ingredientsArray} currentRef={soucesRef} />
                 </li>
                 <li>
-                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} currentRef={mainsRef}/>
+                    <IngredientsList title="Начинки" currentType={mainIngredient} ingredients={ingredientsArray} currentRef={mainsRef} />
                 </li>
 
             </ul>
-            {currentIngredient !== null &&
-                <Modal title="Детали ингредиента" onClose={onClose}>
-                    <IngredientDetails currentIngredient={currentIngredient} />
-                </Modal>
-            }
+            {/* {currentIngredient !== null &&
+                // <Routes>
+
+                    <Route path='/ingredients/:ingredientId'
+                        element={
+                            <Modal title="Детали ингредиента" onClose={onClose}>
+                                <IngredientDetails currentIngredient={currentIngredient} />
+                            </Modal>
+                        } />
+
+
+                // </Routes>
+            } */}
 
         </section>
     )
