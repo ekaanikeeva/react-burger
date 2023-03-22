@@ -24,7 +24,7 @@ function Ingredient({ item }) {
 
         <li draggable={true} className={styles.ingredient} ref={dragRef}
             onClick={() => dispatch(getCurrentIngredientAction(item))}>
-            <Link to={{ state: { background: location }, pathname: `/ingredients/${ingredientId}` }} className={styles.wrapLink}>
+            <Link to={`/ingredients/${ingredientId}`} state={{ background: location }} className={styles.wrapLink}>
                 <Counter count={item.count} size="default" extraClass="m-1" />
                 <img src={item.image} alt={item.name} />
                 <span className={styles.price}>
