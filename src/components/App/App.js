@@ -15,53 +15,81 @@ import { useCookies } from 'react-cookie';
 import { getUserAsync } from '../../services/asyncActions/auth';
 import { ProtectedRouteElement, ProtectedRouteUnAuth } from '../ProtectedRoute';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
+import { isErrorAction } from '../../services/actions/auth';
 import Modal from '../Modal/Modal';
+import Preloader from '../Preloader/Preloader';
+import { refreshToken } from '../../utils/ingredientsApi';
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
   const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
-  const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
-  // const { ingredientId } = useParams()
-
+  const isAuth = useSelector(store => store.authReducer.isUserAuth);
+  const isLoading = useSelector(store => store.authReducer.isLoading);
+  // const [isLoading, setIsLoading] = useState(false)
+  const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
+  const refreshTokenSelector = useSelector(store => store.authReducer.refreshToken)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  let { state } = useLocation()
   const location = useLocation();
-  let background = location.state && location.state.background;
+  let background = state && state.background;
 
   function onClose() {
     dispatch(getCurrentIngredientAction(null))
     navigate(-1);
   }
-
   useEffect(() => {
-    if (cookies.accessToken !== undefined) {
+    if (cookies.accessToken === 'undefined') {
+      dispatch(isErrorAction('user is not authorized'))
+    } else {
       dispatch(getUserAsync(cookies.accessToken, cookies.refreshToken))
-    } else navigate('/login')
+    }
   }, [])
 
+  useEffect(() => {
+    if (accessTokenSelector !== null) {
+      setCookie("accessToken", accessTokenSelector)
 
+
+    } if (refreshTokenSelector) {
+      setCookie("refreshToken", refreshTokenSelector)
+    }
+  }, [isAuth])
+  // console.log(cookies)
+// removeCookie("accessToken")
   return (
     <div className={styles.root}>
       <AppHeader />
+      {isLoading ? 
       <Routes location={background || location}>
-        <Route exact path="/" element={<ProtectedRouteElement element={<Main />} />} />
-        <Route path="/register" element={<ProtectedRouteUnAuth element={<Register />} />} />
-        <Route path="/login" element={<ProtectedRouteUnAuth element={<Login />} />} />
-        <Route path="/forgot-password" element={<ProtectedRouteUnAuth element={<ForgotPassword />} />} />
-        <Route path="/reset-password" element={<ProtectedRouteUnAuth element={<ResetPassword />} />} />
-        <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} />} />
-        {!background && currentIngredient !== null &&
+        <Route path="/" element={<ProtectedRouteElement element={<Main />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
+        <Route path="/register" element={<ProtectedRouteElement element={<Register />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+        <Route path="/login" element={<ProtectedRouteElement element={<Login />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+        <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+        <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+        <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
+        {background &&
           <Route path='/ingredients/:ingredientId'
             element={
               <Modal title="Детали ингредиента" onClose={onClose}>
-                <IngredientDetails currentIngredient={currentIngredient} />
+                <IngredientDetails />
               </Modal>
             } />
         }
-        {/* <Route path='/ingredients/:ingredientId' element={<IngredientDetails currentIngredient={currentIngredient} />} /> */}
       </Routes>
-
+      : <Preloader />
+      }
+      {/* <Routes>
+        {background &&
+          <Route path='/ingredients/:ingredientId'
+            element={
+              <Modal title="Детали ингредиента" onClose={onClose}>
+                <IngredientDetails />
+              </Modal>
+            } />
+        }
+        {location && <Route path='/ingredients/:ingredientId' element={<IngredientDetails />} />}
+      </Routes> */}
 
     </div>
   );

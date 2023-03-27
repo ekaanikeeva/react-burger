@@ -72,7 +72,7 @@ function Profile() {
                         }
                     }}
                 />
-                <Input
+                {/* <Input
                     name={'password'}
                     icon={'EditIcon'}
                     placeholder={'Пароль'}
@@ -84,7 +84,7 @@ function Profile() {
                             dispatch(updateUserAsync(token, {"password": password}))
                         }
                     }}
-                />
+                /> */}
             </div>
         </section>
     )

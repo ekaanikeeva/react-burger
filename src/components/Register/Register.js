@@ -8,10 +8,6 @@ import { registerUserAsync } from '../../services/asyncActions/auth';
 
 function Register() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const isAuth = useSelector(store => store.authReducer.isUserAuth);
-    const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
-    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
 
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
@@ -38,12 +34,6 @@ function Register() {
         dispatch(registerUserAsync(email, password, name))
     }
 
-    useEffect(() => {
-        if(isAuth) {
-            navigate('/')
-            setCookie("accessToken", accessTokenSelector)
-        }
-    }, [isAuth])
 
     return (
         <Form 

@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
 
 function IngredientDetails() {
-
-    const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
+    const { ingredientId } = useParams()
+    const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
+    const currentIngredient = ingredients.find(item => item._id === ingredientId)
+    
     return (
         <>
             <img src={currentIngredient.image} alt={currentIngredient.name} />

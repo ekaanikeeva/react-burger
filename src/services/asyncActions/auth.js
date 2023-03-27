@@ -36,7 +36,10 @@ export const getUserAsync = (accessToken, refreshUserToken) => {
                             const access = res.accessToken;
                             const refresh = res.refreshToken
                             document.cookie = `accessToken=${access}`
-                            document.cookie = `refreshToken=${refresh}`
+                            if (res.refreshToken) {
+                                document.cookie = `refreshToken=${refresh}`
+                            }
+                            
                             getUser(res.accessToken)
                                 .then((res) => {
                                     dispatch(getUserAction(res.user))
@@ -45,7 +48,7 @@ export const getUserAsync = (accessToken, refreshUserToken) => {
                                 .catch(err => dispatch(isErrorAction(err)))
                         })
                         .catch((err) => dispatch(isErrorAction(err)))
-                }
+                } else dispatch(isErrorAction(err))
             })
     }
 }

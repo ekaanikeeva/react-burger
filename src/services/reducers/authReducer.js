@@ -5,7 +5,8 @@ const initialState = {
     isUserAuth: false,
     authError: null,
     accessToken: null,
-    refreshToken: null
+    refreshToken: null,
+    isLoading: false
 };
 
 export const authReducer = (state= initialState, action) => {
@@ -24,13 +25,15 @@ export const authReducer = (state= initialState, action) => {
             return {
                 ...state,
                 authError: action.payload,
+                isLoading: true
             }
         }
         case GET_USER: {
             return {
                 ...state,
                 user: action.payload,
-                isUserAuth: true
+                isUserAuth: true,
+                isLoading: true
             }
         }
         case USER_TOKENS: {

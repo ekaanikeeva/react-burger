@@ -9,10 +9,7 @@ import { authUserAsync } from '../../services/asyncActions/auth';
 function Login () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
-    const isAuth = useSelector(store => store.authReducer.isUserAuth);
-    const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
-    const refreshTokenSelector =useSelector(store => store.authReducer.refreshToken)
+
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
 
@@ -32,13 +29,6 @@ function Login () {
         dispatch(authUserAsync(email, password))
     }
 
-    useEffect(() => {
-        if(isAuth) {
-            navigate('/')
-            setCookie("accessToken", accessTokenSelector)
-            setCookie("refreshToken", refreshTokenSelector)
-        }
-    }, [isAuth])
 
     return (
         <Form

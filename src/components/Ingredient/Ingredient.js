@@ -6,12 +6,13 @@ import styles from './Ingredient.module.scss';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "react-redux";
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function Ingredient({ item }) {
     const location = useLocation();
     const dispatch = useDispatch();
     const ingredientId = item['_id'];
+
     const [{ isDrag }, dragRef] = useDrag({
         type: "ingredient",
         item: { item },

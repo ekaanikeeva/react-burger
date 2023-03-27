@@ -1,16 +1,9 @@
-import { Route, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-export const ProtectedRouteElement = ({ element }) => {
-    const navigate = useNavigate();
-    const authInfo = useSelector(store => store.authReducer.isUserAuth);
-
-    return authInfo ? element : navigate('/login');
+export const ProtectedRouteElement = ({ element, isAuth, routeWithAuthrized, replaceRoute }) => {
+    if (isAuth && routeWithAuthrized || !isAuth && !routeWithAuthrized) {
+        return element;
+    } else {
+        return <Navigate to={replaceRoute} replace />
+    }
 } 
-
-export const ProtectedRouteUnAuth = ({ element }) => {
-    const navigate = useNavigate();
-    const authInfo = useSelector(store => store.authReducer.isUserAuth);
-
-    return !authInfo ? element : navigate('/')
-}
