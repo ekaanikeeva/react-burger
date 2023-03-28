@@ -16,6 +16,7 @@ import { getUserAsync } from '../../services/asyncActions/auth';
 import { ProtectedRouteElement, ProtectedRouteUnAuth } from '../ProtectedRoute';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 import { isErrorAction } from '../../services/actions/auth';
+import PageNotFound from '../PageNotFound/PageNotFound';
 import Modal from '../Modal/Modal';
 import Preloader from '../Preloader/Preloader';
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
 
         : <Preloader />
