@@ -48,12 +48,9 @@ function App() {
   useEffect(() => {
     if (accessTokenSelector !== null && accessTokenSelector) {
       setCookie("accessToken", accessTokenSelector)
-
-
     } if (refreshTokenSelector) {
       setCookie("refreshToken", refreshTokenSelector)
     }
-
   }, [isAuth])
   // console.log(cookies)
   // removeCookie("accessToken")

@@ -41,4 +41,12 @@
 .wrapLink {
     text-decoration: none;
     color: #F2F2F3;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+        text-align: center;
+    }
 }

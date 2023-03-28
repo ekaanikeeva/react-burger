@@ -22,7 +22,6 @@ function Ingredient({ item }) {
     })
 
     return (
-
         <li draggable={true} className={styles.ingredient} ref={dragRef}
             onClick={() => dispatch(getCurrentIngredientAction(item))}>
             <Link to={`/ingredients/${ingredientId}`} state={{ background: location }} className={styles.wrapLink}>
@@ -34,7 +33,6 @@ function Ingredient({ item }) {
                 <h3>{item.name}</h3>
             </Link>
         </li >
-
     )
 }
 
