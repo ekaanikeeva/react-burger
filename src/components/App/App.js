@@ -9,6 +9,7 @@ import Login from '../Login/Login';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import Profile from '../Profile/Profile';
+import IngredientPage from '../IngredientPage/IngredientPage';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useCookies } from 'react-cookie';
 import { getUserAsync } from '../../services/asyncActions/auth';
@@ -77,7 +78,7 @@ function App() {
           <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
-          {!background && <Route path='/ingredients/:ingredientId' element={<IngredientDetails />} />}
+          {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
         </Routes>
 
         : <Preloader />
