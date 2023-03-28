@@ -1,15 +1,24 @@
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useMemo } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
+import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 
 function IngredientDetails() {
+    const dispatch = useDispatch();
     const { ingredientId } = useParams()
     const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
     const currentIngredient = ingredients.find(item => item._id === ingredientId)
-    
+
+    useMemo(() => {
+        dispatch(ingredientsAsync())
+    }, [])
+
     return (
         <>
+            {currentIngredient && 
+            <>
             <img src={currentIngredient.image} alt={currentIngredient.name} />
             <h3>{currentIngredient.name}</h3>
             <section>
@@ -30,6 +39,7 @@ function IngredientDetails() {
                     <span>{currentIngredient.carbohydrates}</span>
                 </div>
             </section>
+            </>}
         </>
     )
 }
