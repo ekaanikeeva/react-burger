@@ -1,4 +1,5 @@
 import { useState, useMemo, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,9 +13,12 @@ import ConstructorIngredient from "../constructorIngredient/ConstructorIngredien
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const orderNumber = useSelector(store => store.orderReducer.order);
     const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
+    const isAuth = useSelector(store => store.authReducer.isUserAuth);
+    console.log(isAuth)
     const [movedIngredient, setMovedIngredient] = useState(null)
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
@@ -31,7 +35,7 @@ function BurgerConstructor() {
                 dispatch(addConstructorIngredientsAction(itemCopy));
                 dispatch(increaseIngredientCountAction(itemCopy._id));
             }
-            
+
         },
         collect: monitor => ({
             isHover: monitor.isOver(),
@@ -42,13 +46,16 @@ function BurgerConstructor() {
     const handleSubmit = (evt) => {
         evt.preventDefault()
 
-        const allIngredientsArray = [];
-        allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun)
+        if (isAuth) {
+            const allIngredientsArray = [];
+            allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun)
 
-        const idArray = allIngredientsArray.map(item => item._id)
+            const idArray = allIngredientsArray.map(item => item._id)
 
-        dispatch(orderNumberAsync(idArray))
-        setIsOpen(true)
+            dispatch(orderNumberAsync(idArray))
+            setIsOpen(true)
+        } else navigate('/login')
+
     }
 
     function onClose() {
@@ -74,7 +81,7 @@ function BurgerConstructor() {
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={`${ currentBun.name } (верх)`}
+                        text={`${currentBun.name} (верх)`}
                         price={currentBun.price}
                         thumbnail={currentBun.image}
                     />}
@@ -82,7 +89,7 @@ function BurgerConstructor() {
             <ul className={styles.ingredientsList} >
                 {ingredientsWithoutBuns.map((item, index) => {
                     return (
-                            <ConstructorIngredient key={item.constructorId} item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient}/>
+                        <ConstructorIngredient key={item.constructorId} item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient} />
                     )
                 })}
             </ul>
@@ -91,7 +98,7 @@ function BurgerConstructor() {
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={`${ currentBun.name } (низ)`}
+                        text={`${currentBun.name} (низ)`}
                         price={currentBun.price}
                         thumbnail={currentBun.image}
                     />}
@@ -100,9 +107,9 @@ function BurgerConstructor() {
                 <span>{priceCount}</span>
                 <CurrencyIcon type="primary" />
             </div>
-            <button type="submit" className={styles.submitButton} 
-            disabled={currentBun !== undefined ? false : true} 
-            title={currentBun !== undefined ? "Оформить заказ" : "Необходимо добавить булку"}>Оформить заказ</button>
+            <button type="submit" className={styles.submitButton}
+                disabled={currentBun !== undefined ? false : true}
+                title={currentBun !== undefined ? "Оформить заказ" : "Необходимо добавить булку"}>Оформить заказ</button>
             {isOpen && orderNumber !== null &&
                 <Modal onClose={onClose}>
                     <OrderDetails orderNumber={orderNumber} />

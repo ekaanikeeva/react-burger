@@ -70,7 +70,7 @@ function App() {
         }
       {isLoading ?
         <Routes location={location || background}>
-          <Route path="/" element={<ProtectedRouteElement element={<Main />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
+          <Route path="/" element={<Main />} />
           <Route path="/register" element={<ProtectedRouteElement element={<Register />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/login" element={<ProtectedRouteElement element={<Login />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
