@@ -1,5 +1,5 @@
 import styles from './IngredientPage.module.scss';
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 
 function IngredientPage () {
     return (

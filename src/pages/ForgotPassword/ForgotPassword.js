@@ -1,5 +1,5 @@
 import styles from './ForgotPassword.module.scss';
-import Form from '../Form/Form';
+import Form from '../../components/Form/Form';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { resetPassword } from '../../utils/ingredientsApi';

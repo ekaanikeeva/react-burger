@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.scss';
-import Form from '../Form/Form';
+import Form from '../../components/Form/Form';
 import { registerUserAsync } from '../../services/asyncActions/auth';
 
 function Register() {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './ResetPassword.module.scss';
-import Form from '../Form/Form';
+import Form from '../../components/Form/Form';
 import { changePassword } from "../../utils/ingredientsApi";
 function ResetPassword() {
     const [newPassword, setNewPassword] = useState(null)

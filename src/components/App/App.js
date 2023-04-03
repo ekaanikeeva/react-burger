@@ -3,20 +3,20 @@ import { Routes, Route, useNavigate, useLocation, useParams, BrowserRouter } fro
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.scss';
 import AppHeader from '../AppHeader/AppHeader'
-import Main from '../Main/Main';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
-import ForgotPassword from '../ForgotPassword/ForgotPassword';
-import ResetPassword from '../ResetPassword/ResetPassword';
-import Profile from '../Profile/Profile';
-import IngredientPage from '../IngredientPage/IngredientPage';
+import Main from '../../pages/Main/Main';
+import Register from '../../pages/Register/Register';
+import Login from '../../pages/Login/Login';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import Profile from '../../pages/Profile/Profile';
+import IngredientPage from '../../pages/IngredientPage/IngredientPage';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useCookies } from 'react-cookie';
 import { getUserAsync } from '../../services/asyncActions/auth';
 import { ProtectedRouteElement, ProtectedRouteUnAuth } from '../ProtectedRoute';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 import { isErrorAction } from '../../services/actions/auth';
-import PageNotFound from '../PageNotFound/PageNotFound';
+import PageNotFound from '../../pages/PageNotFound/PageNotFound';
 import Modal from '../Modal/Modal';
 import Preloader from '../Preloader/Preloader';
 

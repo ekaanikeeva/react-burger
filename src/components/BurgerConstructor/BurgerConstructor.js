@@ -18,7 +18,7 @@ function BurgerConstructor() {
     const orderNumber = useSelector(store => store.orderReducer.order);
     const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
     const isAuth = useSelector(store => store.authReducer.isUserAuth);
-    console.log(isAuth)
+
     const [movedIngredient, setMovedIngredient] = useState(null)
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",

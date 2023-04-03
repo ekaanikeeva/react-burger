@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Login.module.scss';
-import Form from '../Form/Form';
+import Form from '../../components/Form/Form';
 import { authUserAsync } from '../../services/asyncActions/auth';
 
 function Login () {
