@@ -1,11 +1,12 @@
 import styles from './ForgotPassword.module.scss';
+import { useCookies } from 'react-cookie';
 import Form from '../../components/Form/Form';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { resetPassword } from '../../utils/ingredientsApi';
-function ForgotPassword() {
+function ForgotPassword({isVisited}) {
     const navigate = useNavigate();
-    
+    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
     const [email, setEmail] = useState(null)
 
     function handleChange(evt) {
@@ -13,6 +14,8 @@ function ForgotPassword() {
         const name = target.name;
         const value = target.value;
         setEmail(value)
+        isVisited(true)
+        setCookie("isUserVisited", true, {maxAge: 18000000})
     }
 
     function handleReset(e) {

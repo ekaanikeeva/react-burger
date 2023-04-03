@@ -22,16 +22,20 @@ import Preloader from '../Preloader/Preloader';
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
+
   const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
   const isAuth = useSelector(store => store.authReducer.isUserAuth);
   const isLoading = useSelector(store => store.authReducer.isLoading);
   const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
-  const refreshTokenSelector = useSelector(store => store.authReducer.refreshToken)
+  const refreshTokenSelector = useSelector(store => store.authReducer.refreshToken);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let { state } = useLocation()
   const location = useLocation();
   let background = state && state.background;
+
+  const [isUserForgotPassword, setIsUserForgotPassword] = useState(false);
 
   function onClose() {
     dispatch(getCurrentIngredientAction(null))
@@ -43,6 +47,10 @@ function App() {
     } else {
       dispatch(getUserAsync(cookies.accessToken, cookies.refreshToken))
     }
+
+    if (cookies.isUserVisited) {
+      setIsUserForgotPassword(true)
+    }
   }, [])
 
   useEffect(() => {
@@ -52,8 +60,8 @@ function App() {
       setCookie("refreshToken", refreshTokenSelector)
     }
   }, [isAuth])
-  // console.log(cookies)
-  // removeCookie("accessToken")
+  console.log(cookies)
+  // removeCookie("isUserVisited")
 
   return (
     <div className={styles.root}>
@@ -73,8 +81,11 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/register" element={<ProtectedRouteElement element={<Register />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/login" element={<ProtectedRouteElement element={<Login />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
-          <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
-          <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+          <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword isVisited={setIsUserForgotPassword}/>} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+          
+          {isUserForgotPassword &&
+            <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
+            }
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
           <Route path="*" element={<PageNotFound />} />
