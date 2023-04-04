@@ -60,7 +60,7 @@ function App() {
       setCookie("refreshToken", refreshTokenSelector)
     }
   }, [isAuth])
-  console.log(cookies)
+  // console.log(cookies)
   // removeCookie("isUserVisited")
 
   return (

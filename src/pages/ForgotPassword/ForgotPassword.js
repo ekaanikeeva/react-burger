@@ -1,5 +1,6 @@
 import styles from './ForgotPassword.module.scss';
 import { useCookies } from 'react-cookie';
+import PropTypes from 'prop-types';
 import Form from '../../components/Form/Form';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
@@ -15,7 +16,7 @@ function ForgotPassword({isVisited}) {
         const value = target.value;
         setEmail(value)
         isVisited(true)
-        setCookie("isUserVisited", true, {maxAge: 18000000})
+        setCookie("isUserVisited", true, {maxAge: 500})
     }
 
     function handleReset(e) {
@@ -43,6 +44,10 @@ function ForgotPassword({isVisited}) {
             />
         </Form>
     )
+}
+
+ForgotPassword.propTypes = {
+    isVisited: PropTypes.func
 }
 
 export default ForgotPassword;

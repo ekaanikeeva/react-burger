@@ -1,12 +1,9 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useLocation, useParams, Route, Routes } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
@@ -91,19 +88,6 @@ function BurgerIngredients() {
                 </li>
 
             </ul>
-            {/* {currentIngredient !== null &&
-                // <Routes>
-
-                    <Route path='/ingredients/:ingredientId'
-                        element={
-                            <Modal title="Детали ингредиента" onClose={onClose}>
-                                <IngredientDetails currentIngredient={currentIngredient} />
-                            </Modal>
-                        } />
-
-
-                // </Routes>
-            } */}
 
         </section>
     )

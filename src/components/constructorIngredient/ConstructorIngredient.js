@@ -63,8 +63,8 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
 ConstructorIngredient.propTypes = {
     item: ingredientPropTypes,
     index: PropTypes.number.isRequired,
-
-    setMovedIngredient: PropTypes.func.isRequired
+    movedIngredient: PropTypes.any.isRequired,
+    setMovedIngredient: PropTypes.func.isRequired,
 }
 
 export default ConstructorIngredient;

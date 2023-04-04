@@ -67,12 +67,12 @@ function Profile() {
                     defaultValue={user.email}
                     onChange={handleChangeEmail}
                     onIconClick={() => {
-                        if (password !== null) {
+                        if (email !== null) {
                             dispatch(updateUserAsync(token, {"email": email}))
                         }
                     }}
                 />
-                {/* <Input
+                <Input
                     name={'password'}
                     icon={'EditIcon'}
                     placeholder={'Пароль'}
@@ -84,7 +84,7 @@ function Profile() {
                             dispatch(updateUserAsync(token, {"password": password}))
                         }
                     }}
-                /> */}
+                />
             </div>
         </section>
     )
