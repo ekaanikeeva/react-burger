@@ -1,32 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useCookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Login.module.scss';
 import Form from '../../components/Form/Form';
 import { authUserAsync } from '../../services/asyncActions/auth';
+import { useValidation } from '../../utils/Validate';
 
-function Login () {
+function Login() {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const { values, handleChange, errors, isValid } = useValidation();
 
-    const [email, setEmail] = useState(null)
-    const [password, setPassword] = useState(null)
-
-    function handleChangeEmail(evt) {
-        const value = evt.target.value;
-        setEmail(value)
-    }
-
-    function handleChangePassword(evt) {
-        const value = evt.target.value;
-        setPassword(value)
-    }
 
     function handleSubmit(e) {
         e.preventDefault()
 
-        dispatch(authUserAsync(email, password))
+        dispatch(authUserAsync(values.email, values.password))
     }
 
 
@@ -43,16 +29,35 @@ function Login () {
                 minLength={2}
                 maxLength={50}
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                onChange={handleChangeEmail}
+                onChange={handleChange}
                 required
             />
+            <span
+                className={
+                    errors["email"] === ""
+                    ? styles.error
+                    : styles.error_active
+                }
+            >
+                {errors["email"]}
+            </span>
             <input
                 type="password"
                 name="password"
                 className={styles.input}
                 placeholder="Пароль"
-                onChange={handleChangePassword}
+                onChange={handleChange}
+                required
             />
+            <span
+                className={
+                    errors["password"] === ""
+                        ? styles.error
+                        : styles.error_active
+                }
+            >
+                {errors["password"]}
+            </span>
         </Form>
     )
 }
