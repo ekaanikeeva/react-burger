@@ -5,10 +5,13 @@ import Form from '../../components/Form/Form';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { resetPassword } from '../../utils/ingredientsApi';
+import { useValidation } from '../../utils/Validate';
+
 function ForgotPassword({isVisited}) {
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
     const [email, setEmail] = useState(null)
+    const { values, errors, isValid } = useValidation();
 
     function handleChange(evt) {
         const target = evt.target;
@@ -16,13 +19,13 @@ function ForgotPassword({isVisited}) {
         const value = target.value;
         setEmail(value)
         isVisited(true)
-        setCookie("isUserVisited", true, {maxAge: 500})
+        
     }
 
     function handleReset(e) {
         e.preventDefault()
-
-        resetPassword(email)
+        setCookie("isUserVisited", true, {maxAge: 500})
+        resetPassword(values.email)
         .then(res => navigate('/reset-password'))
         .catch(err => console.log(err))
     }
@@ -42,6 +45,15 @@ function ForgotPassword({isVisited}) {
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 required
             />
+            <span
+                className={
+                    errors["email"] === ""
+                    ? styles.error
+                    : styles.error_active
+                }
+            >
+                {errors["email"]}
+            </span>
         </Form>
     )
 }

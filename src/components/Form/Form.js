@@ -34,7 +34,7 @@ function Form({ title, children, submitTitle, linkQuestion, link, linkText, onSu
 
 Form.propTypes = {
     title: PropTypes.string.isRequired,
-    children: PropTypes.object.isRequired,
+    children: PropTypes.array.isRequired,
     submitTitle: PropTypes.string.isRequired,
     linkQuestion: PropTypes.string,
     link: PropTypes.string.isRequired,
