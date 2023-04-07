@@ -10,9 +10,29 @@
     font-size: 16px;
     line-height: 24px;
     height: auto;
-    margin: 12px 0;
+    margin: 12px 0 25px;
 
     &:focus {
         outline: 2px solid #7c7cf3;
     }
+}
+
+.error {
+    visibility: hidden;
+    margin-top: -15px;
+    margin-left: 10px;
+    min-height: 18px;
+}
+
+.error_active {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #ee3465;
+    visibility: visible;
+    margin-top: -15px;
+    min-height: 18px;
+    margin-left: 10px;
+    letter-spacing: 0.15px;
 }
