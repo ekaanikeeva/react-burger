@@ -10,10 +10,13 @@ import { addConstructorIngredientsAction, removeConstructorIngredientAction } fr
 import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
+import { useCookies } from 'react-cookie';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
     const [isOpen, setIsOpen] = useState(false);
     const orderNumber = useSelector(store => store.orderReducer.order);
     const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
@@ -52,7 +55,7 @@ function BurgerConstructor() {
 
             const idArray = allIngredientsArray.map(item => item._id)
 
-            dispatch(orderNumberAsync(idArray))
+            dispatch(orderNumberAsync(idArray, cookies.accessToken))
             setIsOpen(true)
         } else navigate('/login')
 

@@ -15,11 +15,12 @@ export const getIngredientsApi = () => {
 };
 
 
-export const postOrderApi = (idArray) => {
+export const postOrderApi = (idArray, token) => {
     return fetch(`${stellarUrl}/orders`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            authorization: token
         },
         body: JSON.stringify({ ingredients: idArray }),
     })
