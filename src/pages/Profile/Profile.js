@@ -1,18 +1,21 @@
 import styles from "./Profile.module.scss";
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { updateUserAsync } from "../../services/asyncActions/auth";
+import { updateUserAsync, logoutUserAsync } from "../../services/asyncActions/auth";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { logoutAction } from "../../services/actions/auth";
 
 function Profile() {
     const dispatch = useDispatch();
     const user = useSelector(store => store.authReducer.user);
     const token = useSelector(store => store.authReducer.accessToken);
-
+    const refreshToken = useSelector(store => store.authReducer.refreshToken);
     const [email, setEmail] = useState(user.email || null)
     const [password, setPassword] = useState(user.password || null)
     const [name, setName] = useState(user.name || null)
+    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
 
     function handleChangeEmail(evt) {
         const value = evt.target.value;
@@ -29,6 +32,20 @@ function Profile() {
         setPassword(value)
     }
 
+    function logout(refreshToken) {
+        if (refreshToken !== undefined) {
+            dispatch(logoutUserAsync(refreshToken))
+            removeCookie('accessToken');
+            removeCookie('refreshToken');
+        } else {
+            dispatch(logoutAction());
+            removeCookie('accessToken');
+            removeCookie('refreshToken');
+            
+        }
+
+    }
+
     return (
         <section className={styles.profile}>
             <nav className={styles.navigation}>
@@ -40,7 +57,7 @@ function Profile() {
                 } to='/profile/orders'>История заказов</NavLink>
                 <NavLink className={({ isActive }) =>
                     isActive ? styles.active : styles.link
-                } to='/'>Выход</NavLink>
+                } onClick={() => logout(refreshToken)}>Выход</NavLink>
             </nav>
 
             <div>
@@ -53,7 +70,7 @@ function Profile() {
                     extraClass={styles.input}
                     onIconClick={() => {
                         if (name !== null) {
-                            dispatch(updateUserAsync(token, {"name": name}))
+                            dispatch(updateUserAsync(token, { "name": name }))
                         }
                     }}
                     onChange={handleChangeName}
@@ -68,7 +85,7 @@ function Profile() {
                     onChange={handleChangeEmail}
                     onIconClick={() => {
                         if (email !== null) {
-                            dispatch(updateUserAsync(token, {"email": email}))
+                            dispatch(updateUserAsync(token, { "email": email }))
                         }
                     }}
                 />
@@ -81,7 +98,7 @@ function Profile() {
                     onChange={handleChangePassword}
                     onIconClick={() => {
                         if (password !== null) {
-                            dispatch(updateUserAsync(token, {"password": password}))
+                            dispatch(updateUserAsync(token, { "password": password }))
                         }
                     }}
                 />

@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_ERROR, GET_USER, USER_TOKENS } from "../actions/auth";
+import { AUTH_USER, AUTH_ERROR, GET_USER, USER_TOKENS, USER_LOGOUT } from "../actions/auth";
 
 const initialState = {
     user: null,
@@ -42,6 +42,15 @@ export const authReducer = (state= initialState, action) => {
                 ...state,
                 accessToken: tokens.accessToken,
                 refreshToken: tokens.refreshToken
+            }
+        }
+        case USER_LOGOUT: {
+            return {
+                ...state,
+                accessToken: null, 
+                refreshToken: null,
+                user: null,
+                isUserAuth: false
             }
         }
         default: {

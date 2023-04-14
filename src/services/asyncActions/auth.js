@@ -1,5 +1,5 @@
-import { authAction, isErrorAction, getUserAction, getTokensAction } from "../actions/auth";
-import { registerUser, login, getUser, refreshToken, updateUserApi } from "../../utils/ingredientsApi";
+import { authAction, isErrorAction, getUserAction, getTokensAction, logoutAction } from "../actions/auth";
+import { registerUser, login, getUser, refreshToken, updateUserApi, logout } from "../../utils/ingredientsApi";
 
 export const registerUserAsync = (email, password, userName) => {
     return function (dispatch) {
@@ -58,5 +58,12 @@ export const updateUserAsync = (accessToken, changesInfo) => {
         updateUserApi(accessToken, changesInfo)
         .then(res => dispatch(getUserAction(res.user)))
         .catch(err => console.log(err))
+    }
+}
+
+export const logoutUserAsync = (token) => {
+    return function (dispatch) {
+        logout(token)
+        .then(res => dispatch(logoutAction()))
     }
 }

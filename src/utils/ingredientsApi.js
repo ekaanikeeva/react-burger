@@ -110,5 +110,17 @@ export const updateUserApi = (token, updateInfo) => {
          authorization: token
         },
         body: JSON.stringify(updateInfo)
-       }).then(_checkResponse)
+    }).then(_checkResponse)
+}
+
+export const logout = (refresh) => {
+    return fetch(`${stellarUrl}/auth/logout`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify({
+            "token": `${refresh}`
+        })
+    }).then(_checkResponse)
 }
