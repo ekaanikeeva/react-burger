@@ -57,7 +57,7 @@ function Profile() {
                 } to='/profile/orders'>История заказов</NavLink>
                 <NavLink className={({ isActive }) =>
                     isActive ? styles.active : styles.link
-                } onClick={() => logout(refreshToken)}>Выход</NavLink>
+                } onClick={() => logout(refreshToken)} to='/'>Выход</NavLink>
             </nav>
 
             <div>
