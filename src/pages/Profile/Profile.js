@@ -1,5 +1,5 @@
 import styles from "./Profile.module.scss";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -16,20 +16,28 @@ function Profile() {
     const [password, setPassword] = useState(user.password || null)
     const [name, setName] = useState(user.name || null)
     const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
+    const [isFocus, setIsFocus] = useState(false);
+    const [values, setValues] = useState(null);
 
     function handleChangeEmail(evt) {
         const value = evt.target.value;
+        const inputName = evt.target.name;
         setEmail(value)
+        setValues({...values, [inputName]: value})
     }
 
     function handleChangeName(evt) {
         const value = evt.target.value;
+        const inputName = evt.target.name;
         setName(value)
+        setValues({...values, [inputName]: value})
     }
 
     function handleChangePassword(evt) {
         const value = evt.target.value;
+        const inputName = evt.target.name;
         setPassword(value)
+        setValues({...values, [inputName]: value})
     }
 
     function logout(refreshToken) {
@@ -43,7 +51,17 @@ function Profile() {
             removeCookie('refreshToken');
             
         }
+    }
 
+    function cancelUserData () {
+        const inputs = document.querySelectorAll('input')
+        inputs.forEach(input => input.value = input.defaultValue);
+        setIsFocus(false)
+    }
+
+    function saveUserData () {
+        dispatch(updateUserAsync(token, values))
+        setIsFocus(false)
     }
 
     return (
@@ -74,6 +92,7 @@ function Profile() {
                         }
                     }}
                     onChange={handleChangeName}
+                    onFocus={() => setIsFocus(true)}
                 />
                 <Input
                     name={'email'}
@@ -83,6 +102,7 @@ function Profile() {
                     extraClass={styles.input}
                     defaultValue={user.email}
                     onChange={handleChangeEmail}
+                    onFocus={() => setIsFocus(true)}
                     onIconClick={() => {
                         if (email !== null) {
                             dispatch(updateUserAsync(token, { "email": email }))
@@ -96,12 +116,19 @@ function Profile() {
                     type={'password'}
                     extraClass={styles.input}
                     onChange={handleChangePassword}
+                    onFocus={() => setIsFocus(true)}
                     onIconClick={() => {
                         if (password !== null) {
                             dispatch(updateUserAsync(token, { "password": password }))
                         }
                     }}
                 />
+                <div className={styles.edit__buttons}>
+                    <button type="button" className={isFocus ? styles.cancel : styles.hidden}
+                    onClick={cancelUserData}>Отмена</button>
+                    <button type="button" className={isFocus ? styles.save : styles.hidden}
+                    onClick={saveUserData}>Сохранить</button>
+                </div>
             </div>
         </section>
     )
