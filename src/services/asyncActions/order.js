@@ -3,9 +3,9 @@ import { getOrderNumberAction, orderErrorAction } from "../actions/orderActions"
 import { clearConstructorAction } from "../actions/burgerConstructorActions";
 import { clearIngredientsCount } from "../actions/ingredientsActions";
 
-export const orderNumberAsync = (idArray) => {
+export const orderNumberAsync = (idArray, token) => {
     return function (dispatch) {
-        postOrderApi(idArray)
+        postOrderApi(idArray, token)
             .then((res) => dispatch(getOrderNumberAction(res.order.number)))
             .then(() => {
                 dispatch(clearConstructorAction())

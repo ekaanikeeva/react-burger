@@ -23,6 +23,7 @@
     line-height: 24px;
     color: #8585AD;
     text-decoration: none;
+    justify-content: end;
 
     svg {
         margin-right: 9px;
@@ -44,7 +45,7 @@
 }
 
 
-.burgerLink {
+.activeLink {
     composes: link;
     color: #F2F2F3;
 }
