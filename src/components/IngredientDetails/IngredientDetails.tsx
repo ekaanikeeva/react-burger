@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react'
+import { useMemo, FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
+import { IRootState } from '../../services/reducers/rootReducer';
 
-function IngredientDetails() {
-    const dispatch = useDispatch();
+const IngredientDetails: FC = () => {
+    type State = { a: string };
+    type AppDispatch = ThunkDispatch<State, any, AnyAction>;
+
+    const dispatch: AppDispatch = useDispatch();
     const { ingredientId } = useParams()
-    const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
-    const currentIngredient = ingredients.find(item => item._id === ingredientId)
+    const ingredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
+    const currentIngredient = ingredients.find((item: any) => item._id === ingredientId)
 
     useMemo(() => {
         dispatch(ingredientsAsync())
@@ -43,16 +49,5 @@ function IngredientDetails() {
         </>
     )
 }
-
-// IngredientDetails.propTypes = {
-//     currentIngredient: PropTypes.shape({
-//         image: PropTypes.string.isRequired,
-//         name: PropTypes.string.isRequired,
-//         calories: PropTypes.number.isRequired,
-//         fat: PropTypes.number.isRequired,
-//         carbohydrates: PropTypes.number.isRequired,
-//         proteins: PropTypes.number.isRequired,
-//     }.isRequired)
-// }
 
 export default IngredientDetails;
