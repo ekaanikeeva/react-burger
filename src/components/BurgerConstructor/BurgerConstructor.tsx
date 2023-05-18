@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext, useEffect } from "react";
+import { useState, useMemo, useContext, useEffect, FunctionComponent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import styles from "./BurgerConstructor.module.scss";
@@ -11,24 +11,47 @@ import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 import { useCookies } from 'react-cookie';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { IRootState } from '../../services/reducers/rootReducer';
 
-function BurgerConstructor() {
-    const dispatch = useDispatch();
+
+const BurgerConstructor: FunctionComponent = () => {
+    type State = { a: string };
+    type AppDispatch = ThunkDispatch<State, any, AnyAction>;
+    interface ingredientI {
+        _id: number,
+        type: string,
+        price: number,
+        constructorId: number,
+        name: string,
+        image: string,
+        count: number,
+        calories: number,
+        carbohydrates: number,
+    }
+
+    type itemI = {
+        item: ingredientI
+    }
+
+
+    const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
+    const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
     const [isOpen, setIsOpen] = useState(false);
-    const orderNumber = useSelector(store => store.orderReducer.order);
-    const ingredients = useSelector(store => (store.burgerConstructorReducer.constructorIngredients));
-    const isAuth = useSelector(store => store.authReducer.isUserAuth);
+    const orderNumber = useSelector((store: IRootState) => store.orderReducer.order);
+    const ingredients = useSelector((store: IRootState) => (store.burgerConstructorReducer.constructorIngredients));
+    const isAuth = useSelector((store: IRootState) => store.authReducer.isUserAuth);
 
     const [movedIngredient, setMovedIngredient] = useState(null)
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
-        drop(item) {
-            const itemCopy = JSON.parse(JSON.stringify(item.item));
+        drop(item: itemI) {
+            const itemCopy:ingredientI = JSON.parse(JSON.stringify(item.item));
 
-            const burgerBun = ingredients?.find(el => el.type === 'bun')
+            const burgerBun = ingredients?.find((el:ingredientI) => el.type === 'bun')
             if (burgerBun !== undefined && itemCopy.type === 'bun') {
                 dispatch(removeConstructorIngredientAction(burgerBun.constructorId))
                 dispatch(decreaseIngredientCountAction(burgerBun._id))
@@ -46,14 +69,14 @@ function BurgerConstructor() {
     });
 
 
-    const handleSubmit = (evt) => {
+    const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
 
         if (isAuth) {
             const allIngredientsArray = [];
             allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun)
 
-            const idArray = allIngredientsArray.map(item => item._id)
+            const idArray = allIngredientsArray.map((item: ingredientI) => item._id)
 
             dispatch(orderNumberAsync(idArray, cookies.accessToken))
             setIsOpen(true)
@@ -65,11 +88,11 @@ function BurgerConstructor() {
         setIsOpen(false)
     }
 
-    const currentBun = useMemo(() => ingredients.find(item => item.type === 'bun'), [ingredients]);
+    const currentBun = useMemo(() => ingredients.find((item:ingredientI) => item.type === 'bun'), [ingredients]);
 
-    const ingredientsWithoutBuns = useMemo(() => ingredients.filter(item => item.type !== 'bun'), [ingredients])
+    const ingredientsWithoutBuns = useMemo(() => ingredients.filter((item:ingredientI) => item.type !== 'bun'), [ingredients])
 
-    const priceCount = useMemo(() => ingredients.reduce((total, item) => {
+    const priceCount = useMemo(() => ingredients.reduce((total:number, item:ingredientI) => {
         if (item.type !== 'bun') {
             return total + item.price
         } else if (currentBun._id === item._id) return total + (item.price * 2)
@@ -90,7 +113,7 @@ function BurgerConstructor() {
                     />}
             </div>
             <ul className={styles.ingredientsList} >
-                {ingredientsWithoutBuns.map((item, index) => {
+                {ingredientsWithoutBuns.map((item: ingredientI, index:number) => {
                     return (
                         <ConstructorIngredient key={item.constructorId} item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient} />
                     )
