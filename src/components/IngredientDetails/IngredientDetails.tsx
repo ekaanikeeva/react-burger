@@ -7,12 +7,11 @@ import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { IRootState } from '../../services/reducers/rootReducer';
+import { TAppDispatch } from "../../utils/constants";
 
 const IngredientDetails: FC = () => {
-    type State = { a: string };
-    type AppDispatch = ThunkDispatch<State, any, AnyAction>;
 
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch: TAppDispatch = useDispatch();
     const { ingredientId } = useParams()
     const ingredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
     const currentIngredient = ingredients.find((item: any) => item._id === ingredientId)

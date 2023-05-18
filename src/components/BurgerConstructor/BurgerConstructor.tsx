@@ -14,29 +14,15 @@ import { useCookies } from 'react-cookie';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { IRootState } from '../../services/reducers/rootReducer';
-
+import { IIngredient, TAppDispatch } from "../../utils/constants";
 
 const BurgerConstructor: FunctionComponent = () => {
-    type State = { a: string };
-    type AppDispatch = ThunkDispatch<State, any, AnyAction>;
-    interface ingredientI {
-        _id: number,
-        type: string,
-        price: number,
-        constructorId: number,
-        name: string,
-        image: string,
-        count: number,
-        calories: number,
-        carbohydrates: number,
-    }
-
     type itemI = {
-        item: ingredientI
+        item: IIngredient
     }
 
 
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch: TAppDispatch = useDispatch();
     const navigate = useNavigate();
 
     const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
@@ -49,9 +35,9 @@ const BurgerConstructor: FunctionComponent = () => {
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item: itemI) {
-            const itemCopy:ingredientI = JSON.parse(JSON.stringify(item.item));
+            const itemCopy:IIngredient = JSON.parse(JSON.stringify(item.item));
 
-            const burgerBun = ingredients?.find((el:ingredientI) => el.type === 'bun')
+            const burgerBun = ingredients?.find((el:IIngredient) => el.type === 'bun')
             if (burgerBun !== undefined && itemCopy.type === 'bun') {
                 dispatch(removeConstructorIngredientAction(burgerBun.constructorId))
                 dispatch(decreaseIngredientCountAction(burgerBun._id))
@@ -76,7 +62,7 @@ const BurgerConstructor: FunctionComponent = () => {
             const allIngredientsArray = [];
             allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun)
 
-            const idArray = allIngredientsArray.map((item: ingredientI) => item._id)
+            const idArray = allIngredientsArray.map((item: IIngredient) => item._id)
 
             dispatch(orderNumberAsync(idArray, cookies.accessToken))
             setIsOpen(true)
@@ -88,11 +74,11 @@ const BurgerConstructor: FunctionComponent = () => {
         setIsOpen(false)
     }
 
-    const currentBun = useMemo(() => ingredients.find((item:ingredientI) => item.type === 'bun'), [ingredients]);
+    const currentBun = useMemo(() => ingredients.find((item:IIngredient) => item.type === 'bun'), [ingredients]);
 
-    const ingredientsWithoutBuns = useMemo(() => ingredients.filter((item:ingredientI) => item.type !== 'bun'), [ingredients])
+    const ingredientsWithoutBuns = useMemo(() => ingredients.filter((item:IIngredient) => item.type !== 'bun'), [ingredients])
 
-    const priceCount = useMemo(() => ingredients.reduce((total:number, item:ingredientI) => {
+    const priceCount = useMemo(() => ingredients.reduce((total:number, item:IIngredient) => {
         if (item.type !== 'bun') {
             return total + item.price
         } else if (currentBun._id === item._id) return total + (item.price * 2)
@@ -113,7 +99,7 @@ const BurgerConstructor: FunctionComponent = () => {
                     />}
             </div>
             <ul className={styles.ingredientsList} >
-                {ingredientsWithoutBuns.map((item: ingredientI, index:number) => {
+                {ingredientsWithoutBuns.map((item: IIngredient, index:number) => {
                     return (
                         <ConstructorIngredient key={item.constructorId} item={item} index={index} movedIngredient={movedIngredient} setMovedIngredient={setMovedIngredient} />
                     )
