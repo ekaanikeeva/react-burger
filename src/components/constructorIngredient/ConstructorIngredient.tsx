@@ -10,7 +10,7 @@ type TConstructorIngredientProps = {
     item: IIngredient,
     index: number,
     movedIngredient: IIngredient | null,
-    setMovedIngredient: any
+    setMovedIngredient: Function
 }
 
 
