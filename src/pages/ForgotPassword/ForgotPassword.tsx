@@ -1,20 +1,23 @@
 import styles from './ForgotPassword.module.scss';
 import { useCookies } from 'react-cookie';
-import PropTypes from 'prop-types';
 import Form from '../../components/Form/Form';
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FunctionComponent, ChangeEvent, FormEvent } from 'react';
 import { resetPassword } from '../../utils/ingredientsApi';
 import { useValidation } from '../../utils/Validate';
 
-function ForgotPassword({isVisited}) {
+type TProps = {
+    isVisited: (a: boolean) => void
+}
+
+const ForgotPassword:FunctionComponent<TProps> = ({isVisited}) => {
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
-    const [email, setEmail] = useState(null)
+    const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
+    const [email, setEmail] = useState<null | string>(null)
     const { values, errors, isValid } = useValidation();
 
-    function handleChange(evt) {
-        const target = evt.target;
+    function handleChange(evt: ChangeEvent) {
+        const target = evt.target as HTMLInputElement;
         const name = target.name;
         const value = target.value;
         setEmail(value)
@@ -22,7 +25,7 @@ function ForgotPassword({isVisited}) {
         
     }
 
-    function handleReset(e) {
+    function handleReset(e: FormEvent) {
         e.preventDefault()
         setCookie("isUserVisited", true, {maxAge: 500})
         resetPassword(values.email)
@@ -58,8 +61,5 @@ function ForgotPassword({isVisited}) {
     )
 }
 
-ForgotPassword.propTypes = {
-    isVisited: PropTypes.func
-}
 
 export default ForgotPassword;
