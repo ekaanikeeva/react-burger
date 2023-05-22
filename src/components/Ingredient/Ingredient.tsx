@@ -1,13 +1,11 @@
 import React, { useEffect, FunctionComponent } from 'react';
 import { useDrag } from "react-dnd";
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/ingredientPropTypes';
 import styles from './Ingredient.module.scss';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "react-redux";
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { IIngredient } from "../../utils/constants";
+import { IIngredient } from "../../utils/tsUtils";
 
 type TItem = {
     item: IIngredient

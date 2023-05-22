@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import { useMemo, FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { IRootState } from '../../services/reducers/rootReducer';
-import { TAppDispatch } from "../../utils/constants";
+import { TAppDispatch } from "../../utils/tsUtils";
 
 const IngredientDetails: FC = () => {
 

@@ -1,7 +1,7 @@
 import React, {FunctionComponent, LegacyRef} from "react";
 import styles from './IngredientsList.module.scss';
 import Ingredient from '../Ingredient/Ingredient';
-import { IIngredient } from "../../utils/constants";
+import { IIngredient } from "../../utils/tsUtils";
 
 type TProps = {
     title: string,

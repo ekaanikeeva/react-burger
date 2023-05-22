@@ -7,7 +7,7 @@ import IngredientsList from '../IngredientsList/IngredientsList';
 import { useSelector, useDispatch } from 'react-redux';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
-import { IIngredient, TAppDispatch } from '../../utils/constants';
+import { IIngredient, TAppDispatch } from '../../utils/tsUtils';
 import { IRootState } from '../../services/reducers/rootReducer';
 
 function BurgerIngredients() {

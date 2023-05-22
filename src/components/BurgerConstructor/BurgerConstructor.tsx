@@ -11,10 +11,9 @@ import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 import { useCookies } from 'react-cookie';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+
 import { IRootState } from '../../services/reducers/rootReducer';
-import { IIngredient, TAppDispatch } from "../../utils/constants";
+import { IIngredient, TAppDispatch } from "../../utils/tsUtils";
 
 const BurgerConstructor: FunctionComponent = () => {
     type itemI = {
