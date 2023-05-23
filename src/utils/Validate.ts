@@ -10,8 +10,8 @@ interface IObject {
 let obj = {} as IObject
 
 export function useValidation() {
-  const [values, setValues] = React.useState<any>({});
-  const [errors, setErrors] = React.useState<any>({});
+  const [values, setValues] = React.useState<Record<string, string>>({});
+  const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [isValid, setIsValid] = React.useState<boolean>(false);
 
   const handleChange = (event:ChangeEvent) => {
