@@ -1,6 +1,6 @@
 export const stellarUrl = 'https://norma.nomoreparties.space/api';
 
-const _checkResponse = (res) => {
+const _checkResponse = (res:any) => {
     if (res.ok) return res.json();
     else return Promise.reject(res.status);
 };
@@ -15,7 +15,7 @@ export const getIngredientsApi = () => {
 };
 
 
-export const postOrderApi = (idArray, token) => {
+export const postOrderApi = (idArray:number, token:string) => {
     return fetch(`${stellarUrl}/orders`, {
         method: 'POST',
         headers: {
@@ -27,7 +27,7 @@ export const postOrderApi = (idArray, token) => {
         .then(_checkResponse)
 };
 
-export const resetPassword = (email) => {
+export const resetPassword = (email:string) => {
     return fetch(`${stellarUrl}/password-reset`, {
         method: 'POST',
         headers: {
@@ -38,7 +38,7 @@ export const resetPassword = (email) => {
         .then(_checkResponse)
 }
 
-export const changePassword = (password, token) => {
+export const changePassword = (password:string | null, token:string | null) => {
     return fetch(`${stellarUrl}/password-reset/reset`, {
         method: 'POST',
         headers: {
@@ -52,7 +52,7 @@ export const changePassword = (password, token) => {
         .then(_checkResponse)
 }
 
-export const registerUser = (email, password, userName) => {
+export const registerUser = (email:string, password:string, userName:string) => {
     return fetch(`${stellarUrl}/auth/register`, {
         method: 'POST',
         headers: {
@@ -66,7 +66,7 @@ export const registerUser = (email, password, userName) => {
     }).then(_checkResponse)
 }
 
-export const login = (email, password) => {
+export const login = (email:string, password:string) => {
     return fetch(`${stellarUrl}/auth/login`, {
         method: 'POST',
         headers: {
@@ -79,7 +79,7 @@ export const login = (email, password) => {
     }).then(_checkResponse)
 }
 
-export const getUser = (token) => {
+export const getUser = (token:string) => {
     return fetch(`${stellarUrl}/auth/user`, {
         method: "GET",
         headers: {
@@ -89,7 +89,7 @@ export const getUser = (token) => {
     }).then(_checkResponse)
 }
 
-export const refreshToken = (access, refresh) => {
+export const refreshToken = (access:string, refresh:string) => {
     return fetch(`${stellarUrl}/auth/token`, {
         method: 'POST',
         headers: {
@@ -102,7 +102,7 @@ export const refreshToken = (access, refresh) => {
        }).then(_checkResponse)
 }
 
-export const updateUserApi = (token, updateInfo) => {
+export const updateUserApi = (token:string, updateInfo:Record<string, string>) => {
     return fetch(`${stellarUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -113,7 +113,7 @@ export const updateUserApi = (token, updateInfo) => {
     }).then(_checkResponse)
 }
 
-export const logout = (refresh) => {
+export const logout = (refresh:string) => {
     return fetch(`${stellarUrl}/auth/logout`, {
         method: 'POST',
         headers: {
