@@ -6,7 +6,7 @@ export type TState = { a: string };
 export type TAppDispatch = ThunkDispatch<TState, any, AnyAction>;
 
 export interface IIngredient {
-    _id: number,
+    _id: string,
     type: string,
     price: number,
     constructorId: number,

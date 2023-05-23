@@ -5,14 +5,14 @@ import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { IRootState } from '../../services/reducers/rootReducer';
-import { TAppDispatch } from "../../utils/tsUtils";
+import { TAppDispatch, IIngredient } from "../../utils/tsUtils";
 
 const IngredientDetails: FC = () => {
 
     const dispatch: TAppDispatch = useDispatch();
-    const { ingredientId } = useParams()
+    const { ingredientId } = useParams<{ ingredientId: string }>()
     const ingredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
-    const currentIngredient = ingredients.find((item: any) => item._id === ingredientId)
+    const currentIngredient = ingredients.find((item: IIngredient) => item._id === ingredientId)
 
     useMemo(() => {
         dispatch(ingredientsAsync())
