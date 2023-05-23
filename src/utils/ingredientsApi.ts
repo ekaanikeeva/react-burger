@@ -14,7 +14,6 @@ interface IResponse {
 }
 
 const _checkResponse = (res:IResponse) => {
-    console.log(res)
     if (res.ok) return res.json();
     else return Promise.reject(res.status);
 };
