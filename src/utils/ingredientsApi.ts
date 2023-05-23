@@ -1,6 +1,20 @@
 export const stellarUrl = 'https://norma.nomoreparties.space/api';
 
-const _checkResponse = (res:any) => {
+interface IResponse {
+    body: ReadableStream<Uint8Array> | null,
+    bodyUsed: boolean,
+    headers: Headers,
+    ok: boolean,
+    redirected: boolean,
+    status: number,
+    statusText: string,
+    type: ResponseType,
+    url: string,
+    json(): Promise<any>
+}
+
+const _checkResponse = (res:IResponse) => {
+    console.log(res)
     if (res.ok) return res.json();
     else return Promise.reject(res.status);
 };
