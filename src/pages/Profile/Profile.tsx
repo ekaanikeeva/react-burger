@@ -1,46 +1,51 @@
 import styles from "./Profile.module.scss";
-import { useEffect, useState } from 'react';
+import { FunctionComponent, useState, ChangeEvent } from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { updateUserAsync, logoutUserAsync } from "../../services/asyncActions/auth";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logoutAction } from "../../services/actions/auth";
+import { TAppDispatch } from "../../utils/tsUtils";
+import { IRootState } from '../../services/reducers/rootReducer';
 
-function Profile() {
-    const dispatch = useDispatch();
-    const user = useSelector(store => store.authReducer.user);
-    const token = useSelector(store => store.authReducer.accessToken);
-    const refreshToken = useSelector(store => store.authReducer.refreshToken);
+const Profile:FunctionComponent = () => {
+    const dispatch:TAppDispatch = useDispatch();
+    const user = useSelector((store:IRootState) => store.authReducer.user);
+    const token = useSelector((store:IRootState) => store.authReducer.accessToken);
+    const refreshToken = useSelector((store:IRootState) => store.authReducer.refreshToken);
     const [email, setEmail] = useState(user.email || null)
     const [password, setPassword] = useState(user.password || null)
     const [name, setName] = useState(user.name || null)
-    const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
+    const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
     const [isFocus, setIsFocus] = useState(false);
-    const [values, setValues] = useState(null);
+    const [values, setValues] = useState<Record<string, string> | null>(null);
 
-    function handleChangeEmail(evt) {
-        const value = evt.target.value;
-        const inputName = evt.target.name;
+    function handleChangeEmail(evt:ChangeEvent) {
+        const target = evt.target as HTMLInputElement;
+        const value = target.value;
+        const inputName = target.name;
         setEmail(value)
         setValues({...values, [inputName]: value})
     }
 
-    function handleChangeName(evt) {
-        const value = evt.target.value;
-        const inputName = evt.target.name;
+    function handleChangeName(evt:ChangeEvent) {
+        const target = evt.target as HTMLInputElement;
+        const value = target.value;
+        const inputName = target.name;
         setName(value)
         setValues({...values, [inputName]: value})
     }
 
-    function handleChangePassword(evt) {
-        const value = evt.target.value;
-        const inputName = evt.target.name;
+    function handleChangePassword(evt:ChangeEvent) {
+        const target = evt.target as HTMLInputElement;
+        const value = target.value;
+        const inputName = target.name;
         setPassword(value)
         setValues({...values, [inputName]: value})
     }
 
-    function logout(refreshToken) {
+    function logout(refreshToken: string | undefined) {
         if (refreshToken !== undefined) {
             dispatch(logoutUserAsync(refreshToken))
             removeCookie('accessToken');
@@ -80,6 +85,7 @@ function Profile() {
 
             <div>
                 <Input
+                    value={name}
                     name={'name'}
                     icon={'EditIcon'}
                     placeholder={'Имя'}
@@ -95,6 +101,7 @@ function Profile() {
                     onFocus={() => setIsFocus(true)}
                 />
                 <Input
+                    value={email}
                     name={'email'}
                     icon={'EditIcon'}
                     placeholder={'Логин'}
@@ -122,6 +129,7 @@ function Profile() {
                             dispatch(updateUserAsync(token, { "password": password }))
                         }
                     }}
+                    value={password}
                 />
                 <div className={styles.edit__buttons}>
                     <button type="button" className={isFocus ? styles.cancel : styles.hidden}
