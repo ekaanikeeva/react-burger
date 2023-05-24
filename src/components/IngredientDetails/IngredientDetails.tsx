@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react'
+import { useMemo, FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import styles from './IngredientDetails.module.scss';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
+import { IRootState } from '../../services/reducers/rootReducer';
+import { TAppDispatch, IIngredient } from "../../utils/tsUtils";
 
-function IngredientDetails() {
-    const dispatch = useDispatch();
-    const { ingredientId } = useParams()
-    const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
-    const currentIngredient = ingredients.find(item => item._id === ingredientId)
+const IngredientDetails: FC = () => {
+
+    const dispatch: TAppDispatch = useDispatch();
+    const { ingredientId } = useParams<{ ingredientId: string }>()
+    const ingredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
+    const currentIngredient = ingredients.find((item: IIngredient) => item._id === ingredientId)
 
     useMemo(() => {
         dispatch(ingredientsAsync())
@@ -43,16 +46,5 @@ function IngredientDetails() {
         </>
     )
 }
-
-// IngredientDetails.propTypes = {
-//     currentIngredient: PropTypes.shape({
-//         image: PropTypes.string.isRequired,
-//         name: PropTypes.string.isRequired,
-//         calories: PropTypes.number.isRequired,
-//         fat: PropTypes.number.isRequired,
-//         carbohydrates: PropTypes.number.isRequired,
-//         proteins: PropTypes.number.isRequired,
-//     }.isRequired)
-// }
 
 export default IngredientDetails;

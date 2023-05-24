@@ -1,29 +1,32 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { FunctionComponent,  DragEvent, MouseEvent } from "react";
 import styles from "./ConstructorIngredient.module.scss";
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from "../../utils/ingredientPropTypes";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
+import { IIngredient } from "../../utils/tsUtils";
 
-function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredient }) {
+type TConstructorIngredientProps = {
+    item: IIngredient,
+    index: number,
+    movedIngredient: IIngredient | null,
+    setMovedIngredient: Function
+}
+
+
+const ConstructorIngredient:FunctionComponent<TConstructorIngredientProps> = ({ item, index, movedIngredient, setMovedIngredient }) => {
     const dispatch = useDispatch();
 
-    function dragStartHandler(e, index, item) {
+    function dragStartHandler(e:DragEvent, index: number, item: IIngredient) {
         dispatch(getMovedIngredientAction(index))
         setMovedIngredient({ item: item, index: index })
     }
 
-    function dragEndHandler(e) {
-        e.target.style.opacity = 1
-    }
-
-    function dragOverHandler(e) {
+    function dragOverHandler(e:DragEvent) {
         e.preventDefault();
-        e.target.style.opacity = .8;
     }
 
-    function dropHandler(e, index, item) {
+    function dropHandler(e:DragEvent, index: number, item: IIngredient) {
         e.preventDefault();
         if (movedIngredient !== null) {
             dispatch(moveConstructorIngredientAction({ dropitem: item, dropindex: index, moveditem: movedIngredient }))
@@ -32,7 +35,7 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
         
     }
 
-    function removeIngredient(item) {
+    function removeIngredient(item: IIngredient) {
         dispatch(removeConstructorIngredientAction(item.constructorId))
         dispatch(decreaseIngredientCountAction(item._id))
     }
@@ -41,9 +44,9 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
         <li draggable={true}
             className={styles.ingredient}
             onDragStart={(e) => dragStartHandler(e, index, item)}
-            onDragLeave={(e) => dragEndHandler(e)}
+            // onDragLeave={(e) => dragEndHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
-            onDragEnd={(e) => dragEndHandler(e)}
+            // onDragEnd={(e) => dragEndHandler(e)}
             onDrop={(e) => dropHandler(e, index, item)}
         >
                 <DragIcon type="primary" />
@@ -53,18 +56,11 @@ function ConstructorIngredient({ item, index, movedIngredient, setMovedIngredien
                 text={item.name}
                 price={item.price}
                 thumbnail={item.image}
-                handleClose={(e) => removeIngredient(item)}
+                handleClose={() => removeIngredient(item)}
                 
             />
         </li>
     )
-}
-
-ConstructorIngredient.propTypes = {
-    item: ingredientPropTypes,
-    index: PropTypes.number.isRequired,
-    movedIngredient: PropTypes.any.isRequired,
-    setMovedIngredient: PropTypes.func.isRequired,
 }
 
 export default ConstructorIngredient;

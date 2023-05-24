@@ -1,45 +1,28 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from "react-cookie";
-import { useNavigate } from 'react-router-dom';
-import styles from './Register.module.scss';
+import { useDispatch } from 'react-redux';
+import { FunctionComponent, ChangeEvent, FormEvent } from 'react';
+import styles from './Login.module.scss';
 import Form from '../../components/Form/Form';
-import { registerUserAsync } from '../../services/asyncActions/auth';
+import { authUserAsync } from '../../services/asyncActions/auth';
 import { useValidation } from '../../utils/Validate';
+import { TAppDispatch } from '../../utils/tsUtils';
 
-function Register() {
-    const dispatch = useDispatch();
+const Login:FunctionComponent = () => {
+    const dispatch: TAppDispatch = useDispatch();
     const { values, handleChange, errors, isValid } = useValidation();
 
-    function handleSubmit(e) {
+
+    function handleSubmit(e: FormEvent) {
         e.preventDefault()
 
-        dispatch(registerUserAsync(values.email, values.password, values.name))
+        dispatch(authUserAsync(values.email, values.password))
     }
 
 
     return (
         <Form
-            title="Регистрация" submitTitle="Зарегистрироваться" onSubmit={handleSubmit}
-            link="/login" linkQuestion="Уже зарегистрированы?" linkText="Войти"
+            title="Вход" submitTitle="Войти" onSubmit={handleSubmit}
+            link="/register" linkQuestion="Вы — новый пользователь?" linkText="Зарегистрироваться"
         >
-            <input
-                type="text"
-                name="name"
-                className={styles.input}
-                placeholder="Имя"
-                onChange={handleChange}
-                required
-            />
-            <span
-                className={
-                    errors["name"] === ""
-                        ? styles.error
-                        : styles.error_active
-                }
-            >
-                {errors["name"]}
-            </span>
             <input
                 type="email"
                 name="email"
@@ -54,8 +37,8 @@ function Register() {
             <span
                 className={
                     errors["email"] === ""
-                        ? styles.error
-                        : styles.error_active
+                    ? styles.error
+                    : styles.error_active
                 }
             >
                 {errors["email"]}
@@ -81,4 +64,4 @@ function Register() {
     )
 }
 
-export default Register;
+export default Login;

@@ -1,9 +1,9 @@
-import React from "react";
+import { FunctionComponent } from "react";
 import styles from './AppHeader.module.scss'
 import { Logo, BurgerIcon, ProfileIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, NavLink } from "react-router-dom";
 
-function AppHeader() {
+const AppHeader:FunctionComponent = () => {
     return (
         <header className={styles.header}>
             <nav className={styles.navigation}>

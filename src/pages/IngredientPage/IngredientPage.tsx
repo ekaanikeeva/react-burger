@@ -1,7 +1,7 @@
 import styles from './IngredientPage.module.scss';
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
-
-function IngredientPage () {
+import { FunctionComponent } from 'react';
+const IngredientPage:FunctionComponent = () => {
     return (
         <section className={styles.ingredientSection}>
             <IngredientDetails />

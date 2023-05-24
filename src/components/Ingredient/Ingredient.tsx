@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { useDrag } from "react-dnd";
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/ingredientPropTypes';
 import styles from './Ingredient.module.scss';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from "react-redux";
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { IIngredient } from "../../utils/tsUtils";
 
-function Ingredient({ item }) {
+type TItem = {
+    item: IIngredient
+}
+
+const Ingredient:FunctionComponent<TItem> = ({ item }) => {
     const location = useLocation();
     const dispatch = useDispatch();
     const ingredientId = item['_id'];
@@ -36,8 +39,5 @@ function Ingredient({ item }) {
     )
 }
 
-Ingredient.propTypes = {
-    item: ingredientPropTypes
-}
 
 export default Ingredient;

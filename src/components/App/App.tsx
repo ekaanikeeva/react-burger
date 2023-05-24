@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FunctionComponent } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, BrowserRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.scss';
@@ -13,23 +13,25 @@ import IngredientPage from '../../pages/IngredientPage/IngredientPage';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import { useCookies } from 'react-cookie';
 import { getUserAsync } from '../../services/asyncActions/auth';
-import { ProtectedRouteElement, ProtectedRouteUnAuth } from '../ProtectedRoute';
+import { ProtectedRouteElement } from '../ProtectedRoute';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 import { isErrorAction } from '../../services/actions/auth';
 import PageNotFound from '../../pages/PageNotFound/PageNotFound';
 import Modal from '../Modal/Modal';
 import Preloader from '../Preloader/Preloader';
+import { IRootState } from '../../services/reducers/rootReducer';
+import { TAppDispatch } from '../../utils/tsUtils';
 
-function App() {
-  const [cookies, setCookie, removeCookie] = useCookies(['stellarBurger']);
+const App:FunctionComponent = () => {
+  const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
 
-  const currentIngredient = useSelector(store => store.currentIngredientReducer.currentIngredient)
-  const isAuth = useSelector(store => store.authReducer.isUserAuth);
-  const isLoading = useSelector(store => store.authReducer.isLoading);
-  const accessTokenSelector = useSelector(store => store.authReducer.accessToken);
-  const refreshTokenSelector = useSelector(store => store.authReducer.refreshToken);
+  const currentIngredient = useSelector((store:IRootState) => store.currentIngredientReducer.currentIngredient)
+  const isAuth = useSelector((store:IRootState) => store.authReducer.isUserAuth);
+  const isLoading = useSelector((store:IRootState) => store.authReducer.isLoading);
+  const accessTokenSelector = useSelector((store:IRootState) => store.authReducer.accessToken);
+  const refreshTokenSelector = useSelector((store:IRootState) => store.authReducer.refreshToken);
 
-  const dispatch = useDispatch();
+  const dispatch:TAppDispatch = useDispatch();
   const navigate = useNavigate();
   let { state } = useLocation()
   const location = useLocation();

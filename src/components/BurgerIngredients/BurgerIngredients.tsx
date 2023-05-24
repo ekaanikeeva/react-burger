@@ -7,6 +7,8 @@ import IngredientsList from '../IngredientsList/IngredientsList';
 import { useSelector, useDispatch } from 'react-redux';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
+import { IIngredient, TAppDispatch } from '../../utils/tsUtils';
+import { IRootState } from '../../services/reducers/rootReducer';
 
 function BurgerIngredients() {
 
@@ -32,10 +34,10 @@ function BurgerIngredients() {
         }
     }, [inViewBons, inViewMains, inViewSouces])
 
-    const ingredientsSelector = useSelector(store => store.ingredientsReducer);
-    const isSuccessIngredients = useSelector(store => store.ingredientsReducer.isSuccess)
+    const ingredientsSelector = useSelector((store: IRootState) => store.ingredientsReducer);
+    const isSuccessIngredients = useSelector((store: IRootState) => store.ingredientsReducer.isSuccess)
     const [ingredientsArray, setIngredientsArray] = useState(null)
-    const dispatch = useDispatch();
+    const dispatch: TAppDispatch = useDispatch();
     
     useMemo(() => {
         dispatch(ingredientsAsync())
@@ -50,8 +52,8 @@ function BurgerIngredients() {
         dispatch(getCurrentIngredientAction(null))
     }
 
-    function scrollIntoCurrent(current) {
-        document.querySelector(`${current}`).scrollIntoView({ behavior: "smooth" });
+    function scrollIntoCurrent(current: string) {
+        (document.querySelector(`${current}`)as HTMLElement).scrollIntoView({ behavior: "smooth" });
     }
 
     return (
@@ -70,7 +72,7 @@ function BurgerIngredients() {
                     </Tab>
                 </div>
                 <div id="sauce">
-                    <Tab id="sauce" value='sauce' active={current === sauce} onClick={() => scrollIntoCurrent('#mainList')}>
+                    <Tab value="sauce" active={current === sauce} onClick={() => scrollIntoCurrent('#mainList')}>
                         Начинки
                     </Tab>
                 </div>
