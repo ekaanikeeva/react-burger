@@ -4,12 +4,12 @@ import styles from "./ConstructorIngredient.module.scss";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
-import { IIngredient } from "../../utils/tsUtils";
+import { IIngredient, TMovedItem } from "../../utils/tsUtils";
 
 type TConstructorIngredientProps = {
     item: IIngredient,
     index: number,
-    movedIngredient: IIngredient | null,
+    movedIngredient: TMovedItem | null,
     setMovedIngredient: Function
 }
 

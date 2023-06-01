@@ -15,13 +15,22 @@ export interface IIngredient {
     count: number,
     calories: number,
     carbohydrates: number,
-    fat: number
+    fat: number,
+    image_large?: string,
+    image_mobile?: string,
+    proteins: number,
+    __v: number
+}
+
+export type TMovedItem = {
+    index: number;
+    item: IIngredient;
 }
 
 export interface IMoveConstructorIngredient {
     dropitem: IIngredient, 
     dropindex: number, 
-    moveditem: IIngredient
+    moveditem: TMovedItem
 }
 
 export interface IUser {
