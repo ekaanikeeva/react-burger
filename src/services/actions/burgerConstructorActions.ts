@@ -13,17 +13,17 @@ export interface IGetIngredients {
 
 export interface IAddIngredient {
     readonly type: typeof ADD_CONSTRUCTOR_INGREDIENTS;
-    readonly payload: IIngredient;
+    readonly ingredient: IIngredient;
 }
 
 export interface IRemoveIngredient {
     readonly type: typeof REMOVE_CONSTRUCTOR_INGREDIENT;
-    readonly payload: number;
+    readonly id: number;
 }
 
 export interface IMoveIngredient {
     readonly type: typeof MOVE_CONSTRUCTOR_INGREDIENT;
-    readonly payload: IMoveConstructorIngredient;
+    readonly movedIngredient: IMoveConstructorIngredient;
 }
 
 export interface IGetMovedIngredient {
@@ -36,8 +36,8 @@ export interface IClearConstructor {
 }
 
 export const getConstructorIngredientsAction = (constructorIngredients: IIngredient[]):IGetIngredients => ({ type: GET_CONSTRUCTOR_INGREDIENTS, constructorIngredients });
-export const addConstructorIngredientsAction = (payload:IIngredient):IAddIngredient => ({ type: ADD_CONSTRUCTOR_INGREDIENTS, payload });
-export const removeConstructorIngredientAction = (payload:number):IRemoveIngredient => ({ type: REMOVE_CONSTRUCTOR_INGREDIENT, payload });
-export const moveConstructorIngredientAction = (payload:IMoveConstructorIngredient):IMoveIngredient => ({ type: MOVE_CONSTRUCTOR_INGREDIENT, payload });
-export const getMovedIngredientAction = (movedIndex: number) => ({ type: GET_MOVED_INGREDIENT, movedIndex });
+export const addConstructorIngredientsAction = (ingredient:IIngredient):IAddIngredient => ({ type: ADD_CONSTRUCTOR_INGREDIENTS, ingredient });
+export const removeConstructorIngredientAction = (id:number):IRemoveIngredient => ({ type: REMOVE_CONSTRUCTOR_INGREDIENT, id });
+export const moveConstructorIngredientAction = (movedIngredient:IMoveConstructorIngredient):IMoveIngredient => ({ type: MOVE_CONSTRUCTOR_INGREDIENT, movedIngredient });
+export const getMovedIngredientAction = (movedIndex: number):IGetMovedIngredient => ({ type: GET_MOVED_INGREDIENT, movedIndex });
 export const clearConstructorAction = ():IClearConstructor => ({type: CLEAR_CONSTRUCTOR_INGREDIENTS})
