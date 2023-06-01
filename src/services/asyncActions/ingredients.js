@@ -1,4 +1,4 @@
-import { addIngredietntsAction, getIngredientsSuccessAction, getIngredientsErrorAction } from "../actions/ingredientsActions";
+import { addIngredientsAction, getIngredientsSuccessAction, getIngredientsErrorAction } from "../actions/ingredientsActions";
 import { getIngredientsApi } from "../../utils/ingredientsApi";
 
 export const ingredientsAsync = () => {
@@ -9,7 +9,7 @@ export const ingredientsAsync = () => {
                 item.count = 0;
                 return item;
             })
-            return dispatch(addIngredietntsAction(ingredientsList))
+            return dispatch(addIngredientsAction(ingredientsList))
         })
         .then(() => dispatch(getIngredientsSuccessAction()))
         .catch((err) => {
