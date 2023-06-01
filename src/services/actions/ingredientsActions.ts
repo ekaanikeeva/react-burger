@@ -34,6 +34,14 @@ export interface IClearIngredientsCount {
     readonly type: typeof CLEAR_ALL_INGREDIENTS_COUNT
 }
 
+export type TIngredientsUnion =
+| IGetBurgerIngredients
+| IIncreaseIngredientCount
+| IDecreaseIngredientCount
+| IGetBurgerSuccess
+| IGetBurgerError
+| IClearIngredientsCount;
+
 export const addIngredientsAction = (ingredients:IIngredient[]):IGetBurgerIngredients => ({ type: GET_BURGER_INGREDIENTS, ingredients });
 export const increaseIngredientCountAction = (id:string):IIncreaseIngredientCount => ({ type: INCREASE_INGREDIENT_COUNT, id });
 export const decreaseIngredientCountAction = (id:string):IDecreaseIngredientCount => ({ type: DECREASE_INGREDIENT_COUNT, id});
