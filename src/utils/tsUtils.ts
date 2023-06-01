@@ -26,7 +26,8 @@ export interface IMoveConstructorIngredient {
 
 export interface IUser {
     name: string,
-    email: string
+    email: string,
+    password?: any
 }
 
 export type TAuthUser = {

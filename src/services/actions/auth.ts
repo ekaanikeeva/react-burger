@@ -40,6 +40,7 @@ export type TAuthActionsUnion =
 | IGetUSer
 | IUserTokens
 | IUserUpdate
+| ILogout
 
 export const authAction = (data:TAuthUser):IUserAuth => ({ type: AUTH_USER, data });
 export const isErrorAction = (error:string):IAuthError => ({type: AUTH_ERROR, error});

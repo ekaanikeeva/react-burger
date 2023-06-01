@@ -14,9 +14,9 @@ const Profile:FunctionComponent = () => {
     const user = useSelector((store:IRootState) => store.authReducer.user);
     const token = useSelector((store:IRootState) => store.authReducer.accessToken);
     const refreshToken = useSelector((store:IRootState) => store.authReducer.refreshToken);
-    const [email, setEmail] = useState(user.email || null)
-    const [password, setPassword] = useState(user.password || null)
-    const [name, setName] = useState(user.name || null)
+    const [email, setEmail] = useState<string | null>(user ? user.email : null)
+    const [password, setPassword] = useState<string | null>(user ? user.password : null)
+    const [name, setName] = useState<string | null>(user ? user.name : null)
     const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
     const [isFocus, setIsFocus] = useState(false);
     const [values, setValues] = useState<Record<string, string> | null>(null);
@@ -45,7 +45,7 @@ const Profile:FunctionComponent = () => {
         setValues({...values, [inputName]: value})
     }
 
-    function logout(refreshToken: string | undefined) {
+    function logout(refreshToken: string | null) {
         if (refreshToken !== undefined) {
             dispatch(logoutUserAsync(refreshToken))
             removeCookie('accessToken');
@@ -85,12 +85,11 @@ const Profile:FunctionComponent = () => {
 
             <div>
                 <Input
-                    value={name}
+                    value={name ? name : ''}
                     name={'name'}
                     icon={'EditIcon'}
                     placeholder={'Имя'}
                     type={'text'}
-                    defaultValue={user.name}
                     extraClass={styles.input}
                     onIconClick={() => {
                         if (name !== null) {
@@ -101,13 +100,12 @@ const Profile:FunctionComponent = () => {
                     onFocus={() => setIsFocus(true)}
                 />
                 <Input
-                    value={email}
+                    value={email ? email : ''}
                     name={'email'}
                     icon={'EditIcon'}
                     placeholder={'Логин'}
                     type={'email'}
                     extraClass={styles.input}
-                    defaultValue={user.email}
                     onChange={handleChangeEmail}
                     onFocus={() => setIsFocus(true)}
                     onIconClick={() => {
@@ -129,7 +127,7 @@ const Profile:FunctionComponent = () => {
                             dispatch(updateUserAsync(token, { "password": password }))
                         }
                     }}
-                    value={password}
+                    value={password ? password : ''}
                 />
                 <div className={styles.edit__buttons}>
                     <button type="button" className={isFocus ? styles.cancel : styles.hidden}

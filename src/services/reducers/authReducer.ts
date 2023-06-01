@@ -1,6 +1,16 @@
-import { AUTH_USER, AUTH_ERROR, GET_USER, USER_TOKENS, USER_LOGOUT } from "../actions/auth";
+import { IUser } from "../../utils/tsUtils";
+import { AUTH_USER, AUTH_ERROR, GET_USER, USER_TOKENS, USER_LOGOUT, TAuthActionsUnion } from "../actions/auth";
 
-const initialState = {
+type TAuthState = {
+    user: null | IUser;
+    isUserAuth: boolean;
+    authError: null | string;
+    accessToken?: null | string;
+    refreshToken: null | string;
+    isLoading: boolean;
+}
+
+const initialState:TAuthState = {
     user: null,
     isUserAuth: false,
     authError: null,
@@ -9,10 +19,9 @@ const initialState = {
     isLoading: false
 };
 
-export const authReducer = (state= initialState, action) => {
+export const authReducer = (state= initialState, action:TAuthActionsUnion) => {
     switch (action.type) {
         case AUTH_USER: {
-            
             const userPayload = action.data;
             return {
                 ...state,
