@@ -12,7 +12,8 @@ const initialState = {
 export const authReducer = (state= initialState, action) => {
     switch (action.type) {
         case AUTH_USER: {
-            const userPayload = action.payload;
+            
+            const userPayload = action.data;
             return {
                 ...state,
                 user: userPayload.user,
@@ -24,20 +25,20 @@ export const authReducer = (state= initialState, action) => {
         case AUTH_ERROR: {
             return {
                 ...state,
-                authError: action.payload,
+                authError: action.error,
                 isLoading: true
             }
         }
         case GET_USER: {
             return {
                 ...state,
-                user: action.payload,
+                user: action.user,
                 isUserAuth: true,
                 isLoading: true
             }
         }
         case USER_TOKENS: {
-            const tokens = action.payload
+            const tokens = action.tokens
             return {
                 ...state,
                 accessToken: tokens.accessToken,

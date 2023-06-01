@@ -23,3 +23,20 @@ export interface IMoveConstructorIngredient {
     dropindex: number, 
     moveditem: IIngredient
 }
+
+export interface IUser {
+    name: string,
+    email: string
+}
+
+export type TAuthUser = {
+    accessToken: string;
+    refreshToken: string;
+    success: boolean;
+    user: IUser;
+}
+
+export interface ITokens {
+    accessToken: string;
+    refreshToken: string;
+}
