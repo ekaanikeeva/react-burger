@@ -35,6 +35,14 @@ export interface IClearConstructor {
     readonly type: typeof CLEAR_CONSTRUCTOR_INGREDIENTS;
 }
 
+export type TConstructorUnion =
+| IGetIngredients
+| IAddIngredient
+| IRemoveIngredient
+| IMoveIngredient
+| IGetMovedIngredient
+| IClearConstructor;
+
 export const getConstructorIngredientsAction = (constructorIngredients: IIngredient[]):IGetIngredients => ({ type: GET_CONSTRUCTOR_INGREDIENTS, constructorIngredients });
 export const addConstructorIngredientsAction = (ingredient:IIngredient):IAddIngredient => ({ type: ADD_CONSTRUCTOR_INGREDIENTS, ingredient });
 export const removeConstructorIngredientAction = (id:number):IRemoveIngredient => ({ type: REMOVE_CONSTRUCTOR_INGREDIENT, id });
