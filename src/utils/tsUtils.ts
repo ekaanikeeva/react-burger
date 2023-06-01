@@ -15,4 +15,11 @@ export interface IIngredient {
     count: number,
     calories: number,
     carbohydrates: number,
+    fat: number
+}
+
+export interface IMoveConstructorIngredient {
+    dropitem: IIngredient, 
+    dropindex: number, 
+    moveditem: IIngredient
 }
