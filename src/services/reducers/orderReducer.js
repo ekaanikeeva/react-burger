@@ -9,17 +9,18 @@ const initialState = {
 export const orderReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ORDER: {
+            console.log(action)
             return {
                 ...state,
                 isOpen: true,
-                order: action.payload,
+                order: action.order,
             }
         }
         case GET_ORDER_ERROR: {
             return {
                 ...state,
                 isOpen: false,
-                errorMessage: action.payload,
+                errorMessage: action.error,
             }
         }
         default: {
