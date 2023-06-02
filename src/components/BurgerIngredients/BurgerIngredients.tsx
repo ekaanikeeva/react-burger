@@ -36,7 +36,7 @@ function BurgerIngredients() {
 
     const ingredientsSelector = useSelector((store: IRootState) => store.ingredientsReducer);
     const isSuccessIngredients = useSelector((store: IRootState) => store.ingredientsReducer.isSuccess)
-    const [ingredientsArray, setIngredientsArray] = useState(null)
+    const [ingredientsArray, setIngredientsArray] = useState<null | IIngredient[]>(null)
     const dispatch: TAppDispatch = useDispatch();
     
     useMemo(() => {
