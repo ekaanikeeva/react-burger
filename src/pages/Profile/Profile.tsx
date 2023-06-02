@@ -46,7 +46,7 @@ const Profile:FunctionComponent = () => {
     }
 
     function logout(refreshToken: string | null) {
-        if (refreshToken !== undefined) {
+        if (refreshToken !== undefined || refreshToken !== null) {
             dispatch(logoutUserAsync(refreshToken))
             removeCookie('accessToken');
             removeCookie('refreshToken');

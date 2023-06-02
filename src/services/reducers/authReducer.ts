@@ -5,7 +5,7 @@ type TAuthState = {
     user: null | IUser;
     isUserAuth: boolean;
     authError: null | string;
-    accessToken?: null | string;
+    accessToken: null | string;
     refreshToken: null | string;
     isLoading: boolean;
 }
