@@ -28,7 +28,7 @@ export const getIngredientsApi = () => {
 };
 
 
-export const postOrderApi = (idArray:number, token:string) => {
+export const postOrderApi = (idArray:string[], token:string) => {
     return fetch(`${stellarUrl}/orders`, {
         method: 'POST',
         headers: {

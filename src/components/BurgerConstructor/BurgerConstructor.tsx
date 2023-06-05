@@ -58,10 +58,10 @@ const BurgerConstructor: FunctionComponent = () => {
         evt.preventDefault()
 
         if (isAuth) {
-            const allIngredientsArray = [];
+            const allIngredientsArray:any = [];
             allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun);
 
-            const idArray = allIngredientsArray.map(item => item?._id)
+            const idArray = allIngredientsArray.map((item: IIngredient) => item?._id)
 
             dispatch(orderNumberAsync(idArray, cookies.accessToken))
             setIsOpen(true)
