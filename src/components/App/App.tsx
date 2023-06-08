@@ -21,6 +21,8 @@ import Modal from '../Modal/Modal';
 import Preloader from '../Preloader/Preloader';
 import { IRootState } from '../../services/reducers/rootReducer';
 import { TAppDispatch } from '../../utils/tsUtils';
+import OrderFeed from '../../pages/OrderFeed/OrderFeed';
+import { WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsAction";
 
 const App:FunctionComponent = () => {
   const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
@@ -36,6 +38,10 @@ const App:FunctionComponent = () => {
   let { state } = useLocation()
   const location = useLocation();
   let background = state && state.background;
+
+  dispatch({ type: WS_CONNECTION_START });
+  dispatch({ type: WS_GET_MESSAGE });
+
 
   const [isUserForgotPassword, setIsUserForgotPassword] = useState(false);
 
@@ -84,7 +90,7 @@ const App:FunctionComponent = () => {
           <Route path="/register" element={<ProtectedRouteElement element={<Register />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/login" element={<ProtectedRouteElement element={<Login />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           <Route path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPassword isVisited={setIsUserForgotPassword}/>} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
-          
+          <Route path="/feed" element={<OrderFeed />} />
           {isUserForgotPassword &&
             <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
             }

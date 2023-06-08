@@ -50,3 +50,13 @@ export interface ITokens {
     accessToken: string;
     refreshToken: string;
 }
+
+export type TOrdersItem = {
+    _id:string;
+    ingredients:string[];
+    status:string;
+    name:string;
+    number:number;
+    createdAt:string;
+    updatedAt:string;
+}
