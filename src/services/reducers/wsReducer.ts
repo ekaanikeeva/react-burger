@@ -9,13 +9,13 @@ import {
 interface IState {
     wsConnected: boolean,
     orders: IIngredient[] | null,
-    orederNumber: number | null
+    error: Object | null
 }
 
 const initialState: IState = {
     wsConnected: false,
     orders: [],
-    orederNumber: null
+    error: null
 }
 
 export const wsReducer = (state = initialState, action: any) => {

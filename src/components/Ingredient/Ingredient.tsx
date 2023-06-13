@@ -33,7 +33,7 @@ const Ingredient:FunctionComponent<TItem> = ({ item }) => {
                 <span className={styles.price}>
                     <span>{item.price}</span>
                     <CurrencyIcon type="primary" /></span>
-                <h3>{item.name}</h3>
+                    <h3>{item.name}</h3>
             </Link>
         </li >
     )

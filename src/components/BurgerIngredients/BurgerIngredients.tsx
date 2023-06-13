@@ -40,10 +40,6 @@ function BurgerIngredients() {
     const dispatch: TAppDispatch = useDispatch();
     
     useMemo(() => {
-        dispatch(ingredientsAsync())
-    }, [])
-
-    useMemo(() => {
         setIngredientsArray(ingredientsSelector?.ingredients)
     }, [ingredientsSelector])
 
