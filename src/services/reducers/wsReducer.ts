@@ -9,13 +9,17 @@ import {
 interface IState {
     wsConnected: boolean,
     orders: IIngredient[] | null,
+    total: number,
+    totalToday: number,
     error: Object | null
 }
 
 const initialState: IState = {
     wsConnected: false,
     orders: [],
-    error: null
+    error: null,
+    total: 0,
+    totalToday: 0
 }
 
 export const wsReducer = (state = initialState, action: any) => {
@@ -42,7 +46,9 @@ export const wsReducer = (state = initialState, action: any) => {
         case WS_GET_MESSAGE:
             return {
                 ...state,
-                orders: action.payload?.orders
+                orders: action.payload?.orders,
+                total: action.payload?.total,
+                totalToday: action.payload?.totalToday
             };
 
         default:
