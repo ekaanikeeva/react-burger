@@ -18,12 +18,12 @@ const OrderItem: FunctionComponent = () => {
 
     const ingredients = useMemo(() => {
         if (currentOrder !== undefined) {
-            return allIngredients.filter(el => currentOrder?.ingredients.some((id: string) => id === el._id) === true)
+            return JSON.parse(JSON.stringify(allIngredients.filter(el => currentOrder?.ingredients.some((id: string) => id === el._id) === true)))
         }
     }, [currentOrder])
 
     useMemo(() => {
-        ingredients?.forEach(item => item.count = 0);
+        ingredients?.forEach((item:IIngredient) => item.count = 0);
         currentOrder?.ingredients.forEach((id: string) => {
             const current = ingredients?.find((item: IIngredient) => item._id === id)
             if (current !== undefined) {

@@ -1,4 +1,3 @@
-// socketMiddleware.ts
 import type { Middleware, MiddlewareAPI, AnyAction } from 'redux';
 
 import { TAppDispatch } from '../../utils/tsUtils';

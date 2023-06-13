@@ -30,13 +30,11 @@ import OrderItem from '../OrderItem/OrderItem';
 const App: FunctionComponent = () => {
   const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
 
-  const currentIngredient = useSelector((store: IRootState) => store.currentIngredientReducer.currentIngredient)
   const isAuth = useSelector((store: IRootState) => store.authReducer.isUserAuth);
   const isLoading = useSelector((store: IRootState) => store.authReducer.isLoading);
   const isWsConnected = useSelector((store: IRootState) => store.wsReducer);
   const accessTokenSelector = useSelector((store: IRootState) => store.authReducer.accessToken);
   const refreshTokenSelector = useSelector((store: IRootState) => store.authReducer.refreshToken);
-  const ingredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients);
   const dispatch: TAppDispatch = useDispatch();
   const navigate = useNavigate();
   let { state } = useLocation()

@@ -5,6 +5,7 @@ import { rootReducer } from './reducers/rootReducer';
 
 import { socketMiddleware } from './middleware/wsMiddleware';
 
-const wsUrl: string = 'wss://norma.nomoreparties.space/orders/all';
+const wsOrdersAllUrl: string = 'wss://norma.nomoreparties.space/orders/all';
+const wsUserOrders: string = 'wss://norma.nomoreparties.space/orders';
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, socketMiddleware(wsUrl))))
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, socketMiddleware(wsOrdersAllUrl), socketMiddleware(wsUserOrders))))
