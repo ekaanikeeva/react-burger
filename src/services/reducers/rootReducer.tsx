@@ -5,6 +5,7 @@ import { currentIngredientReducer } from "./currentIngredientReducer"
 import { orderReducer } from "./orderReducer";
 import { authReducer } from "./authReducer";
 import { wsReducer } from "./wsReducer";
+import { wsUserOrdersReducer } from "./wsUserOrdersReducer";
 export type IRootState = ReturnType<typeof rootReducer>; 
 
 export const rootReducer = combineReducers({
@@ -13,5 +14,6 @@ export const rootReducer = combineReducers({
     currentIngredientReducer,
     orderReducer,
     authReducer,
-    wsReducer
+    wsReducer,
+    wsUserOrdersReducer,
 })

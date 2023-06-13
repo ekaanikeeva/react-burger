@@ -29,10 +29,10 @@ const ProfileNavigation:FunctionComponent = () => {
         <nav className={styles.navigation}>
                 <NavLink className={({ isActive }) =>
                     isActive ? styles.active : styles.link
-                } to='/profile'>Профиль</NavLink>
+                } to='/profile' end>Профиль</NavLink>
                 <NavLink className={({ isActive }) =>
                     isActive ? styles.active : styles.link
-                } to='/profile/orders'>История заказов</NavLink>
+                } to='/profile/orders' end>История заказов</NavLink>
                 <NavLink className={({ isActive }) =>
                     isActive ? styles.active : styles.link
                 } onClick={() => logout(refreshToken)} to='/'>Выход</NavLink>

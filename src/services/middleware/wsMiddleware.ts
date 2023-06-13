@@ -2,41 +2,39 @@ import type { Middleware, MiddlewareAPI, AnyAction } from 'redux';
 
 import { TAppDispatch } from '../../utils/tsUtils';
 import { IRootState } from '../reducers/rootReducer';
-export const socketMiddleware = (wsUrl: string): Middleware => {
+export const socketMiddleware = (wsActions: any): Middleware => {
   return ((store: MiddlewareAPI<TAppDispatch, IRootState>) => {
     let socket: WebSocket | null = null;
 
-    return next => (action: AnyAction) => {
+    return next => (action: any) => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
-
-      if (type === 'WS_CONNECTION_START') {
+      const user = getState().authReducer.user
+      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      if (type === wsInit) {
         // объект класса WebSocket
-        socket = new WebSocket(wsUrl);
+        socket = new WebSocket(payload);
+        socket.onopen = event => {
+          dispatch({ type: onOpen, payload: event });
+        };
       }
       if (socket) {
-
-        // функция, которая вызывается при открытии сокета
-        socket.onopen = event => {
-          dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
-        };
-
         // функция, которая вызывается при ошибке соединения
         socket.onerror = event => {
-          dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
+          dispatch({ type: onError, payload: event });
         };
 
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
           const { data } = event;
-          dispatch({ type: 'WS_GET_MESSAGE', payload: JSON.parse(data) });
+          dispatch({ type: onMessage, payload: JSON.parse(data) });
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
-          dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
+          dispatch({ type: onClose, payload: event });
         };
 
-        if (type === 'WS_SEND_MESSAGE') {
+        if (type === wsSendMessage) {
           const message = payload;
           // функция для отправки сообщения на сервер
           socket.send(JSON.stringify(message));
@@ -47,3 +45,4 @@ export const socketMiddleware = (wsUrl: string): Middleware => {
     };
   }) as Middleware;
 };
+

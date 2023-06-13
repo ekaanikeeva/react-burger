@@ -23,16 +23,16 @@ import Preloader from '../Preloader/Preloader';
 import { IRootState } from '../../services/reducers/rootReducer';
 import { TAppDispatch } from '../../utils/tsUtils';
 import OrderFeed from '../../pages/OrderFeed/OrderFeed';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsAction";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/wsAction";
 import OrderPage from '../../pages/OrderPage/OrderPage';
 import OrderItem from '../OrderItem/OrderItem';
+import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
 
 const App: FunctionComponent = () => {
   const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
-
+  const isWsConnected = useSelector((store: IRootState) => store.wsReducer);
   const isAuth = useSelector((store: IRootState) => store.authReducer.isUserAuth);
   const isLoading = useSelector((store: IRootState) => store.authReducer.isLoading);
-  const isWsConnected = useSelector((store: IRootState) => store.wsReducer);
   const accessTokenSelector = useSelector((store: IRootState) => store.authReducer.accessToken);
   const refreshTokenSelector = useSelector((store: IRootState) => store.authReducer.refreshToken);
   const dispatch: TAppDispatch = useDispatch();
@@ -67,8 +67,7 @@ const App: FunctionComponent = () => {
   }, [])
 
   useMemo(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    dispatch({ type: WS_GET_MESSAGE })
+    dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });
 
     if(isWsConnected.orders !== null) {
       dispatch({ type: WS_CONNECTION_CLOSED})
@@ -116,6 +115,7 @@ const App: FunctionComponent = () => {
           {isUserForgotPassword &&
             <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           }
+          <Route path="/profile/orders" element={<ProtectedRouteElement element={<UserOrderHistory />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login'/>}></Route>
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
           {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderPage /> : <Preloader />} />}
