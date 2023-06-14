@@ -11,13 +11,14 @@ const UserOrderHistory:FunctionComponent = () => {
 
     const orders = useSelector((store: IRootState) => store.wsUserOrdersReducer.orders)
     
-        
+    const reverseOrders = [...orders].reverse();
+    
     return (
         <main className={styles.main}>
             <ProfileNavigation />
             <ul className={styles.ordersList}>
                     {orders !== null &&
-                        orders?.map((item: TOrdersItem) => {
+                        reverseOrders?.map((item: TOrdersItem) => {
                             return <li key={item._id}>
                                 <OrderElement item={item} link='/profile/orders/' />
                             </li>
