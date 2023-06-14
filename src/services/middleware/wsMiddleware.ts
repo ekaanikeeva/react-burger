@@ -6,7 +6,7 @@ export const socketMiddleware = (wsActions: any): Middleware => {
   return ((store: MiddlewareAPI<TAppDispatch, IRootState>) => {
     let socket: WebSocket | null = null;
 
-    return next => (action: any) => {
+    return next => (action) => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
       const user = getState().authReducer.user

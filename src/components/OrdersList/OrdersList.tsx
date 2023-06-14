@@ -19,8 +19,6 @@ const OrdersList:FunctionComponent = () => {
                             </li>
                         })
                     }
-
-
                 </ul>
             </section>
     )

@@ -80,3 +80,9 @@ export type TWSFeedActions = {
     onError: typeof WS_CONNECTION_USER_ERROR,
     onMessage: typeof WS_GET_USER_MESSAGE,
   };
+
+  export interface IWsMessageData {
+    orders: TOrdersItem[],
+    total: number,
+    totalToday: number
+}

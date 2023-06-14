@@ -23,7 +23,7 @@ import Preloader from '../Preloader/Preloader';
 import { IRootState } from '../../services/reducers/rootReducer';
 import { TAppDispatch } from '../../utils/tsUtils';
 import OrderFeed from '../../pages/OrderFeed/OrderFeed';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/wsAction";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsAction";
 import OrderItem from '../OrderItem/OrderItem';
 import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
 import { WS_CONNECTION_USER_START, WS_CONNECTION_USER_CLOSED } from '../../services/actions/wsUserActions';
