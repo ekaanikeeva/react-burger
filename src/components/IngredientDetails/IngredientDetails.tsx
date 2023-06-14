@@ -9,7 +9,7 @@ const IngredientDetails: FC = () => {
     const dispatch = useAppDispatch();
     const { ingredientId } = useParams<{ ingredientId: string }>()
     const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
-    const currentIngredient = ingredients.find((item) => item._id === ingredientId)
+    const currentIngredient = ingredients.find(item => item._id === ingredientId)
 
     useMemo(() => {
         dispatch(ingredientsAsync())

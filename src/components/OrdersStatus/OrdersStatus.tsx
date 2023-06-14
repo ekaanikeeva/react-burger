@@ -9,15 +9,15 @@ const OrdersStatus: FunctionComponent = () => {
     const total = useAppSelector(store => store.wsReducer.total);
     const totalToday = useAppSelector(store => store.wsReducer.totalToday);
     const doneOrders = useMemo(() => {
-        if (orders?.some((order: TOrdersItem) => order.status === 'done')) {
-            return orders?.filter((item: TOrdersItem) => item.status === 'done')
+        if (orders.some(order => order.status === 'done')) {
+            return orders.filter(item => item.status === 'done')
         } else return null
 
     }, [orders])
 
     const pendingOrders = useMemo(() => {
-        if (orders?.some((order: TOrdersItem) => order.status !== 'done')) {
-            return orders?.filter((item: TOrdersItem) => item.status !== 'done')
+        if (orders.some((order) => order.status !== 'done')) {
+            return orders.filter((item) => item.status !== 'done')
         } else return null
     }, [orders])
 

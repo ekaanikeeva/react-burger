@@ -1,14 +1,12 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
+import { bun, mainIngredient, sauce } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
-import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
-import { IIngredient, TAppDispatch } from '../../utils/tsUtils';
-import { IRootState } from '../../services/reducers/rootReducer';
+import { IIngredient } from '../../utils/tsUtils';
 
 function BurgerIngredients() {
 
@@ -40,7 +38,7 @@ function BurgerIngredients() {
     const dispatch = useAppDispatch();
     
     useMemo(() => {
-        setIngredientsArray(ingredientsSelector?.ingredients)
+        setIngredientsArray(ingredientsSelector.ingredients)
     }, [ingredientsSelector])
 
 

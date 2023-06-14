@@ -16,9 +16,7 @@ const OrderItem: FunctionComponent<IProps> = ({orders}) => {
     const currentOrder = useMemo(() => orders?.find((order: TOrdersItem) => order._id === orderId), [orders])
 
     const ingredients = useMemo(() => {
-        if (currentOrder !== undefined) {
             return JSON.parse(JSON.stringify(allIngredients.filter(el => currentOrder?.ingredients.some((id: string) => id === el._id) === true)))
-        }
     }, [currentOrder])
 
     useMemo(() => {

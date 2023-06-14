@@ -35,7 +35,7 @@ const BurgerConstructor: FunctionComponent = () => {
         drop(item: itemI) {
             const itemCopy: IIngredient = JSON.parse(JSON.stringify(item.item));
 
-            const burgerBun = ingredients?.find((el: IIngredient) => el.type === 'bun')
+            const burgerBun = ingredients.find((el) => el.type === 'bun')
             if (burgerBun !== undefined && itemCopy.type === 'bun') {
                 dispatch(removeConstructorIngredientAction(burgerBun.constructorId))
                 dispatch(decreaseIngredientCountAction(burgerBun._id))
@@ -73,11 +73,11 @@ const BurgerConstructor: FunctionComponent = () => {
         dispatch(getOrderNumberAction(null))
     }
 
-    const currentBun = useMemo(() => ingredients?.find((item: IIngredient) => item.type === 'bun'), [ingredients]);
+    const currentBun = useMemo(() => ingredients.find((item) => item.type === 'bun'), [ingredients]);
 
-    const ingredientsWithoutBuns = useMemo(() => ingredients.filter((item: IIngredient) => item.type !== 'bun'), [ingredients])
+    const ingredientsWithoutBuns = useMemo(() => ingredients.filter((item) => item.type !== 'bun'), [ingredients])
 
-    const priceCount = useMemo(() => ingredients.reduce((total: number, item: IIngredient) => {
+    const priceCount = useMemo(() => ingredients.reduce((total, item) => {
         if (item.type !== 'bun') {
             return total + item.price
         } else if (currentBun && currentBun._id === item._id) return total + (item.price * 2)
