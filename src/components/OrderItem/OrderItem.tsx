@@ -38,7 +38,7 @@ const OrderItem: FunctionComponent = () => {
         return total + (item.price * item.count)
     }, 0), [ingredients])
 
-    const currentOrderDate = useMemo(() => new Date(currentOrder.createdAt).toLocaleString() ,[currentOrder])
+    const currentOrderDate = useMemo(() => new Date(currentOrder?.createdAt).toLocaleString() ,[currentOrder])
 
     return (
         <div>
