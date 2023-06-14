@@ -114,10 +114,11 @@ const App: FunctionComponent = () => {
               </Modal>
             } />
           <Route path='/profile/orders/:orderId'
-            element={
+            element={userWsConnected.orders && userWsConnected.error === null ?
               <Modal onClose={onOrderClose}>
-                {userWsConnected.orders && userWsConnected.error === null ? <OrderItem orders={userOrders} /> : <Preloader />}
+                 <OrderItem orders={userOrders} /> 
               </Modal>
+              : <Preloader />
             } />
         </Routes>
       }
@@ -135,7 +136,7 @@ const App: FunctionComponent = () => {
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
           {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderItem orders={feedOrders} /> : <Preloader />} />}
-          {!background && <Route path='/profile/orders/:orderId' element={userWsConnected.wsConnected && userWsConnected.error === null ? <OrderItem orders={userOrders}/> : <Preloader />} />}
+          {!background && <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' element={userWsConnected.wsConnected && userWsConnected.error === null ? <OrderItem orders={userOrders}/> : <Preloader />}/>} />}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 
