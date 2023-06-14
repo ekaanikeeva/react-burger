@@ -5,7 +5,7 @@ import { rootReducer } from './reducers/rootReducer';
 
 import { socketMiddleware } from './middleware/wsMiddleware';
 import { TWSFeedActions, TWSUsersActions } from '../utils/tsUtils';
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE, WS_SEND_MESSAGE} from '../services/actions/wsAction';
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_MESSAGE, WS_SEND_MESSAGE} from './actions/wsAction';
 import { WS_CONNECTION_USER_CLOSED, WS_CONNECTION_USER_ERROR, WS_CONNECTION_USER_START, WS_CONNECTION_USER_SUCCESS, WS_GET_USER_MESSAGE, WS_SEND_USER_MESSAGE } from './actions/wsUserActions';
 
 const feedWsActions:TWSFeedActions = {

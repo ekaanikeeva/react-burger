@@ -1,20 +1,21 @@
-import { IIngredient } from "../../utils/tsUtils";
+import { TOrdersItem } from "../../utils/tsUtils";
 import {
     WS_CONNECTION_USER_SUCCESS,
     WS_CONNECTION_USER_ERROR,
     WS_CONNECTION_USER_CLOSED,
-    WS_GET_USER_MESSAGE
+    WS_GET_USER_MESSAGE,
+    TWsUsersOrdersUnion
 } from "../actions/wsUserActions";
 
-interface IState {
+interface IWsState {
     wsConnected: boolean,
-    orders: IIngredient[] | null,
+    orders: TOrdersItem[],
+    error: {} | null,
     total: number,
     totalToday: number,
-    error: Object | null
 }
 
-const initialState: IState = {
+const initialState:IWsState = {
     wsConnected: false,
     orders: [],
     error: null,
@@ -22,7 +23,8 @@ const initialState: IState = {
     totalToday: 0
 }
 
-export const wsUserOrdersReducer = (state = initialState, action: any) => {
+
+export const wsUserOrdersReducer = (state = initialState, action: TWsUsersOrdersUnion) => {
     switch (action.type) {
         case WS_CONNECTION_USER_SUCCESS:
             return {
@@ -46,9 +48,9 @@ export const wsUserOrdersReducer = (state = initialState, action: any) => {
         case WS_GET_USER_MESSAGE:
             return {
                 ...state,
-                orders: action.payload?.orders,
-                total: action.payload?.total,
-                totalToday: action.payload?.totalToday
+                orders: action.payload.orders,
+                total: action.payload.total,
+                totalToday: action.payload.totalToday
             };
 
         default:

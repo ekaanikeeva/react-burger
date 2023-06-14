@@ -17,7 +17,7 @@ export interface IWsConnectionSuccess {
 
 export interface IWsConnectionError {
     readonly type: typeof WS_CONNECTION_ERROR
-    error: {}
+    payload: {}
 }
 
 export interface IWsConnectionClosed {

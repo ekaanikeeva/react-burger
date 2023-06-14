@@ -34,7 +34,7 @@ export const wsReducer = (state = initialState, action:TWsFeedUnion) => {
         case WS_CONNECTION_ERROR:
             return {
                 ...state,
-                error: action.error,
+                error: action.payload,
                 wsConnected: false
             };
 
