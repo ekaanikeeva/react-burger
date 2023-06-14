@@ -3,12 +3,10 @@ import { FunctionComponent, useState, ChangeEvent } from 'react';
 import { useAppDispatch, useAppSelector } from "../../services/hooks";
 import { updateUserAsync } from "../../services/asyncActions/auth";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { TAppDispatch } from "../../utils/tsUtils";
 import ProfileNavigation from "../../components/ProfileNavigation/ProfileNavigation";
 
 const Profile:FunctionComponent = () => {
-    const dispatch:TAppDispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
     const user = useAppSelector(store => store.authReducer.user);
     const token = useAppSelector(store => store.authReducer.accessToken);
     const [email, setEmail] = useState<string | null>(user ? user.email : null)
