@@ -1,13 +1,13 @@
 import { FunctionComponent, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../services/hooks';
 import styles from "./OrdersStatus.module.scss";
 import { IRootState } from '../../services/reducers/rootReducer';
 import { TOrdersItem } from '../../utils/tsUtils';
 
 const OrdersStatus: FunctionComponent = () => {
-    const orders = useSelector((store: IRootState) => store.wsReducer.orders);
-    const total = useSelector((store: IRootState) => store.wsReducer.total);
-    const totalToday = useSelector((store: IRootState) => store.wsReducer.totalToday);
+    const orders = useAppSelector(store => store.wsReducer.orders);
+    const total = useAppSelector(store => store.wsReducer.total);
+    const totalToday = useAppSelector(store => store.wsReducer.totalToday);
     const doneOrders = useMemo(() => {
         if (orders?.some((order: TOrdersItem) => order.status === 'done')) {
             return orders?.filter((item: TOrdersItem) => item.status === 'done')
