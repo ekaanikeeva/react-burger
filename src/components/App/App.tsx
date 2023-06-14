@@ -73,23 +73,28 @@ const App: FunctionComponent = () => {
     dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });
 
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED})
+      dispatch({ type: WS_CONNECTION_CLOSED })
     }
 
-    
-  },[dispatch])
+  }, [dispatch])
+
+  useMemo(() => {
+    if (accessTokenSelector !== null) {
+      const token = accessTokenSelector.slice(7)
+
+      dispatch({ type: WS_CONNECTION_USER_START, payload: `wss://norma.nomoreparties.space/orders?token=${token}` })
+
+      return () => {
+        dispatch({ type: WS_CONNECTION_USER_CLOSED })
+      }
+    }
+  }, [accessTokenSelector])
 
 
   useEffect(() => {
     if (accessTokenSelector !== null && accessTokenSelector) {
       setCookie("accessToken", accessTokenSelector)
-      const token = accessTokenSelector.slice(7)
 
-      dispatch({type: WS_CONNECTION_USER_START, payload: `wss://norma.nomoreparties.space/orders?token=${token}`})
-
-      return() => {
-        dispatch({type: WS_CONNECTION_USER_CLOSED})
-      }
     } if (refreshTokenSelector) {
       setCookie("refreshToken", refreshTokenSelector)
     }
@@ -116,7 +121,7 @@ const App: FunctionComponent = () => {
           <Route path='/profile/orders/:orderId'
             element={userWsConnected.orders && userWsConnected.error === null ?
               <Modal onClose={onOrderClose}>
-                 <OrderItem orders={userOrders} /> 
+                <OrderItem orders={userOrders} />
               </Modal>
               : <Preloader />
             } />
@@ -132,11 +137,11 @@ const App: FunctionComponent = () => {
           {isUserForgotPassword &&
             <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           }
-          <Route path="/profile/orders" element={<ProtectedRouteElement element={<UserOrderHistory />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login'/>}></Route>
+          <Route path="/profile/orders" element={<ProtectedRouteElement element={<UserOrderHistory />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />}></Route>
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
           {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderItem orders={feedOrders} /> : <Preloader />} />}
-          {!background && <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' element={userWsConnected.wsConnected && userWsConnected.error === null ? <OrderItem orders={userOrders}/> : <Preloader />}/>} />}
+          {!background && <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' element={userWsConnected.wsConnected && userWsConnected.error === null ? <OrderItem orders={userOrders} /> : <Preloader />} />} />}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 
