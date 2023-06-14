@@ -34,7 +34,7 @@ const OrderItem: FunctionComponent = () => {
 
     }, [ingredients])
 
-    const priceCount = useMemo(() => ingredients.reduce((total: number, item: IIngredient) => {
+    const priceCount = useMemo(() => ingredients?.reduce((total: number, item: IIngredient) => {
         return total + (item.price * item.count)
     }, 0), [ingredients])
 
