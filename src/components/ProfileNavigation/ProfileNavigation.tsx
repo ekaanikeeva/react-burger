@@ -1,17 +1,15 @@
 import { FunctionComponent } from "react";
 import { NavLink } from "react-router-dom";
 import styles from './ProfileNavigation.module.scss';
-import { useDispatch, useSelector } from "react-redux";
-import { TAppDispatch } from "../../utils/tsUtils";
-import { IRootState } from "../../services/reducers/rootReducer";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
 import { useCookies } from "react-cookie";
 import { logoutUserAsync } from "../../services/asyncActions/auth";
 import { logoutAction } from "../../services/actions/auth";
 
 const ProfileNavigation:FunctionComponent = () => {
-    const token = useSelector((store:IRootState) => store.authReducer.accessToken);
-    const refreshToken = useSelector((store:IRootState) => store.authReducer.refreshToken);
-    const dispatch:TAppDispatch = useDispatch();
+    const token = useAppSelector(store => store.authReducer.accessToken);
+    const refreshToken = useAppSelector(store => store.authReducer.refreshToken);
+    const dispatch = useAppDispatch();
     const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
     function logout(refreshToken: string | null) {
         if (refreshToken !== undefined || refreshToken !== null) {

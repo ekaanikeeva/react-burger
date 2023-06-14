@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { FunctionComponent,  DragEvent, MouseEvent } from "react";
+import { useAppDispatch } from "../../services/hooks";
+import { FunctionComponent,  DragEvent } from "react";
 import styles from "./ConstructorIngredient.module.scss";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { moveConstructorIngredientAction, getMovedIngredientAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
@@ -15,7 +15,7 @@ type TConstructorIngredientProps = {
 
 
 const ConstructorIngredient:FunctionComponent<TConstructorIngredientProps> = ({ item, index, movedIngredient, setMovedIngredient }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     function dragStartHandler(e:DragEvent, index: number, item: IIngredient) {
         dispatch(getMovedIngredientAction(index))
@@ -44,9 +44,7 @@ const ConstructorIngredient:FunctionComponent<TConstructorIngredientProps> = ({ 
         <li draggable={true}
             className={styles.ingredient}
             onDragStart={(e) => dragStartHandler(e, index, item)}
-            // onDragLeave={(e) => dragEndHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
-            // onDragEnd={(e) => dragEndHandler(e)}
             onDrop={(e) => dropHandler(e, index, item)}
         >
                 <DragIcon type="primary" />

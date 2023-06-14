@@ -1,13 +1,12 @@
 import { FunctionComponent, FormEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../services/hooks';
 import styles from './Register.module.scss';
 import Form from '../../components/Form/Form';
 import { registerUserAsync } from '../../services/asyncActions/auth';
 import { useValidation } from '../../utils/Validate';
-import { TAppDispatch } from '../../utils/tsUtils';
 
 const Register:FunctionComponent = () => {
-    const dispatch:TAppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { values, handleChange, errors, isValid } = useValidation();
 
     function handleSubmit(e: FormEvent) {

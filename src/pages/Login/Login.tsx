@@ -1,13 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { FunctionComponent, ChangeEvent, FormEvent } from 'react';
+import { useAppDispatch } from '../../services/hooks';
+import { FunctionComponent, FormEvent } from 'react';
 import styles from './Login.module.scss';
 import Form from '../../components/Form/Form';
 import { authUserAsync } from '../../services/asyncActions/auth';
 import { useValidation } from '../../utils/Validate';
-import { TAppDispatch } from '../../utils/tsUtils';
 
 const Login:FunctionComponent = () => {
-    const dispatch: TAppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { values, handleChange, errors, isValid } = useValidation();
 
 

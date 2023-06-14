@@ -1,11 +1,8 @@
 import styles from "./OrderItem.module.scss";
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, useMemo} from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { IRootState } from '../../services/reducers/rootReducer';
-import { orderReducer } from '../../services/reducers/orderReducer';
-import { wsReducer } from '../../services/reducers/wsReducer';
+import { useAppSelector } from "../../services/hooks";
 import { IIngredient, TOrdersItem } from '../../utils/tsUtils';
 
 interface IProps {
@@ -14,7 +11,7 @@ interface IProps {
 
 const OrderItem: FunctionComponent<IProps> = ({orders}) => {
     const { orderId } = useParams();
-    const allIngredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
+    const allIngredients = useAppSelector(store => store.ingredientsReducer.ingredients)
 
     const currentOrder = useMemo(() => orders?.find((order: TOrdersItem) => order._id === orderId), [orders])
 

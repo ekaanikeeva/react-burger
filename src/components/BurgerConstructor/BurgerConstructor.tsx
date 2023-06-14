@@ -1,20 +1,18 @@
-import { useState, useMemo, useContext, useEffect, FunctionComponent, FormEvent } from "react";
+import { useState, useMemo, FunctionComponent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import styles from "./BurgerConstructor.module.scss";
 import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
 import { getOrderNumberAction } from "../../services/actions/orderActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 import { useCookies } from 'react-cookie';
-
-import { IRootState } from '../../services/reducers/rootReducer';
-import { IIngredient, TAppDispatch, TMovedItem } from "../../utils/tsUtils";
+import { IIngredient } from "../../utils/tsUtils";
 import Preloader from "../Preloader/Preloader";
 
 const BurgerConstructor: FunctionComponent = () => {
@@ -22,15 +20,14 @@ const BurgerConstructor: FunctionComponent = () => {
         item: IIngredient
     }
 
-
-    const dispatch: TAppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
     const [isOpen, setIsOpen] = useState(false);
-    const orderNumber = useSelector((store: IRootState) => store.orderReducer.order);
-    const ingredients = useSelector((store: IRootState) => (store.burgerConstructorReducer.constructorIngredients));
-    const isAuth = useSelector((store: IRootState) => store.authReducer.isUserAuth);
+    const orderNumber = useAppSelector(store => store.orderReducer.order);
+    const ingredients = useAppSelector(store => (store.burgerConstructorReducer.constructorIngredients));
+    const isAuth = useAppSelector(store => store.authReducer.isUserAuth);
 
     const [movedIngredient, setMovedIngredient] = useState(null)
     const [{ isHover }, dropTarget] = useDrop({

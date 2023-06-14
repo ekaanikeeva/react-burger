@@ -4,7 +4,7 @@ import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
 import { IIngredient, TAppDispatch } from '../../utils/tsUtils';
@@ -34,10 +34,10 @@ function BurgerIngredients() {
         }
     }, [inViewBons, inViewMains, inViewSouces])
 
-    const ingredientsSelector = useSelector((store: IRootState) => store.ingredientsReducer);
-    const isSuccessIngredients = useSelector((store: IRootState) => store.ingredientsReducer.isSuccess)
+    const ingredientsSelector = useAppSelector(store => store.ingredientsReducer);
+    const isSuccessIngredients = useAppSelector(store => store.ingredientsReducer.isSuccess)
     const [ingredientsArray, setIngredientsArray] = useState<null | IIngredient[]>(null)
-    const dispatch: TAppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     
     useMemo(() => {
         setIngredientsArray(ingredientsSelector?.ingredients)

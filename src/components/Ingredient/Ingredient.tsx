@@ -1,10 +1,10 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { useDrag } from "react-dnd";
 import styles from './Ingredient.module.scss';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from '../../services/hooks';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { IIngredient } from "../../utils/tsUtils";
 
 type TItem = {
@@ -13,7 +13,7 @@ type TItem = {
 
 const Ingredient:FunctionComponent<TItem> = ({ item }) => {
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ingredientId = item['_id'];
 
     const [{ isDrag }, dragRef] = useDrag({

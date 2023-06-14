@@ -1,9 +1,8 @@
-import { FunctionComponent, useEffect, useState, useMemo } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from "./OrderElement.module.scss";
-import { IIngredient, TAppDispatch, TOrdersItem } from '../../utils/tsUtils';
-import { useSelector, useDispatch } from 'react-redux';
-import { IRootState } from "../../services/reducers/rootReducer";
+import { TOrdersItem } from '../../utils/tsUtils';
+import { useAppSelector } from '../../services/hooks';
 
 interface IProps {
     item: TOrdersItem,
@@ -12,9 +11,8 @@ interface IProps {
 
 const OrderElement: FunctionComponent<IProps> = ({ item, link }) => {
     const location = useLocation();
-    const dispatch: TAppDispatch = useDispatch();
-    const [currentIngredients, setCurrentIngredients] = useState(null)
-    const allIngredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
+
+    const allIngredients = useAppSelector(store => store.ingredientsReducer.ingredients)
 
     const orderId = item['_id'];
     const orderIngredients = allIngredients.filter(el => item.ingredients.some(id => id === el._id) === true)

@@ -1,18 +1,15 @@
-import PropTypes from 'prop-types';
 import { useMemo, FC } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import styles from './IngredientDetails.module.scss';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
+import { useParams } from 'react-router-dom';
 import { ingredientsAsync } from '../../services/asyncActions/ingredients';
-import { IRootState } from '../../services/reducers/rootReducer';
-import { TAppDispatch, IIngredient } from "../../utils/tsUtils";
+
 
 const IngredientDetails: FC = () => {
 
-    const dispatch: TAppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { ingredientId } = useParams<{ ingredientId: string }>()
-    const ingredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
-    const currentIngredient = ingredients.find((item: IIngredient) => item._id === ingredientId)
+    const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
+    const currentIngredient = ingredients.find((item) => item._id === ingredientId)
 
     useMemo(() => {
         dispatch(ingredientsAsync())

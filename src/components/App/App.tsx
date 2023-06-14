@@ -1,6 +1,5 @@
 import { useEffect, useState, FunctionComponent, useMemo } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams, BrowserRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import styles from './App.module.scss';
 import AppHeader from '../AppHeader/AppHeader'
 import Main from '../../pages/Main/Main';
@@ -20,25 +19,24 @@ import { isErrorAction } from '../../services/actions/auth';
 import PageNotFound from '../../pages/PageNotFound/PageNotFound';
 import Modal from '../Modal/Modal';
 import Preloader from '../Preloader/Preloader';
-import { IRootState } from '../../services/reducers/rootReducer';
-import { TAppDispatch } from '../../utils/tsUtils';
 import OrderFeed from '../../pages/OrderFeed/OrderFeed';
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START, WS_GET_MESSAGE } from "../../services/actions/wsAction";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/wsAction";
 import OrderItem from '../OrderItem/OrderItem';
 import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
 import { WS_CONNECTION_USER_START, WS_CONNECTION_USER_CLOSED } from '../../services/actions/wsUserActions';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 const App: FunctionComponent = () => {
   const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
-  const isWsConnected = useSelector((store: IRootState) => store.wsReducer);
-  const userWsConnected = useSelector((store: IRootState) => store.wsUserOrdersReducer);
-  const isAuth = useSelector((store: IRootState) => store.authReducer.isUserAuth);
-  const isLoading = useSelector((store: IRootState) => store.authReducer.isLoading);
-  const accessTokenSelector = useSelector((store: IRootState) => store.authReducer.accessToken);
-  const refreshTokenSelector = useSelector((store: IRootState) => store.authReducer.refreshToken);
-  const feedOrders = useSelector((store: IRootState) => store.wsReducer.orders);
-  const userOrders = useSelector((store: IRootState) => store.wsUserOrdersReducer.orders);
-  const dispatch: TAppDispatch = useDispatch();
+  const isWsConnected = useAppSelector(store => store.wsReducer);
+  const userWsConnected = useAppSelector(store => store.wsUserOrdersReducer);
+  const isAuth = useAppSelector(store => store.authReducer.isUserAuth);
+  const isLoading = useAppSelector(store => store.authReducer.isLoading);
+  const accessTokenSelector = useAppSelector(store => store.authReducer.accessToken);
+  const refreshTokenSelector = useAppSelector(store => store.authReducer.refreshToken);
+  const feedOrders = useAppSelector(store => store.wsReducer.orders);
+  const userOrders = useAppSelector(store => store.wsUserOrdersReducer.orders);
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
   let { state } = useLocation()
   const location = useLocation();

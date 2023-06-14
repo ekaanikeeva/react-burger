@@ -1,19 +1,16 @@
 import styles from "./Profile.module.scss";
 import { FunctionComponent, useState, ChangeEvent } from 'react';
-import { useCookies } from 'react-cookie';
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../services/hooks";
 import { updateUserAsync } from "../../services/asyncActions/auth";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { TAppDispatch } from "../../utils/tsUtils";
-import { IRootState } from '../../services/reducers/rootReducer';
 import ProfileNavigation from "../../components/ProfileNavigation/ProfileNavigation";
 
 const Profile:FunctionComponent = () => {
-    const dispatch:TAppDispatch = useDispatch();
-    const user = useSelector((store:IRootState) => store.authReducer.user);
-    const token = useSelector((store:IRootState) => store.authReducer.accessToken);
+    const dispatch:TAppDispatch = useAppDispatch();
+    const user = useAppSelector(store => store.authReducer.user);
+    const token = useAppSelector(store => store.authReducer.accessToken);
     const [email, setEmail] = useState<string | null>(user ? user.email : null)
     const [password, setPassword] = useState<string | null>(user ? user.password : null)
     const [name, setName] = useState<string | null>(user ? user.name : null)
