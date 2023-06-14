@@ -8,11 +8,13 @@ import { orderReducer } from '../../services/reducers/orderReducer';
 import { wsReducer } from '../../services/reducers/wsReducer';
 import { IIngredient, TOrdersItem } from '../../utils/tsUtils';
 
+interface IProps {
+    orders: TOrdersItem[]
+}
 
-const OrderItem: FunctionComponent = () => {
+const OrderItem: FunctionComponent<IProps> = ({orders}) => {
     const { orderId } = useParams();
     const allIngredients = useSelector((store: IRootState) => store.ingredientsReducer.ingredients)
-    const orders = useSelector((store: IRootState) => store.wsReducer.orders);
 
     const currentOrder = useMemo(() => orders?.find((order: TOrdersItem) => order._id === orderId), [orders])
 
@@ -38,7 +40,7 @@ const OrderItem: FunctionComponent = () => {
         return total + (item.price * item.count)
     }, 0), [ingredients])
 
-    const currentOrderDate = useMemo(() => new Date(currentOrder?.createdAt).toLocaleString() ,[currentOrder])
+    const currentOrderDate = useMemo(() => currentOrder ? new Date(currentOrder.createdAt).toLocaleString() : new Date().getDate() ,[currentOrder])
 
     return (
         <div>
@@ -46,7 +48,7 @@ const OrderItem: FunctionComponent = () => {
                 <div className={styles.orders}>
                     <span className={styles.number}>#{currentOrder.number}</span>
                     <h1 className={styles.name}>{currentOrder.name}</h1>
-                    <span className={styles.status}>{currentOrder.status}</span>
+                    <span className={styles.status}>{currentOrder.status === 'done' ? 'Выполнен' : currentOrder.status === 'pending' ? 'Готовится' : currentOrder.status}</span>
                     <h2 className={styles.structure__title}>Состав:</h2>
 
                     <ul className={styles.ingredientsList}>

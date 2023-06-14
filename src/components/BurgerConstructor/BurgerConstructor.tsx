@@ -9,11 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addConstructorIngredientsAction, removeConstructorIngredientAction } from "../../services/actions/burgerConstructorActions";
 import { orderNumberAsync } from "../../services/asyncActions/order";
 import { increaseIngredientCountAction, decreaseIngredientCountAction } from "../../services/actions/ingredientsActions";
+import { getOrderNumberAction } from "../../services/actions/orderActions";
 import ConstructorIngredient from "../constructorIngredient/ConstructorIngredient";
 import { useCookies } from 'react-cookie';
 
 import { IRootState } from '../../services/reducers/rootReducer';
 import { IIngredient, TAppDispatch, TMovedItem } from "../../utils/tsUtils";
+import Preloader from "../Preloader/Preloader";
 
 const BurgerConstructor: FunctionComponent = () => {
     type itemI = {
@@ -58,7 +60,7 @@ const BurgerConstructor: FunctionComponent = () => {
         evt.preventDefault()
 
         if (isAuth) {
-            const allIngredientsArray:any = [];
+            const allIngredientsArray: any = [];
             allIngredientsArray.push(currentBun, ...ingredientsWithoutBuns, currentBun);
 
             const idArray = allIngredientsArray.map((item: IIngredient) => item?._id)
@@ -71,6 +73,7 @@ const BurgerConstructor: FunctionComponent = () => {
 
     function onClose() {
         setIsOpen(false)
+        dispatch(getOrderNumberAction(null))
     }
 
     const currentBun = useMemo(() => ingredients?.find((item: IIngredient) => item.type === 'bun'), [ingredients]);
@@ -121,9 +124,13 @@ const BurgerConstructor: FunctionComponent = () => {
             <button type="submit" className={styles.submitButton}
                 disabled={currentBun !== undefined ? false : true}
                 title={currentBun !== undefined ? "Оформить заказ" : "Необходимо добавить булку"}>Оформить заказ</button>
-            {isOpen && orderNumber !== null &&
+            {isOpen &&
                 <Modal onClose={onClose}>
-                    <OrderDetails orderNumber={orderNumber} />
+                    {orderNumber !== null ?
+                        <OrderDetails orderNumber={orderNumber} />
+                        :
+                        <Preloader />
+                }
                 </Modal>
             }
         </form>

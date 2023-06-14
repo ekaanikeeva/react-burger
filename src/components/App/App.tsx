@@ -24,10 +24,8 @@ import { IRootState } from '../../services/reducers/rootReducer';
 import { TAppDispatch } from '../../utils/tsUtils';
 import OrderFeed from '../../pages/OrderFeed/OrderFeed';
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/wsAction";
-import OrderPage from '../../pages/OrderPage/OrderPage';
 import OrderItem from '../OrderItem/OrderItem';
 import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
-import UsersOrderItem from '../UsersOrderItem/UsersOrderItem';
 import { WS_CONNECTION_USER_START, WS_CONNECTION_USER_CLOSED } from '../../services/actions/wsUserActions';
 
 const App: FunctionComponent = () => {
@@ -38,6 +36,8 @@ const App: FunctionComponent = () => {
   const isLoading = useSelector((store: IRootState) => store.authReducer.isLoading);
   const accessTokenSelector = useSelector((store: IRootState) => store.authReducer.accessToken);
   const refreshTokenSelector = useSelector((store: IRootState) => store.authReducer.refreshToken);
+  const feedOrders = useSelector((store: IRootState) => store.wsReducer.orders);
+  const userOrders = useSelector((store: IRootState) => store.wsUserOrdersReducer.orders);
   const dispatch: TAppDispatch = useDispatch();
   const navigate = useNavigate();
   let { state } = useLocation()
@@ -110,13 +110,13 @@ const App: FunctionComponent = () => {
           <Route path='/feed/:orderId'
             element={
               <Modal onClose={onOrderClose}>
-                {isWsConnected.orders && isWsConnected.error === null ? <OrderItem /> : <Preloader />}
+                {isWsConnected.orders && isWsConnected.error === null ? <OrderItem orders={feedOrders} /> : <Preloader />}
               </Modal>
             } />
           <Route path='/profile/orders/:orderId'
             element={
               <Modal onClose={onOrderClose}>
-                {userWsConnected.orders && userWsConnected.error === null ? <UsersOrderItem /> : <Preloader />}
+                {userWsConnected.orders && userWsConnected.error === null ? <OrderItem orders={userOrders} /> : <Preloader />}
               </Modal>
             } />
         </Routes>
@@ -134,8 +134,8 @@ const App: FunctionComponent = () => {
           <Route path="/profile/orders" element={<ProtectedRouteElement element={<UserOrderHistory />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login'/>}></Route>
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
-          {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderPage /> : <Preloader />} />}
-          {!background && <Route path='/profile/orders/:orderId' element={userWsConnected.wsConnected && userWsConnected.error === null ? <UsersOrderItem /> : <Preloader />} />}
+          {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderItem orders={feedOrders} /> : <Preloader />} />}
+          {!background && <Route path='/profile/orders/:orderId' element={userWsConnected.wsConnected && userWsConnected.error === null ? <OrderItem orders={userOrders}/> : <Preloader />} />}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 
