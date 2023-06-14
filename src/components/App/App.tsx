@@ -27,10 +27,13 @@ import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/action
 import OrderPage from '../../pages/OrderPage/OrderPage';
 import OrderItem from '../OrderItem/OrderItem';
 import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
+import UsersOrderItem from '../UsersOrderItem/UsersOrderItem';
+import { WS_CONNECTION_USER_START, WS_CONNECTION_USER_CLOSED } from '../../services/actions/wsUserActions';
 
 const App: FunctionComponent = () => {
   const [cookies, setCookie, removeCookie] = useCookies<string>(['stellarBurger']);
   const isWsConnected = useSelector((store: IRootState) => store.wsReducer);
+  const userWsConnected = useSelector((store: IRootState) => store.wsUserOrdersReducer);
   const isAuth = useSelector((store: IRootState) => store.authReducer.isUserAuth);
   const isLoading = useSelector((store: IRootState) => store.authReducer.isLoading);
   const accessTokenSelector = useSelector((store: IRootState) => store.authReducer.accessToken);
@@ -69,16 +72,24 @@ const App: FunctionComponent = () => {
   useMemo(() => {
     dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });
 
-    if(isWsConnected.orders !== null) {
+    return () => {
       dispatch({ type: WS_CONNECTION_CLOSED})
     }
-  },[])
 
+    
+  },[dispatch])
 
 
   useEffect(() => {
     if (accessTokenSelector !== null && accessTokenSelector) {
       setCookie("accessToken", accessTokenSelector)
+      const token = accessTokenSelector.slice(7)
+
+      dispatch({type: WS_CONNECTION_USER_START, payload: `wss://norma.nomoreparties.space/orders?token=${token}`})
+
+      return() => {
+        dispatch({type: WS_CONNECTION_USER_CLOSED})
+      }
     } if (refreshTokenSelector) {
       setCookie("refreshToken", refreshTokenSelector)
     }
@@ -102,7 +113,12 @@ const App: FunctionComponent = () => {
                 {isWsConnected.orders && isWsConnected.error === null ? <OrderItem /> : <Preloader />}
               </Modal>
             } />
-
+          <Route path='/profile/orders/:orderId'
+            element={
+              <Modal onClose={onOrderClose}>
+                {userWsConnected.orders && userWsConnected.error === null ? <UsersOrderItem /> : <Preloader />}
+              </Modal>
+            } />
         </Routes>
       }
       {isLoading ?
@@ -119,6 +135,7 @@ const App: FunctionComponent = () => {
           <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
           {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderPage /> : <Preloader />} />}
+          {!background && <Route path='/profile/orders/:orderId' element={userWsConnected.wsConnected && userWsConnected.error === null ? <UsersOrderItem /> : <Preloader />} />}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 

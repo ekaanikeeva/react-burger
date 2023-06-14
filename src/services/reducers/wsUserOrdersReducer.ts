@@ -44,7 +44,6 @@ export const wsUserOrdersReducer = (state = initialState, action: any) => {
             };
 
         case WS_GET_USER_MESSAGE:
-            console.log(action.payload)
             return {
                 ...state,
                 orders: action.payload?.orders,

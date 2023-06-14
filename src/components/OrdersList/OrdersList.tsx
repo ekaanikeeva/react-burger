@@ -15,7 +15,7 @@ const OrdersList:FunctionComponent = () => {
                     {orders !== null &&
                         orders?.map((item: TOrdersItem) => {
                             return <li key={item._id}>
-                                <OrderElement item={item} />
+                                <OrderElement item={item} link='/feed/'/>
                             </li>
                         })
                     }

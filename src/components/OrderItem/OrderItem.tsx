@@ -1,5 +1,5 @@
 import styles from "./OrderItem.module.scss";
-import { ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ const OrderItem: FunctionComponent = () => {
     }, [currentOrder])
 
     useMemo(() => {
-        ingredients?.forEach((item:IIngredient) => item.count = 0);
+        ingredients?.forEach((item: IIngredient) => item.count = 0);
         currentOrder?.ingredients.forEach((id: string) => {
             const current = ingredients?.find((item: IIngredient) => item._id === id)
             if (current !== undefined) {
@@ -31,8 +31,14 @@ const OrderItem: FunctionComponent = () => {
             }
 
         })
+
     }, [ingredients])
 
+    const priceCount = useMemo(() => ingredients.reduce((total: number, item: IIngredient) => {
+        return total + (item.price * item.count)
+    }, 0), [ingredients])
+
+    const currentOrderDate = useMemo(() => new Date(currentOrder.createdAt).toLocaleString() ,[currentOrder])
 
     return (
         <div>
@@ -56,6 +62,13 @@ const OrderItem: FunctionComponent = () => {
                             )
                         })}
                     </ul>
+                    <div className={styles.dateProceContainer}>
+                        <span className={styles.currentDate}>{currentOrderDate}</span>
+                        <div className={styles.fullPrice}>
+                            <span>{priceCount}</span>
+                            <CurrencyIcon type="primary" />
+                        </div>
+                    </div>
                 </div>}
         </div>
     )

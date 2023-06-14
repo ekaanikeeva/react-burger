@@ -38,13 +38,11 @@
     overflow-x: hidden;
 
     &::-webkit-scrollbar {
-        width: 10px;
-        /* ширина scrollbar */
+        width: 10px;               /* ширина scrollbar */
     }
 
     &::-webkit-scrollbar-track {
-        background: #2F2F37;
-        /* цвет дорожки */
+        background: #2F2F37;        /* цвет дорожки */
     }
 
     &::-webkit-scrollbar-thumb {
@@ -131,21 +129,10 @@
         height: auto;
         padding-left: 10px;
     }
-
-    grid-column: 2 / 3;
 }
 
 .dateProceContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.currentDate {
-    font-family: 'JetBrains Mono', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #8585AD;
 }

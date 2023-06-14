@@ -6,10 +6,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IRootState } from "../../services/reducers/rootReducer";
 
 interface IProps {
-    item: TOrdersItem
+    item: TOrdersItem,
+    link: string
 }
 
-const OrderElement: FunctionComponent<IProps> = ({ item }) => {
+const OrderElement: FunctionComponent<IProps> = ({ item, link }) => {
     const location = useLocation();
     const dispatch: TAppDispatch = useDispatch();
     const [currentIngredients, setCurrentIngredients] = useState(null)
@@ -19,7 +20,7 @@ const OrderElement: FunctionComponent<IProps> = ({ item }) => {
     const orderIngredients = allIngredients.filter(el => item.ingredients.some(id => id === el._id) === true)
 
     return (
-        <Link to={`/feed/${orderId}`} className={styles.item} state={{ background: location }}>
+        <Link to={`${link}${orderId}`} className={styles.item} state={{ background: location }}>
             <span className={styles.number}>#{item.number}</span>
             <h2 className={styles.name}>{item.name}</h2>
             <div className={styles.ingredientsContainer}>
