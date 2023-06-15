@@ -22,7 +22,6 @@ import Preloader from '../Preloader/Preloader';
 import OrderFeed from '../../pages/OrderFeed/OrderFeed';
 import OrderItem from '../OrderItem/OrderItem';
 import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
-import { WS_CONNECTION_USER_START, WS_CONNECTION_USER_CLOSED } from '../../services/actions/wsUserActions';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
 const App: FunctionComponent = () => {
@@ -52,6 +51,7 @@ const App: FunctionComponent = () => {
   function onOrderClose() {
     navigate(-1);
   }
+
   useEffect(() => {
     dispatch(ingredientsAsync())
 
@@ -65,20 +65,6 @@ const App: FunctionComponent = () => {
       setIsUserForgotPassword(true)
     }
   }, [])
-
-
-  useMemo(() => {
-    if (accessTokenSelector !== null) {
-      const token = accessTokenSelector.slice(7)
-
-      dispatch({ type: WS_CONNECTION_USER_START, payload: `wss://norma.nomoreparties.space/orders?token=${token}` })
-
-      return () => {
-        dispatch({ type: WS_CONNECTION_USER_CLOSED })
-      }
-    }
-  }, [accessTokenSelector])
-
 
   useEffect(() => {
     if (accessTokenSelector !== null && accessTokenSelector) {
