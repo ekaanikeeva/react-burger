@@ -27,6 +27,7 @@ const Register:FunctionComponent = () => {
                 className={styles.input}
                 placeholder="Имя"
                 onChange={handleChange}
+                value={values["name"] ? values["name"] : ''}
                 required
             />
             <span
@@ -46,6 +47,7 @@ const Register:FunctionComponent = () => {
                 minLength={2}
                 maxLength={50}
                 onChange={handleChange}
+                value={values["email"] ? values["email"] : ''}
                 required
             />
             <span
@@ -63,6 +65,7 @@ const Register:FunctionComponent = () => {
                 className={styles.input}
                 placeholder="Пароль"
                 onChange={handleChange}
+                value={values["password"] ? values["password"] : ''}
                 required
             />
             <span
