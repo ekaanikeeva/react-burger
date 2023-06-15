@@ -45,7 +45,6 @@ const ForgotPassword:FunctionComponent<TProps> = ({isVisited}) => {
                 minLength={2}
                 maxLength={50}
                 onChange={handleChange}
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 required
             />
             <span

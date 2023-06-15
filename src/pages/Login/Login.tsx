@@ -29,7 +29,6 @@ const Login:FunctionComponent = () => {
                 placeholder="E-mail"
                 minLength={2}
                 maxLength={50}
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 onChange={handleChange}
                 required
             />
