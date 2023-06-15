@@ -1,5 +1,5 @@
 import { useEffect, useState, FunctionComponent, useMemo } from 'react';
-import { Routes, Route, useNavigate, useLocation, useParams, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
 import AppHeader from '../AppHeader/AppHeader'
 import Main from '../../pages/Main/Main';
@@ -21,6 +21,7 @@ import Modal from '../Modal/Modal';
 import Preloader from '../Preloader/Preloader';
 import OrderFeed from '../../pages/OrderFeed/OrderFeed';
 import OrderItem from '../OrderItem/OrderItem';
+import OrderPage from '../../pages/OrderPage/OrderPage';
 import UserOrderHistory from '../../pages/UserOrderHistory/UserOrderHistory';
 import { useAppDispatch, useAppSelector } from '../../services/hooks';
 
@@ -97,7 +98,7 @@ const App: FunctionComponent = () => {
               <Route path='/feed/:orderId'
                 element={
                   <Modal onClose={onOrderClose}>
-                    {isWsConnected.orders && isWsConnected.error === null ? <OrderItem orders={feedOrders} /> : <Preloader />}
+                    {<OrderItem orders={feedOrders} />}
                   </Modal>
                 } />}
           </Route>
@@ -105,22 +106,21 @@ const App: FunctionComponent = () => {
             <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPassword />} isAuth={isAuth} routeWithAuthrized={false} replaceRoute='/' />} />
           }
           <Route path="/profile/orders" element={<ProtectedRouteElement element={<UserOrderHistory />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />}>
-          {background &&
+            {background &&
               <Route path='/profile/orders/:orderId'
-                element={userWsConnected.orders && userWsConnected.error === null ?
+                element={
                   <Modal onClose={onOrderClose}>
                     <OrderItem orders={userOrders} />
                   </Modal>
-                  : <Preloader />
                 } />
             }
           </Route>
-          
-          <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />}/>
-            
+
+          <Route path="/profile" element={<ProtectedRouteElement element={<Profile />} isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' />} />
+
           {!background && <Route path='/ingredients/:ingredientId' element={<IngredientPage />} />}
-          {!background && <Route path='/feed/:orderId' element={isWsConnected.wsConnected && !isWsConnected.error ? <OrderItem orders={feedOrders} /> : <Preloader />} />}
-          {!background && <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' element={userWsConnected.wsConnected && userWsConnected.error === null ? <OrderItem orders={userOrders} /> : <Preloader />} />} />}
+          {!background && <Route path='/feed/:orderId' element={<OrderPage orders={feedOrders} isOrderName="feed" />} />}
+          {!background && <Route path='/profile/orders/:orderId' element={<ProtectedRouteElement isAuth={isAuth} routeWithAuthrized={true} replaceRoute='/login' element={<OrderPage orders={userOrders} isOrderName="user" />} />} />}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
 

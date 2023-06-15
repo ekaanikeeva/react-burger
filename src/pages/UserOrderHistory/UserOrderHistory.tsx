@@ -20,7 +20,7 @@ const UserOrderHistory:FunctionComponent = () => {
             dispatch({ type: WS_CONNECTION_USER_CLOSED })
           }
         }
-      }, [accessToken])
+      }, [dispatch])
     const orders = useAppSelector(store => store.wsUserOrdersReducer.orders)
     
     const reverseOrders = [...orders].reverse();
