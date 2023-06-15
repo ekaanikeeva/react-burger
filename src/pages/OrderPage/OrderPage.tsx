@@ -2,7 +2,7 @@ import OrderItem from "../../components/OrderItem/OrderItem";
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/wsAction";
 import { WS_CONNECTION_USER_START, WS_CONNECTION_USER_CLOSED } from '../../services/actions/wsUserActions';
 import styles from "./OrderPage.module.scss";
-import { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "../../services/hooks";
 import { TOrdersItem } from "../../utils/tsUtils";
 
@@ -14,7 +14,7 @@ interface IProps {
 const OrderPage: FunctionComponent<IProps> = ({ orders, isOrderName }) => {
     const dispatch = useAppDispatch()
     const accessToken = useAppSelector(store => store.authReducer.accessToken);
-    useMemo(() => {
+    useEffect(() => {
         if (isOrderName === 'feed') {
             dispatch({ type: WS_CONNECTION_START, payload: 'wss://norma.nomoreparties.space/orders/all' });
 

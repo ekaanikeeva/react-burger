@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo } from "react";
+import { FunctionComponent, useEffect } from "react";
 import styles from "./UserOrderHistory.module.scss";
 import ProfileNavigation from "../../components/ProfileNavigation/ProfileNavigation";
 import { useAppDispatch, useAppSelector } from "../../services/hooks";
@@ -10,7 +10,7 @@ import { Outlet } from "react-router-dom";
 const UserOrderHistory:FunctionComponent = () => {
     const accessToken = useAppSelector(store => store.authReducer.accessToken);
     const dispatch = useAppDispatch()
-    useMemo(() => {
+    useEffect(() => {
         if (accessToken !== null) {
           const token = accessToken.slice(7)
     
