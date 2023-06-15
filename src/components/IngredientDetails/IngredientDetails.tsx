@@ -11,9 +11,6 @@ const IngredientDetails: FC = () => {
     const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
     const currentIngredient = ingredients.find(item => item._id === ingredientId)
 
-    useMemo(() => {
-        dispatch(ingredientsAsync())
-    }, [])
 
     return (
         <>
