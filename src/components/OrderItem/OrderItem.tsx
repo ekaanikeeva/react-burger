@@ -12,8 +12,8 @@ interface IProps {
 const OrderItem: FunctionComponent<IProps> = ({orders}) => {
     const { orderId } = useParams();
     const allIngredients = useAppSelector(store => store.ingredientsReducer.ingredients)
-
-    const currentOrder = useMemo(() => orders?.find((order: TOrdersItem) => order._id === orderId), [orders])
+    
+    const currentOrder = useMemo(() => orders.find((order: TOrdersItem) => order._id === orderId), [orders])
 
     const ingredients = useMemo(() => {
             return JSON.parse(JSON.stringify(allIngredients.filter(el => currentOrder?.ingredients.some((id: string) => id === el._id) === true)))
@@ -31,7 +31,7 @@ const OrderItem: FunctionComponent<IProps> = ({orders}) => {
 
     }, [ingredients])
 
-    const priceCount = useMemo(() => ingredients?.reduce((total: number, item: IIngredient) => {
+    const priceCount = useMemo(() => ingredients.reduce((total: number, item: IIngredient) => {
         return total + (item.price * item.count)
     }, 0), [ingredients])
 

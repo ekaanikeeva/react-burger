@@ -6,6 +6,7 @@ import { IRootState } from "../../services/reducers/rootReducer";
 import { TOrdersItem } from "../../utils/tsUtils";
 
 import OrderElement from "../../components/OrderElement/OrderElement";
+import { Outlet } from "react-router-dom";
 const UserOrderHistory:FunctionComponent = () => {
     const dispatch = useAppDispatch()
 
@@ -25,6 +26,7 @@ const UserOrderHistory:FunctionComponent = () => {
                         })
                     }
                 </ul>
+                <Outlet />
         </main>
     )
 } 
