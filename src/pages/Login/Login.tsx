@@ -1,13 +1,12 @@
-import { useDispatch } from 'react-redux';
-import { FunctionComponent, ChangeEvent, FormEvent } from 'react';
+import { useAppDispatch } from '../../services/hooks';
+import { FunctionComponent, FormEvent } from 'react';
 import styles from './Login.module.scss';
 import Form from '../../components/Form/Form';
 import { authUserAsync } from '../../services/asyncActions/auth';
 import { useValidation } from '../../utils/Validate';
-import { TAppDispatch } from '../../utils/tsUtils';
 
 const Login:FunctionComponent = () => {
-    const dispatch: TAppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { values, handleChange, errors, isValid } = useValidation();
 
 
@@ -30,8 +29,8 @@ const Login:FunctionComponent = () => {
                 placeholder="E-mail"
                 minLength={2}
                 maxLength={50}
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 onChange={handleChange}
+                value={values["email"] ? values["email"] : ''}
                 required
             />
             <span
@@ -49,6 +48,7 @@ const Login:FunctionComponent = () => {
                 className={styles.input}
                 placeholder="Пароль"
                 onChange={handleChange}
+                value={values["password"] ? values["password"] : ''}
                 required
             />
             <span

@@ -1,8 +1,9 @@
 import { authAction, isErrorAction, getUserAction, getTokensAction, logoutAction } from "../actions/auth";
 import { registerUser, login, getUser, refreshToken, updateUserApi, logout } from "../../utils/ingredientsApi";
+import { IUser, TAppDispatch } from "../../utils/tsUtils";
 
-export const registerUserAsync = (email, password, userName) => {
-    return function (dispatch) {
+export const registerUserAsync = (email:string, password:string, userName:string) => {
+    return function (dispatch:TAppDispatch) {
         registerUser(email, password, userName)
             .then((res) => {
                 dispatch(authAction(res));
@@ -11,8 +12,8 @@ export const registerUserAsync = (email, password, userName) => {
     }
 }
 
-export const authUserAsync = (email, password) => {
-    return function (dispatch) {
+export const authUserAsync = (email:string, password:string) => {
+    return function (dispatch:TAppDispatch) {
         login(email, password)
             .then((res) => {
                 dispatch(authAction(res));
@@ -22,12 +23,12 @@ export const authUserAsync = (email, password) => {
 }
 
 
-export const getUserAsync = (accessToken, refreshUserToken) => {
-    return function (dispatch) {
+export const getUserAsync = (accessToken:string, refreshUserToken:string) => {
+    return function (dispatch:TAppDispatch) {
         getUser(accessToken)
             .then((res) => {
                 dispatch(getUserAction(res.user))
-                dispatch(getTokensAction({accessToken, refreshUserToken}))
+                dispatch(getTokensAction({accessToken:accessToken, refreshToken: refreshUserToken}))
             })
             .catch(err => {
                 if (err === 403) {
@@ -43,7 +44,7 @@ export const getUserAsync = (accessToken, refreshUserToken) => {
                             getUser(res.accessToken)
                                 .then((res) => {
                                     dispatch(getUserAction(res.user))
-                                    dispatch(getTokensAction({access, refresh}))
+                                    dispatch(getTokensAction({accessToken:access, refreshToken:refresh}))
                                 } )
                                 .catch(err => dispatch(isErrorAction(err)))
                         })
@@ -53,16 +54,16 @@ export const getUserAsync = (accessToken, refreshUserToken) => {
     }
 }
 
-export const updateUserAsync = (accessToken, changesInfo) => {
-    return function (dispatch) {
-        updateUserApi(accessToken, changesInfo)
+export const updateUserAsync = (accessToken:string | null, changesInfo:Record<string, string> | null) => {
+    return function (dispatch:TAppDispatch) {
+        updateUserApi(accessToken === null ? '' : accessToken, changesInfo)
         .then(res => dispatch(getUserAction(res.user)))
         .catch(err => console.log(err))
     }
 }
 
-export const logoutUserAsync = (token) => {
-    return function (dispatch) {
+export const logoutUserAsync = (token:string | null) => {
+    return function (dispatch:TAppDispatch) {
         logout(token)
         .then(res => dispatch(logoutAction()))
     }

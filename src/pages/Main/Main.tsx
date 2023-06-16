@@ -4,6 +4,7 @@ import { FunctionComponent } from 'react';
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import styles from './Main.module.scss';
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
+import { Outlet } from "react-router-dom";
 
 const Main:FunctionComponent = () => {
     return (
@@ -12,6 +13,7 @@ const Main:FunctionComponent = () => {
                 <BurgerIngredients />
                 <BurgerConstructor/>
             </DndProvider>
+            <Outlet />
         </main>
     )
 }

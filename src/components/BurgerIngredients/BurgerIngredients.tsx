@@ -1,14 +1,12 @@
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import styles from './BurgerIngredients.module.scss';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { bun, mainIngredient, sauce, one, two, three } from '../../utils/constants';
+import { bun, mainIngredient, sauce } from '../../utils/constants';
 import IngredientsList from '../IngredientsList/IngredientsList';
-import { useSelector, useDispatch } from 'react-redux';
-import { ingredientsAsync } from '../../services/asyncActions/ingredients';
+import { useAppDispatch, useAppSelector } from '../../services/hooks';
 import { getCurrentIngredientAction } from "../../services/actions/currentIngredientActions";
-import { IIngredient, TAppDispatch } from '../../utils/tsUtils';
-import { IRootState } from '../../services/reducers/rootReducer';
+import { IIngredient } from '../../utils/tsUtils';
 
 function BurgerIngredients() {
 
@@ -34,17 +32,13 @@ function BurgerIngredients() {
         }
     }, [inViewBons, inViewMains, inViewSouces])
 
-    const ingredientsSelector = useSelector((store: IRootState) => store.ingredientsReducer);
-    const isSuccessIngredients = useSelector((store: IRootState) => store.ingredientsReducer.isSuccess)
-    const [ingredientsArray, setIngredientsArray] = useState(null)
-    const dispatch: TAppDispatch = useDispatch();
+    const ingredientsSelector = useAppSelector(store => store.ingredientsReducer);
+    const isSuccessIngredients = useAppSelector(store => store.ingredientsReducer.isSuccess)
+    const [ingredientsArray, setIngredientsArray] = useState<null | IIngredient[]>(null)
+    const dispatch = useAppDispatch();
     
     useMemo(() => {
-        dispatch(ingredientsAsync())
-    }, [])
-
-    useMemo(() => {
-        setIngredientsArray(ingredientsSelector?.ingredients)
+        setIngredientsArray(ingredientsSelector.ingredients)
     }, [ingredientsSelector])
 
 

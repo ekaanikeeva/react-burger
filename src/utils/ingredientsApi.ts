@@ -28,7 +28,7 @@ export const getIngredientsApi = () => {
 };
 
 
-export const postOrderApi = (idArray:number, token:string) => {
+export const postOrderApi = (idArray:string[], token:string) => {
     return fetch(`${stellarUrl}/orders`, {
         method: 'POST',
         headers: {
@@ -115,7 +115,7 @@ export const refreshToken = (access:string, refresh:string) => {
        }).then(_checkResponse)
 }
 
-export const updateUserApi = (token:string, updateInfo:Record<string, string>) => {
+export const updateUserApi = (token:string, updateInfo:Record<string, string> | null) => {
     return fetch(`${stellarUrl}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -126,7 +126,7 @@ export const updateUserApi = (token:string, updateInfo:Record<string, string>) =
     }).then(_checkResponse)
 }
 
-export const logout = (refresh:string) => {
+export const logout = (refresh:string | null) => {
     return fetch(`${stellarUrl}/auth/logout`, {
         method: 'POST',
         headers: {
