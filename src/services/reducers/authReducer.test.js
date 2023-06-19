@@ -1,5 +1,5 @@
 import { authReducer } from "./authReducer";
-import { AUTH_USER, AUTH_ERROR, GET_USER, USER_TOKENS, USER_LOGOUT, TAuthActionsUnion } from "../actions/auth";
+import { AUTH_USER, AUTH_ERROR, GET_USER, USER_TOKENS, USER_LOGOUT } from "../actions/auth";
 
 
 
