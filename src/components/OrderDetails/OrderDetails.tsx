@@ -4,7 +4,7 @@ import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-component
 const OrderDetails:FunctionComponent<{orderNumber:number}> = ({ orderNumber }) => {
     return (
         <>
-            <p className="text text_type_digits-large">{orderNumber}</p>
+            <p className="text text_type_digits-large" data-modal="data-modal-number">{orderNumber}</p>
             <h3>идентификатор заказа</h3>
             <CheckMarkIcon type="primary" />
             <div className="p-7"></div>

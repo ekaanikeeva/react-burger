@@ -31,6 +31,7 @@ const Login:FunctionComponent = () => {
                 maxLength={50}
                 onChange={handleChange}
                 value={values["email"] ? values["email"] : ''}
+                data-login='data-login-email'
                 required
             />
             <span
@@ -49,6 +50,7 @@ const Login:FunctionComponent = () => {
                 placeholder="Пароль"
                 onChange={handleChange}
                 value={values["password"] ? values["password"] : ''}
+                data-login='data-login-password'
                 required
             />
             <span

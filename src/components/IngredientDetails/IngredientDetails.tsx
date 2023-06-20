@@ -17,7 +17,7 @@ const IngredientDetails: FC = () => {
             {currentIngredient && 
             <>
             <img src={currentIngredient.image} alt={currentIngredient.name} />
-            <h3>{currentIngredient.name}</h3>
+            <h3 data-ingredient-details="data-ingredient-details-name">{currentIngredient.name}</h3>
             <section>
                 <div>
                     <span>Калории,ккал</span>

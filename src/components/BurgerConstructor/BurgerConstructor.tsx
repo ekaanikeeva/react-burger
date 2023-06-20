@@ -85,7 +85,7 @@ const BurgerConstructor: FunctionComponent = () => {
     }, 0), [ingredients])
 
     return (
-        <form className={styles.burgerConstructor} onSubmit={handleSubmit} ref={dropTarget}>
+        <form className={styles.burgerConstructor} onSubmit={handleSubmit} ref={dropTarget} data-drop='data-drop-container'>
 
             <div className={styles.burgerBunTop} >
                 {currentBun &&
@@ -120,7 +120,8 @@ const BurgerConstructor: FunctionComponent = () => {
             </div>
             <button type="submit" className={styles.submitButton}
                 disabled={currentBun !== undefined ? false : true}
-                title={currentBun !== undefined ? "Оформить заказ" : "Необходимо добавить булку"}>Оформить заказ</button>
+                title={currentBun !== undefined ? "Оформить заказ" : "Необходимо добавить булку"}
+                data-drop='data-drop-submit'>Оформить заказ</button>
             {isOpen &&
                 <Modal onClose={onClose}>
                     {orderNumber !== null ?
