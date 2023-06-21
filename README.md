@@ -1,4 +1,4 @@
-# Фронтенд дипломного проекта Yandex Practicum (fullstack)
+
 
 ![Превью проекта Stellar Burger](./preview.jpg)
 
