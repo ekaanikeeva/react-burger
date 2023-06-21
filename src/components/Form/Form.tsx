@@ -20,7 +20,7 @@ const Form:FunctionComponent<TFormProps> = ({ title, children, submitTitle, link
             <h1 className={styles.title}>{title}</h1>
             {children}
 
-            <button type="submit" className={styles.submit}>{submitTitle}</button>
+            <button type="submit" className={styles.submit} data-form="data-login-submit" >{submitTitle}</button>
 
             <span className={styles.linkQuestion}>
                 {linkQuestion}

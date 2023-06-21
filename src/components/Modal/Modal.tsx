@@ -24,10 +24,10 @@ const Modal:FunctionComponent<TModalProps> = ({ onClose, children, title }) => {
     }, [onClose])
 
     return createPortal(
-        <div className={styles.modal}>
+        <div className={styles.modal} data-modal="data-modal">
             <ModalOverlay onClose={onClose} />
             <div className={styles.modal__container}>
-                <button type="button" className={styles.close} onClick={onClose}><CloseIcon type="primary" /></button>
+                <button type="button" className={styles.close} onClick={onClose} data-modal="data-modal-close"><CloseIcon type="primary" /></button>
                 <h2 className={styles.title}>{title}</h2>
                 <div className={styles.child__container}>
                     {children}

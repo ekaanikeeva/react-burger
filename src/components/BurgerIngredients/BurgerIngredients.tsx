@@ -72,7 +72,7 @@ function BurgerIngredients() {
                 </div>
             </nav>
 
-            <ul className={styles.ingredientsList}>
+            <ul className={styles.ingredientsList} data-ingredients="data-ingredients">
                 <li>
                     <IngredientsList title="Булки" currentType={bun} ingredients={ingredientsArray} currentRef={bonsRef} />
                 </li>

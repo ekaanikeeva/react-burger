@@ -25,15 +25,15 @@ const Ingredient:FunctionComponent<TItem> = ({ item }) => {
     })
 
     return (
-        <li draggable={true} className={styles.ingredient} ref={dragRef}
+        <li draggable={true} className={styles.ingredient} ref={dragRef} data-item="data-item"
             onClick={() => dispatch(getCurrentIngredientAction(item))}>
             <Link to={`/ingredients/${ingredientId}`} state={{ background: location }} className={styles.wrapLink}>
-                <Counter count={item.count} size="default" extraClass="m-1" />
+                <Counter count={item.count} size="default" extraClass="m-1"/>
                 <img src={item.image} alt={item.name} />
                 <span className={styles.price}>
                     <span>{item.price}</span>
                     <CurrencyIcon type="primary" /></span>
-                    <h3>{item.name}</h3>
+                    <h3 data-item="data-item-name">{item.name}</h3>
             </Link>
         </li >
     )
